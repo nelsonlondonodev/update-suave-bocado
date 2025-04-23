@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Suave bocado Repostería - Envigado</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              // Paleta de colores de la marca
+              "marca-claro": "#FFE8E1", // Principal 1
+              "marca-oscuro": "#6A2E35", // Principal 2
+              "marca-acento1": "#FFC4D1", // Complementario 1 (Rosa)
+              "marca-complemento1": "#8CBCB9", // Complementario 2 (Verde azulado claro)
+              "marca-complemento2": "#3C6E71", // Complementario 3 (Verde azulado oscuro)
+            },
+            fontFamily: {
+              // Tipografía amigable (ejemplo, podrías cambiarla)
+              sans: ["Poppins", "sans-serif"],
+              serif: ["Playfair Display", "serif"],
+            },
+            // Eliminamos backgroundImage.hero-pattern ya que usamos un carrusel
+            // backgroundImage: {
+            //      'hero-pattern': "url('./image/imagen1Bg Large.jpeg')"
+            // }
+          },
+        },
+      };
+    </script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
+    <style>
+      /* Estilos personalizados si es necesario (mínimo con Tailwind) */
+      html {
+        scroll-behavior: smooth; /* Desplazamiento suave al hacer clic en enlaces de anclaje */
+      }
+      /* Estilo para las estrellas de reseña (ejemplo simple) */
+      .rating .star {
+        color: #ffd700; /* Color dorado para las estrellas */
+        display: inline-block;
+        margin-right: 2px;
+      }
+      /* Ajuste para el tamaño del logo si es necesario */
+      .logo-img {
+        max-height: 50px; /* Ajusta este valor según el tamaño deseado para el logo en el encabezado */
+        width: auto;
+      }
+
+      /* --- Estilos para manejo de idiomas --- */
+      /* Oculta por defecto los elementos que no sean del idioma activo */
+      body[data-lang="es"] [lang="en"],
+      body[data-lang="en"] [lang="es"] {
+        display: none;
+      }
+      /* Asegura que el idioma activo se muestre */
+      body[data-lang="es"] [lang="es"],
+      body[data-lang="en"] [lang="en"] {
+        display: block; /* O inline, inline-block, flex, grid según el elemento original */
+      }
+
+      /* Ajustes específicos si algunos elementos con lang='en' o lang='es' no se muestran correctamente */
+      body[data-lang="es"] span[lang="es"],
+      body[data-lang="en"] span[lang="en"] {
+        display: inline;
+      }
+
+      /* Estilo para los botones de idioma activos */
+      #language-switcher .lang-button.active {
+        font-weight: bold;
+        text-decoration: underline;
+        color: #6a2e35; /* Color oscuro de la marca */
+      }
+      /* --- Fin Estilos para manejo de idiomas --- */
+
+      /* --- Estilos para el Chatbot --- */
+      #chatbot-widget {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+        width: 300px; /* Ancho del chat */
+        max-height: 400px; /* Altura máxima */
+        display: flex;
+        flex-direction: column;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      #chat-header {
+        background-color: #6a2e35; /* Color oscuro de la marca */
+        color: white;
+        padding: 10px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: bold;
+      }
+
+      #chat-body {
+        flex-grow: 1;
+        padding: 10px;
+        overflow-y: auto; /* Permite scroll si el contenido excede la altura máxima */
+        background-color: #ffe8e1; /* Color claro de la marca */
+        display: flex;
+        flex-direction: column;
+      }
+
+      .message {
+        margin-bottom: 8px;
+        padding: 6px 10px;
+        border-radius: 8px;
+        max-width: 80%;
+      }
+
+      .message.user {
+        align-self: flex-end;
+        background-color: #ffc4d1; /* Color de acento */
+        color: #6a2e35; /* Color oscuro */
+      }
+
+      .message.bot {
+        align-self: flex-start;
+        background-color: #e0e0e0; /* Gris claro */
+        color: #333; /* Gris oscuro */
+      }
+
+      #chat-input-area {
+        display: flex;
+        padding: 10px;
+        background-color: #f1f1f1; /* Gris muy claro */
+      }
+
+      #chat-input-area input {
+        flex-grow: 1;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-right: 8px;
+        font-size: 0.9em;
+      }
+
+      #chat-input-area button {
+        background-color: #8cbcb9; /* Color complemento */
+        color: white;
+        padding: 8px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      #chat-input-area button:hover {
+        background-color: #3c6e71; /* Color complemento oscuro */
+      }
+      /* Oculta el cuerpo del chat por defecto */
+      #chatbot-widget.collapsed #chat-body,
+      #chatbot-widget.collapsed #chat-input-area {
+        display: none;
+      }
+      /* --- Fin Estilos para el Chatbot --- */
+
+      /* --- Estilos para el Carrusel --- */
+      .carousel-slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0; /* Oculta por defecto */
+        transition: opacity 1s ease-in-out; /* Transición suave */
+      }
+      .carousel-slide.active {
+        opacity: 1; /* Muestra la slide activa */
+      }
+      .carousel-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Asegura que la imagen cubra el contenedor sin distorsionarse */
+      }
+      /* --- Fin Estilos para el Carrusel --- */
+    </style>
+  </head>
+  <body class="font-sans text-marca-oscuro bg-marca-claro" data-lang="es">
+    <header class="bg-white shadow-lg fixed top-0 left-0 right-0 z-50">
+      <nav
+        class="container mx-auto px-6 py-4 flex justify-between items-center"
+      >
+        <a href="#inicio" class="flex items-center">
+          <img
+            src="./image/Logo suave1.png"
+            alt="Logo Suave bocado Repostería"
+            class="logo-img mr-2"
+          />
+        </a>
+
+        <div id="language-switcher" class="flex items-center space-x-2">
+          <button
+            class="lang-button text-marca-oscuro hover:text-marca-complemento2 transition duration-300 active"
+            data-lang="es"
+          >
+            ES
+          </button>
+          <span class="text-marca-oscuro">|</span>
+          <button
+            class="lang-button text-marca-oscuro hover:text-marca-complemento2 transition duration-300"
+            data-lang="en"
+          >
+            EN
+          </button>
+        </div>
+
+        <div class="hidden md:flex space-x-6">
+          <a
+            href="#inicio"
+            class="text-marca-oscuro hover:text-marca-complemento2 transition duration-300"
+            ><span lang="es">Inicio</span><span lang="en">Home</span></a
+          >
+          <a
+            href="#galeria"
+            class="text-marca-oscuro hover:text-marca-complemento2 transition duration-300"
+            ><span lang="es">Galería</span><span lang="en">Gallery</span></a
+          >
+          <a
+            href="#productos"
+            class="text-marca-oscuro hover:text-marca-complemento2 transition duration-300"
+            ><span lang="es">Productos</span><span lang="en">Products</span></a
+          >
+          <a
+            href="#reviews"
+            class="text-marca-oscuro hover:text-marca-complemento2 transition duration-300"
+            ><span lang="es">Reseñas</span><span lang="en">Reviews</span></a
+          >
+          <a
+            href="#acerca-de"
+            class="text-marca-oscuro hover:text-marca-complemento2 transition duration-300"
+            ><span lang="es">Acerca de</span><span lang="en">About Us</span></a
+          >
+          <a
+            href="#contacto"
+            class="text-marca-oscuro hover:text-marca-complemento2 transition duration-300"
+            ><span lang="es">Contacto</span><span lang="en">Contact</span></a
+          >
+        </div>
+        <div class="md:hidden">
+          <button
+            id="mobile-menu-button"
+            class="text-marca-oscuro focus:outline-none"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-menu"
+            >
+              <line x1="4" x2="20" y1="12" y2="12" />
+              <line x1="4" x2="20" y1="6" y2="6" />
+              <line x1="4" x2="20" y1="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+      </nav>
+      <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg">
+        <a
+          href="#inicio"
+          class="block px-6 py-3 text-marca-oscuro hover:bg-marca-acento1 transition duration-300"
+          ><span lang="es">Inicio</span><span lang="en">Home</span></a
+        >
+        <a
+          href="#galeria"
+          class="block px-6 py-3 text-marca-oscuro hover:bg-marca-acento1 transition duration-300"
+          ><span lang="es">Galería</span><span lang="en">Gallery</span></a
+        >
+        <a
+          href="#productos"
+          class="block px-6 py-3 text-marca-oscuro hover:bg-marca-acento1 transition duration-300"
+          ><span lang="es">Productos</span><span lang="en">Products</span></a
+        >
+        <a
+          href="#reviews"
+          class="block px-6 py-3 text-marca-oscuro hover:bg-marca-acento1 transition duration-300"
+          ><span lang="es">Reseñas</span><span lang="en">Reviews</span></a
+        >
+        <a
+          href="#acerca-de"
+          class="block px-6 py-3 text-marca-oscuro hover:bg-marca-acento1 transition duration-300"
+          ><span lang="es">Acerca de</span><span lang="en">About Us</span></a
+        >
+        <a
+          href="#contacto"
+          class="block px-6 py-3 text-marca-oscuro hover:bg-marca-acento1 transition duration-300"
+          ><span lang="es">Contacto</span><span lang="en">Contact</span></a
+        >
+      </div>
+    </header>
+
+    <div class="pt-20"></div>
+
+    <section
+      id="inicio"
+      class="relative h-screen flex items-center justify-center"
+    >
+      <div class="carousel-container absolute inset-0">
+        <div class="carousel-slide active">
+          <img
+            src="./image/imagen1Bg Large.jpeg"
+            alt="Imagen de repostería 1"
+          />
+        </div>
+        <div class="carousel-slide">
+          <img
+            src="./image/imagen2Bg Large copy.jpeg"
+            alt="Imagen de repostería 2"
+          />
+        </div>
+        <div class="carousel-slide">
+          <img
+            src="./image/imagen2Bg Large copy.jpeg"
+            alt="Imagen de repostería 3"
+          />
+        </div>
+      </div>
+
+      <div class="absolute inset-0 bg-marca-oscuro opacity-25"></div>
+
+      <div
+        class="relative z-10 p-8 rounded-lg max-w-2xl text-center text-white"
+      >
+        <h1
+          class="text-5xl md:text-6xl font-serif font-bold mb-4 text-white drop-shadow-lg"
+        >
+          <span lang="es">Delicias Hechas con Amor en Envigado</span>
+          <span lang="en">Delights Made with Love in Envigado</span>
+        </h1>
+        <p class="text-xl md:text-2xl font-light italic">
+          <span lang="es"
+            >"Donde cada bocado es una dulce historia artesanal"</span
+          >
+          <span lang="en">"Where every bite is a sweet artisanal story"</span>
+        </p>
+        <a
+          href="#productos"
+          class="mt-8 inline-block bg-marca-acento1 text-marca-oscuro font-semibold py-3 px-8 rounded-full hover:bg-marca-complemento2 hover:text-white transition duration-300 ease-in-out shadow-lg"
+        >
+          <span lang="es">Explora Nuestros Productos</span>
+          <span lang="en">Explore Our Products</span>
+        </a>
+      </div>
+    </section>
+
+    <section id="galeria" class="py-16 bg-marca-claro">
+      <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-serif text-marca-oscuro text-center mb-12">
+          <span lang="es">Nuestra Galería de Dulzura</span>
+          <span lang="en">Our Sweetness Gallery</span>
+        </h2>
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
+        >
+          <div
+            class="overflow-hidden rounded-lg shadow-lg transform transition duration-300 hover:scale-105"
+          >
+            <img
+              src="https://via.placeholder.com/400x300?text=Pastel+de+Chocolate"
+              alt="Pastel de Chocolate"
+              lang="es"
+              class="w-full h-60 object-cover"
+            />
+            <img
+              src="https://via.placeholder.com/400x300?text=Chocolate+Cake"
+              alt="Chocolate Cake"
+              lang="en"
+              class="w-full h-60 object-cover"
+            />
+          </div>
+          <div
+            class="overflow-hidden rounded-lg shadow-lg transform transition duration-300 hover:scale-105"
+          >
+            <img
+              src="https://via.placeholder.com/400x300?text=Cupcakes+Variados"
+              alt="Cupcakes Variados"
+              lang="es"
+              class="w-full h-60 object-cover"
+            />
+            <img
+              src="https://via.placeholder.com/400x300?text=Assorted+Cupcakes"
+              alt="Assorted Cupcakes"
+              lang="en"
+              class="w-full h-60 object-cover"
+            />
+          </div>
+          <div
+            class="overflow-hidden rounded-lg shadow-lg transform transition duration-300 hover:scale-105"
+          >
+            <img
+              src="https://via.placeholder.com/400x300?text=Postre+Tipico+1"
+              alt="Postre Típico 1"
+              lang="es"
+              class="w-full h-60 object-cover"
+            />
+            <img
+              src="https://via.placeholder.com/400x300?text=Typical+Dessert+1"
+              alt="Typical Dessert 1"
+              lang="en"
+              class="w-full h-60 object-cover"
+            />
+          </div>
+          <div
+            class="overflow-hidden rounded-lg shadow-lg transform transition duration-300 hover:scale-105"
+          >
+            <img
+              src="https://via.placeholder.com/400x300?text=Galletas+Decoradas"
+              alt="Galletas Decoradas"
+              lang="es"
+              class="w-full h-60 object-cover"
+            />
+            <img
+              src="https://via.placeholder.com/400x300?text=Decorated+Cookies"
+              alt="Decorated Cookies"
+              lang="en"
+              class="w-full h-60 object-cover"
+            />
+          </div>
+          <div
+            class="overflow-hidden rounded-lg shadow-lg transform transition duration-300 hover:scale-105"
+          >
+            <img
+              src="https://via.placeholder.com/400x300?text=Pastel+de+Frutas"
+              alt="Pastel de Frutas"
+              lang="es"
+              class="w-full h-60 object-cover"
+            />
+            <img
+              src="https://via.placeholder.com/400x300?text=Fruit+Cake"
+              alt="Fruit Cake"
+              lang="en"
+              class="w-full h-60 object-cover"
+            />
+          </div>
+          <div
+            class="overflow-hidden rounded-lg shadow-lg transform transition duration-300 hover:scale-105"
+          >
+            <img
+              src="https://via.placeholder.com/400x300?text=Mesa+de+Postres"
+              alt="Mesa de Postres"
+              lang="es"
+              class="w-full h-60 object-cover"
+            />
+            <img
+              src="https://via.placeholder.com/400x300?text=Dessert+Table"
+              alt="Dessert Table"
+              lang="en"
+              class="w-full h-60 object-cover"
+            />
+          </div>
+          <div
+            class="overflow-hidden rounded-lg shadow-lg transform transition duration-300 hover:scale-105"
+          >
+            <img
+              src="https://via.placeholder.com/400x300?text=Postre+Tipico+2"
+              alt="Postre Típico 2"
+              lang="es"
+              class="w-full h-60 object-cover"
+            />
+            <img
+              src="https://via.placeholder.com/400x300?text=Typical+Dessert+2"
+              alt="Typical Dessert 2"
+              lang="en"
+              class="w-full h-60 object-cover"
+            />
+          </div>
+          <div
+            class="overflow-hidden rounded-lg shadow-lg transform transition duration-300 hover:scale-105"
+          >
+            <img
+              src="https://via.placeholder.com/400x300?text=Brownies"
+              alt="Brownies"
+              lang="es"
+              class="w-full h-60 object-cover"
+            />
+            <img
+              src="https://via.placeholder.com/400x300?text=Brownies"
+              alt="Brownies"
+              lang="en"
+              class="w-full h-60 object-cover"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="productos" class="py-16 bg-marca-complemento1">
+      <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-serif text-marca-oscuro text-center mb-12">
+          <span lang="es">Nuestros Productos Destacados</span>
+          <span lang="en">Our Featured Products</span>
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div
+            class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl"
+          >
+            <i data-lucide="cake" class="w-12 h-12 text-marca-acento1 mb-4"></i>
+            <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
+              <span lang="es">Pastel Selva Negra</span>
+              <span lang="en">Black Forest Cake</span>
+            </h3>
+            <p class="text-marca-oscuro mb-4">
+              <span lang="es"
+                >Clásico bizcocho de chocolate, crema y cerezas. Una
+                delicia.</span
+              >
+              <span lang="en"
+                >Classic chocolate sponge cake, cream, and cherries. A
+                delight.</span
+              >
+            </p>
+            <span class="text-2xl font-bold text-marca-oscuro"
+              >$ 45.000 COP</span
+            >
+          </div>
+          <div
+            class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl"
+          >
+            <i
+              data-lucide="cupcake"
+              class="w-12 h-12 text-marca-acento1 mb-4"
+            ></i>
+            <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
+              <span lang="es">Set de Cupcakes Gourmet</span>
+              <span lang="en">Gourmet Cupcake Set</span>
+            </h3>
+            <p class="text-marca-oscuro mb-4">
+              <span lang="es"
+                >Variedad de sabores exquisitos con decoraciones únicas.</span
+              >
+              <span lang="en"
+                >Variety of exquisite flavors with unique decorations.</span
+              >
+            </p>
+            <span class="text-2xl font-bold text-marca-oscuro"
+              >$ 6.000 COP (cada uno)</span
+            >
+          </div>
+          <div
+            class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl"
+          >
+            <i
+              data-lucide="cookie"
+              class="w-12 h-12 text-marca-acento1 mb-4"
+            ></i>
+            <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
+              <span lang="es">Galletas Artesanales</span>
+              <span lang="en">Artisanal Cookies</span>
+            </h3>
+            <p class="text-marca-oscuro mb-4">
+              <span lang="es"
+                >Hechas a mano con los mejores ingredientes, crujientes y
+                deliciosas.</span
+              >
+              <span lang="en"
+                >Handmade with the best ingredients, crunchy and
+                delicious.</span
+              >
+            </p>
+            <span class="text-2xl font-bold text-marca-oscuro"
+              >$ 3.000 COP (paquete)</span
+            >
+          </div>
+          <div
+            class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl"
+          >
+            <i data-lucide="cake" class="w-12 h-12 text-marca-acento1 mb-4"></i>
+            <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
+              <span lang="es">Torta de Nata</span>
+              <span lang="en">Cream Cake</span>
+            </h3>
+            <p class="text-marca-oscuro mb-4">
+              <span lang="es"
+                >Tradición de la abuela, suave y esponjosa con el toque justo de
+                dulzura.</span
+              >
+              <span lang="en"
+                >Grandma's tradition, soft and fluffy with just the right touch
+                of sweetness.</span
+              >
+            </p>
+            <span class="text-2xl font-bold text-marca-oscuro"
+              >$ 38.000 COP</span
+            >
+          </div>
+          <div
+            class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl"
+          >
+            <i
+              data-lucide="ice-cream"
+              class="w-12 h-12 text-marca-acento1 mb-4"
+            ></i>
+            <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
+              <span lang="es">Postre de las 3 Leches</span>
+              <span lang="en">Three Milk Dessert</span>
+            </h3>
+            <p class="text-marca-oscuro mb-4">
+              <span lang="es">Húmedo y cremoso, un clásico irresistible.</span>
+              <span lang="en">Moist and creamy, an irresistible classic.</span>
+            </p>
+            <span class="text-2xl font-bold text-marca-oscuro"
+              >$ 8.000 COP (porción)</span
+            >
+          </div>
+          <div
+            class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl"
+          >
+            <i
+              data-lucide="bonfire"
+              class="w-12 h-12 text-marca-acento1 mb-4"
+            ></i>
+            <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
+              <span lang="es">Volcán de Chocolate</span>
+              <span lang="en">Chocolate Lava Cake</span>
+            </h3>
+            <p class="text-marca-oscuro mb-4">
+              <span lang="es"
+                >El centro perfecto y fundido, servido caliente.</span
+              >
+              <span lang="en">The perfect molten center, served warm.</span>
+            </p>
+            <span class="text-2xl font-bold text-marca-oscuro"
+              >$ 10.000 COP (porción)</span
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="reviews" class="py-16 bg-marca-claro">
+      <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-serif text-marca-oscuro text-center mb-12">
+          <span lang="es">Lo que Dicen Nuestros Clientes</span>
+          <span lang="en">What Our Customers Say</span>
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <div class="flex items-center mb-4">
+              <div
+                class="w-10 h-10 rounded-full bg-marca-complemento1 flex items-center justify-center text-white font-bold mr-4"
+              >
+                J.P.
+              </div>
+              <div>
+                <p class="font-semibold text-marca-oscuro">
+                  <span lang="es">Juan Pérez</span
+                  ><span lang="en">John Smith</span>
+                </p>
+                <div class="rating text-sm">
+                  <span class="star">★</span>
+                  <span class="star">★</span>
+                  <span class="star">★</span>
+                  <span class="star">★</span>
+                  <span class="star">★</span>
+                </div>
+              </div>
+            </div>
+            <p class="text-marca-oscuro italic mb-4">
+              <span lang="es"
+                >"¡Simplemente deliciosos! Probé el pastel de nata y me
+                transportó a mi infancia. La atención es excelente."</span
+              >
+              <span lang="en"
+                >"Simply delicious! I tried the cream cake, and it transported
+                me back to my childhood. The service is excellent."</span
+              >
+            </p>
+            <p class="text-gray-500 text-sm">
+              <span lang="es">Reseña de Google - Hace 2 días</span>
+              <span lang="en">Google Review - 2 days ago</span>
+            </p>
+          </div>
+
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <div class="flex items-center mb-4">
+              <div
+                class="w-10 h-10 rounded-full bg-marca-complemento1 flex items-center justify-center text-white font-bold mr-4"
+              >
+                M.G.
+              </div>
+              <div>
+                <p class="font-semibold text-marca-oscuro">
+                  <span lang="es">Maria González</span
+                  ><span lang="en">Mary Jones</span>
+                </p>
+                <div class="rating text-sm">
+                  <span class="star">★</span>
+                  <span class="star">★</span>
+                  <span class="star">★</span>
+                  <span class="star">★</span>
+                  <span class="star">★</span>
+                </div>
+              </div>
+            </div>
+            <p class="text-marca-oscuro italic mb-4">
+              <span lang="es"
+                >"Los cupcakes son obras de arte. Perfectos para cualquier
+                celebración. Se nota la calidad de los ingredientes."</span
+              >
+              <span lang="en"
+                >"The cupcakes are works of art. Perfect for any celebration.
+                The quality of the ingredients is noticeable."</span
+              >
+            </p>
+            <p class="text-gray-500 text-sm">
+              <span lang="es">Reseña de Google - Hace 1 semana</span>
+              <span lang="en">Google Review - 1 week ago</span>
+            </p>
+          </div>
+
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <div class="flex items-center mb-4">
+              <div
+                class="w-10 h-10 rounded-full bg-marca-complemento1 flex items-center justify-center text-white font-bold mr-4"
+              >
+                C.L.
+              </div>
+              <div>
+                <p class="font-semibold text-marca-oscuro">
+                  <span lang="es">Carlos López</span
+                  ><span lang="en">Charles Brown</span>
+                </p>
+                <div class="rating text-sm">
+                  <span class="star">★</span>
+                  <span class="star">★</span>
+                  <span class="star">★</span>
+                  <span class="star">★</span>
+                  <span class="star">★</span>
+                </div>
+              </div>
+            </div>
+            <p class="text-marca-oscuro italic mb-4">
+              <span lang="es"
+                >"La mejor repostería de Envigado sin duda. El volcán de
+                chocolate es una locura. Muy recomendado."</span
+              >
+              <span lang="en"
+                >"The best bakery in Envigado without a doubt. The chocolate
+                lava cake is crazy good. Highly recommended."</span
+              >
+            </p>
+            <p class="text-gray-500 text-sm">
+              <span lang="es">Reseña de Google - Hace 3 días</span>
+              <span lang="en">Google Review - 3 days ago</span>
+            </p>
+          </div>
+
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <div class="flex items-center mb-4">
+              <div
+                class="w-10 h-10 rounded-full bg-marca-complemento1 flex items-center justify-center text-white font-bold mr-4"
+              >
+                A.R.
+              </div>
+              <div>
+                <p class="font-semibold text-marca-oscuro">
+                  <span lang="es">Ana Ramírez</span
+                  ><span lang="en">Anna Davis</span>
+                </p>
+                <div class="rating text-sm">
+                  <span class="star">★</span>
+                  <span class="star">★</span>
+                  <span class="star">★</span>
+                  <span class="star">★</span>
+                  <span class="star">★</span>
+                </div>
+              </div>
+            </div>
+            <p class="text-marca-oscuro italic mb-4">
+              <span lang="es"
+                >"El detalle en las galletas personalizadas es increíble. Son
+                perfectas para regalar y están deliciosas."</span
+              >
+              <span lang="en"
+                >"The detail in the personalized cookies is incredible. They are
+                perfect for gifting and are delicious."</span
+              >
+            </p>
+            <p class="text-gray-500 text-sm">
+              <span lang="es">Reseña de Google - Hace 1 mes</span>
+              <span lang="en">Google Review - 1 month ago</span>
+            </p>
+          </div>
+        </div>
+        <div class="text-center mt-12">
+          <a
+            href="#"
+            target="_blank"
+            class="inline-block bg-marca-acento1 hover:bg-marca-complemento2 text-marca-oscuro hover:text-white font-bold py-2 px-6 rounded-full transition duration-300 ease-in-out"
+          >
+            <span lang="es">Ver más reseñas en Google</span>
+            <span lang="en">View more reviews on Google</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="acerca-de" class="py-16 bg-marca-claro">
+      <div
+        class="container mx-auto px-6 flex flex-col md:flex-row items-center gap-12"
+      >
+        <div class="md:w-1/2">
+          <img
+            src="./image/foto mis inicios.jpeg"
+            alt="Foto de la fundadora de Suave bocado Repostería"
+            lang="es"
+            class="rounded-lg shadow-lg w-full"
+          />
+          <img
+            src="./image/foto mis inicios.jpeg"
+            alt="Photo of Suave bocado Bakery founder"
+            lang="en"
+            class="rounded-lg shadow-lg w-full"
+          />
+        </div>
+        <div class="md:w-1/2">
+          <h2 class="text-4xl font-serif text-marca-oscuro mb-6">
+            <span lang="es">Nuestra Historia Dulce en Envigado</span>
+            <span lang="en">Our Sweet Story in Envigado</span>
+          </h2>
+          <p class="text-marca-oscuro leading-relaxed mb-4">
+            <span lang="es"
+              >Desde el corazón de Envigado, nace [Nombre de la Repostería], un
+              sueño hecho realidad por [Nombre del Fundador/a] hace [Número]
+              años. Inspirados en las recetas tradicionales de nuestras abuelas
+              y la calidez de nuestra tierra antioqueña, nos dedicamos a crear
+              postres que no solo deleitan el paladar, sino que también cuentan
+              una historia.</span
+            >
+            <span lang="en"
+              >From the heart of Envigado, [Bakery Name] is born, a dream made
+              reality by [Founder's Name] [Number] years ago. Inspired by our
+              grandmothers' traditional recipes and the warmth of our Antioquian
+              land, we dedicate ourselves to creating desserts that not only
+              delight the palate but also tell a story.</span
+            >
+          </p>
+          <p class="text-marca-oscuro leading-relaxed">
+            <span lang="es"
+              >Cada ingrediente es seleccionado con esmero, cada pastel es
+              horneado con pasión y cada detalle es cuidado con amor artesanal.
+              Somos más que una repostería, somos parte de la tradición
+              envigadeña, endulzando momentos especiales para nuestras familias
+              y amigos.</span
+            >
+            <span lang="en"
+              >Each ingredient is selected with care, each cake is baked with
+              passion, and every detail is crafted with artisanal love. We are
+              more than a bakery; we are part of Envigado's tradition,
+              sweetening special moments for our families and friends.</span
+            >
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contacto" class="py-16 bg-marca-complemento1">
+      <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-serif text-marca-oscuro text-center mb-12">
+          <span lang="es">Contáctanos</span>
+          <span lang="en">Contact Us</span>
+        </h2>
+        <div class="flex flex-col md:flex-row gap-12">
+          <div class="md:w-1/2 bg-white p-8 rounded-lg shadow-lg">
+            <h3 class="text-2xl font-serif text-marca-oscuro mb-6">
+              <span lang="es">Envíanos un Mensaje</span>
+              <span lang="en">Send Us a Message</span>
+            </h3>
+            <form action="#" method="POST">
+              <div class="mb-4">
+                <label
+                  for="nombre"
+                  class="block text-marca-oscuro text-sm font-bold mb-2"
+                  ><span lang="es">Nombre:</span
+                  ><span lang="en">Name:</span></label
+                >
+                <input
+                  type="text"
+                  id="nombre"
+                  name="nombre"
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-marca-oscuro leading-tight focus:outline-none focus:shadow-outline"
+                  required
+                />
+              </div>
+              <div class="mb-4">
+                <label
+                  for="correo"
+                  class="block text-marca-oscuro text-sm font-bold mb-2"
+                  ><span lang="es">Correo Electrónico:</span
+                  ><span lang="en">Email:</span></label
+                >
+                <input
+                  type="email"
+                  id="correo"
+                  name="correo"
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-marca-oscuro leading-tight focus:outline-none focus:shadow-outline"
+                  required
+                />
+              </div>
+              <div class="mb-6">
+                <label
+                  for="mensaje"
+                  class="block text-marca-oscuro text-sm font-bold mb-2"
+                  ><span lang="es">Mensaje:</span
+                  ><span lang="en">Message:</span></label
+                >
+                <textarea
+                  id="mensaje"
+                  name="mensaje"
+                  rows="5"
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-marca-oscuro leading-tight focus:outline-none focus:shadow-outline"
+                  required
+                ></textarea>
+              </div>
+              <div class="flex items-center justify-center">
+                <button
+                  type="submit"
+                  class="bg-marca-acento1 hover:bg-marca-complemento2 text-marca-oscuro hover:text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-300 ease-in-out"
+                >
+                  <span lang="es">Enviar Mensaje</span>
+                  <span lang="en">Send Message</span>
+                </button>
+              </div>
+            </form>
+          </div>
+          <div class="md:w-1/2">
+            <h3 class="text-2xl font-serif text-marca-oscuro mb-6">
+              <span lang="es">Encuéntranos</span>
+              <span lang="en">Find Us</span>
+            </h3>
+            <div class="flex items-center mb-4">
+              <i
+                data-lucide="map-pin"
+                class="w-6 h-6 text-marca-oscuro mr-3"
+              ></i>
+              <p class="text-marca-oscuro">
+                <span lang="es"
+                  >Dirección Ficticia, Envigado, Antioquia, Colombia</span
+                >
+                <span lang="en"
+                  >Fictional Address, Envigado, Antioquia, Colombia</span
+                >
+              </p>
+            </div>
+            <div class="flex items-center mb-4">
+              <i data-lucide="phone" class="w-6 h-6 text-marca-oscuro mr-3"></i>
+              <p class="text-marca-oscuro">+57 300 123 4567</p>
+            </div>
+            <div class="flex items-center mb-6">
+              <i data-lucide="mail" class="w-6 h-6 text-marca-oscuro mr-3"></i>
+              <p class="text-marca-oscuro">info@reposteriadelicias.com</p>
+            </div>
+
+            <div class="flex space-x-6 mb-8 justify-center md:justify-start">
+              <a
+                href="https://www.instagram.com/suavebocado/"
+                target="_blank"
+                aria-label="Instagram"
+                class="text-marca-oscuro hover:text-marca-acento1 transition duration-300"
+              >
+                <i data-lucide="instagram" class="w-8 h-8"></i>
+              </a>
+              <a
+                href="https://www.facebook.com/suavebocado?locale=es_ES"
+                target="_blank"
+                aria-label="Facebook"
+                class="text-marca-oscuro hover:text-marca-acento1 transition duration-300"
+              >
+                <i data-lucide="facebook" class="w-8 h-8"></i>
+              </a>
+              <a
+                href="https://www.tiktok.com/@suave.bocado?_t=8p9vCYiDRGY&_r=1"
+                target="_blank"
+                aria-label="TikTok"
+                class="text-marca-oscuro hover:text-marca-acento1 transition duration-300"
+              >
+                <i data-lucide="tiktok" class="w-8 h-8"></i>
+              </a>
+              <a
+                href="#"
+                target="_blank"
+                aria-label="WhatsApp"
+                class="text-marca-oscuro hover:text-marca-acento1 transition duration-300"
+              >
+                <i data-lucide="whatsapp" class="w-8 h-8"></i>
+              </a>
+            </div>
+
+            <div class="w-full h-64 rounded-lg shadow-lg overflow-hidden">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12345.678910111213!2d-75.576359!3d6.168056!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e4682819f0d67a1%3A0xa2554c864c10e416!2sEnvigado%2C%20Antioquia!5e0!3m2!1ses!2sco!4v1678888888888!5m2!1ses!2sco"
+                width="100%"
+                height="100%"
+                style="border: 0"
+                allowfullscreen=""
+                loading="lazy"
+              >
+              </iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="bg-marca-oscuro text-white py-8 text-center">
+      <div class="container mx-auto px-6">
+        <p>
+          <span lang="es"
+            >© 2025 Suave bocado Repostería. Todos los derechos
+            reservados.</span
+          >
+          <span lang="en"
+            >© 2025 Suave bocado Repostería. All rights reserved.</span
+          >
+        </p>
+      </div>
+    </footer>
+
+    <div id="chatbot-widget" class="collapsed">
+      <div id="chat-header">
+        <span lang="es">Pregúntale a Suave Bocado</span>
+        <span lang="en">Ask Suave Bocado</span>
+        <button id="toggle-chat" class="text-white focus:outline-none">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-minus"
+          >
+            <line x1="5" x2="19" y1="12" y2="12" />
+          </svg>
+        </button>
+      </div>
+      <div id="chat-body">
+        <div class="message bot">
+          <span lang="es">¡Hola! Soy bocadito</span>
+          <span lang="en">¡Hello! I am bocadito</span>
+        </div>
+      </div>
+      <div id="chat-input-area">
+        <input
+          type="text"
+          id="chat-input"
+          placeholder="Escribe tu mensaje..."
+          lang="es"
+        />
+        <input
+          type="text"
+          id="chat-input-en"
+          placeholder="Type your message..."
+          lang="en"
+        />
+        <button id="send-button">
+          <span lang="es">Enviar</span>
+          <span lang="en">Send</span>
+        </button>
+      </div>
+    </div>
+    <script>
+      lucide.createIcons();
+    </script>
+    <script>
+      const mobileMenuButton = document.getElementById("mobile-menu-button");
+      const mobileMenu = document.getElementById("mobile-menu");
+
+      mobileMenuButton.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+      });
+
+      // Opcional: Cerrar menú al hacer clic en un enlace (para desplazamiento suave)
+      document.querySelectorAll("#mobile-menu a").forEach((link) => {
+        link.addEventListener("click", () => {
+          mobileMenu.classList.add("hidden");
+        });
+      });
+    </script>
+
+    <script>
+      const languageButtons = document.querySelectorAll(
+        "#language-switcher .lang-button"
+      );
+      const body = document.body;
+      const siteTitle = document.querySelector("title"); // Selecciona la etiqueta title
+      const chatInputEs = document.getElementById("chat-input");
+      const chatInputEn = document.getElementById("chat-input-en");
+
+      // Función para cambiar el idioma
+      function changeLanguage(lang) {
+        body.setAttribute("data-lang", lang); // Cambia el atributo data-lang del body
+
+        // Actualiza la clase 'active' en los botones de idioma
+        languageButtons.forEach((button) => {
+          if (button.getAttribute("data-lang") === lang) {
+            button.classList.add("active");
+          } else {
+            button.classList.remove("active");
+          }
+        });
+
+        // Actualizar el título de la página en la pestaña del navegador
+        if (lang === "es") {
+          siteTitle.textContent = "Suave bocado Repostería - Envigado";
+          chatInputEs.style.display = "block"; // Mostrar input en español
+          chatInputEn.style.display = "none"; // Ocultar input en inglés
+        } else if (lang === "en") {
+          siteTitle.textContent = "Suave bocado Bakery - Envigado"; // Ejemplo de título en inglés
+          chatInputEs.style.display = "none"; // Ocultar input en español
+          chatInputEn.style.display = "block"; // Mostrar input en inglés
+        }
+
+        // Guarda el idioma seleccionado en localStorage
+        localStorage.setItem("preferredLanguage", lang);
+      }
+
+      // Al cargar la página, verifica si hay un idioma guardado en localStorage
+      document.addEventListener("DOMContentLoaded", () => {
+        const savedLanguage = localStorage.getItem("preferredLanguage");
+        if (savedLanguage) {
+          changeLanguage(savedLanguage); // Si hay uno guardado, úsalo
+        } else {
+          // Si no hay idioma guardado, usa el idioma por defecto definido en el HTML (lang="es")
+          // Aseguramos que el body tenga el data-lang correcto al cargar si no había preferencia
+          const initialLang = body.lang || "es";
+          body.setAttribute("data-lang", initialLang);
+          // Asegura que el botón de idioma por defecto esté activo visualmente
+          const defaultButton = document.querySelector(
+            `#language-switcher .lang-button[data-lang="${initialLang}"]`
+          );
+          if (defaultButton) {
+            defaultButton.classList.add("active");
+          }
+          // Configura la visibilidad inicial de los inputs de chat
+          if (initialLang === "es") {
+            chatInputEs.style.display = "block";
+            chatInputEn.style.display = "none";
+          } else {
+            chatInputEs.style.display = "none";
+            chatInputEn.style.display = "block";
+          }
+        }
+
+        // Añade listeners a los botones de idioma
+        languageButtons.forEach((button) => {
+          button.addEventListener("click", () => {
+            const lang = button.getAttribute("data-lang");
+            changeLanguage(lang);
+          });
+        });
+      });
+    </script>
+
+    <script>
+      let slideIndex = 0;
+      const slides = document.querySelectorAll("#inicio .carousel-slide");
+      const totalSlides = slides.length;
+      const intervalTime = 5000; // Tiempo en milisegundos (5 segundos)
+
+      function showSlides() {
+        // Oculta todas las slides
+        slides.forEach((slide) => {
+          slide.classList.remove("active");
+        });
+
+        // Muestra la slide actual
+        slides[slideIndex].classList.add("active");
+
+        // Avanza al siguiente índice
+        slideIndex++;
+
+        // Reinicia al principio si llega al final
+        if (slideIndex >= totalSlides) {
+          slideIndex = 0;
+        }
+
+        // Llama a la función nuevamente después del intervalo de tiempo
+        setTimeout(showSlides, intervalTime);
+      }
+
+      // Inicia el carrusel al cargar la página
+      document.addEventListener("DOMContentLoaded", () => {
+        if (totalSlides > 0) {
+          // Solo inicia si hay slides
+          showSlides();
+        }
+      });
+    </script>
+
+    <script>
+      const chatWidget = document.getElementById("chatbot-widget");
+      const chatHeader = document.getElementById("chat-header");
+      const toggleChatButton = document.getElementById("toggle-chat");
+      const chatBody = document.getElementById("chat-body");
+      const chatInput = document.getElementById("chat-input"); // Input en español (visible por defecto)
+      const chatInputEn = document.getElementById("chat-input-en"); // Input en inglés (oculto por defecto)
+      const sendButton = document.getElementById("send-button");
+
+      // Alternar visibilidad del chat
+      chatHeader.addEventListener("click", () => {
+        chatWidget.classList.toggle("collapsed");
+        // Cambiar el icono del botón al expandir/colapsar
+        if (chatWidget.classList.contains("collapsed")) {
+          toggleChatButton.innerHTML =
+            '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>'; // Ícono de chat
+        } else {
+          toggleChatButton.innerHTML =
+            '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-minus"><line x1="5" x2="19" y1="12" y2="12"/></svg>'; // Ícono de menos
+        }
+        // Inicializar íconos de Lucide si cambian
+        lucide.createIcons();
+      });
+
+      // Función para añadir un mensaje al chat
+      function addMessage(messageText, sender) {
+        const messageElement = document.createElement("div");
+        messageElement.classList.add("message", sender);
+        // Crear spans para ambos idiomas dentro del mensaje
+        const spanEs = document.createElement("span");
+        spanEs.setAttribute("lang", "es");
+        // Para mensajes generados dinámicamente (como respuestas del bot),
+        // aquí deberías recibir la traducción correcta desde tu backend.
+        // Por ahora, si no es el mensaje inicial, usamos un placeholder.
+        spanEs.textContent = messageText;
+
+        const spanEn = document.createElement("span");
+        spanEn.setAttribute("lang", "en");
+        spanEn.textContent = "[AI Response in English]"; // Placeholder para la traducción
+
+        messageElement.appendChild(spanEs);
+        messageElement.appendChild(spanEn);
+
+        chatBody.appendChild(messageElement);
+        // Hacer scroll automático hacia abajo
+        chatBody.scrollTop = chatBody.scrollHeight;
+
+        // Asegurar que el idioma correcto del mensaje se muestre inicialmente
+        const currentLang = body.getAttribute("data-lang") || "es";
+        if (currentLang === "es") {
+          spanEn.style.display = "none";
+          spanEs.style.display = "block";
+        } else {
+          spanEs.style.display = "none";
+          spanEn.style.display = "block";
+        }
+      }
+
+      // Evento al enviar mensaje (botón o Enter)
+      function handleSendMessage() {
+        const currentLang = body.getAttribute("data-lang") || "es";
+        const inputElement = currentLang === "es" ? chatInput : chatInputEn;
+        const userMessage = inputElement.value.trim();
+
+        if (userMessage) {
+          // Añadir el mensaje del usuario
+          const userMessageElement = document.createElement("div");
+          userMessageElement.classList.add("message", "user");
+          userMessageElement.innerHTML = `<span lang="${currentLang}">${userMessage}</span>`; // Mensaje del usuario solo en el idioma actual
+          chatBody.appendChild(userMessageElement);
+
+          inputElement.value = ""; // Limpiar input
+
+          // *** AQUÍ ES DONDE NECESITARÍAS ENVIAR EL userMessage A TU BACKEND ***
+          // Tu backend recibiría el mensaje, lo enviaría a la API de Gemini,
+          // y una vez que reciba la respuesta de Gemini, se la enviaría de vuelta al frontend.
+          //
+          // La respuesta de la IA (botResponse) debería ser recibida por el frontend
+          // (posiblemente a través de una nueva llamada a tu backend) y luego se llamaría a:
+          // addMessage(botResponse, 'bot'); // addMessage ahora espera solo el texto en español
+          //
+          // Por ahora, simularemos una respuesta de la IA después de un breve retraso
+          setTimeout(() => {
+            const botResponseEs = "¿En qué más puedo ayudarte?"; // Respuesta simulada en español
+            const botResponseEn = "How else can I assist you?"; // Respuesta simulada en inglés
+            // En un caso real, recibirías la respuesta real de la IA desde el backend,
+            // posiblemente ya traducida o la traducirías en el backend/frontend.
+            // Aquí simplemente añadimos placeholders.
+            // addMessage(botResponseEs, 'bot'); // Usamos addMessage original que maneja ambos spans
+            // Para simular respuesta bilingüe:
+            const botMessageElement = document.createElement("div");
+            botMessageElement.classList.add("message", "bot");
+            botMessageElement.innerHTML = `<span lang="es">${botResponseEs}</span><span lang="en">${botResponseEn}</span>`;
+            chatBody.appendChild(botMessageElement);
+            // Asegurar visibilidad del idioma correcto para el mensaje del bot simulado
+            const currentLang = body.getAttribute("data-lang") || "es";
+            const botSpanEs = botMessageElement.querySelector('[lang="es"]');
+            const botSpanEn = botMessageElement.querySelector('[lang="en"]');
+            if (currentLang === "es") {
+              botSpanEn.style.display = "none";
+              botSpanEs.style.display = "block";
+            } else {
+              botSpanEs.style.display = "none";
+              botSpanEn.style.display = "block";
+            }
+
+            // Hacer scroll automático hacia abajo después de añadir la respuesta
+            chatBody.scrollTop = chatBody.scrollHeight;
+          }, 1000); // Simula un retraso de 1 segundo
+        }
+      }
+
+      sendButton.addEventListener("click", handleSendMessage);
+
+      chatInput.addEventListener("keypress", (event) => {
+        if (event.key === "Enter") {
+          handleSendMessage();
+        }
+      });
+      chatInputEn.addEventListener("keypress", (event) => {
+        if (event.key === "Enter") {
+          handleSendMessage();
+        }
+      });
+
+      // Inicializar el ícono de Lucide en el encabezado del chat
+      lucide.createIcons();
+    </script>
+  </body>
+</html>
