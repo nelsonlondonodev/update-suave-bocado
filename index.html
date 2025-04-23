@@ -46,9 +46,9 @@
         display: inline-block;
         margin-right: 2px;
       }
-      /* Ajuste para el tamaño del logo si es necesario */
+      /* Ajuste para el tamaño del logo */
       .logo-img {
-        max-height: 50px; /* Ajusta este valor según el tamaño deseado para el logo en el encabezado */
+        max-height: 70px; /* Ajustado a 70px */
         width: auto;
       }
 
@@ -186,6 +186,21 @@
         object-fit: cover; /* Asegura que la imagen cubra el contenedor sin distorsionarse */
       }
       /* --- Fin Estilos para el Carrusel --- */
+
+      /* Estilo para la galería de categorías */
+      .gallery-item {
+        text-align: center; /* Centra la imagen y el texto */
+      }
+      .gallery-item img {
+        display: block; /* Asegura que la imagen tome su ancho y permita centrado de texto debajo */
+        margin-left: auto; /* Centra la imagen si es más estrecha que su contenedor */
+        margin-right: auto; /* Centra la imagen si es más estrecha que su contenedor */
+      }
+      .gallery-item p {
+        margin-top: 8px; /* Espacio entre la imagen y el texto */
+        font-weight: 600; /* Texto en negrita para destacar la categoría */
+        color: #6a2e35; /* Color oscuro de la marca */
+      }
     </style>
   </head>
   <body class="font-sans text-marca-oscuro bg-marca-claro" data-lang="es">
@@ -371,132 +386,123 @@
           class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
         >
           <div
-            class="overflow-hidden rounded-lg shadow-lg transform transition duration-300 hover:scale-105"
+            class="overflow-hidden rounded-lg shadow-lg transform transition duration-300 hover:scale-105 gallery-item"
           >
             <img
-              src="https://via.placeholder.com/400x300?text=Pastel+de+Chocolate"
-              alt="Pastel de Chocolate"
+              src="./image/Galería/artesanales/artesanales-02 Large.jpeg"
+              alt="Productos Artesanales"
               lang="es"
               class="w-full h-60 object-cover"
             />
             <img
-              src="https://via.placeholder.com/400x300?text=Chocolate+Cake"
-              alt="Chocolate Cake"
+              src="./image/Galería/artesanales/artesanales-02 Large.jpeg"
+              alt="Artisanal Products"
               lang="en"
               class="w-full h-60 object-cover"
             />
+            <p>
+              <span lang="es">Artesanales</span><span lang="en">Artisanal</span>
+            </p>
           </div>
+
           <div
-            class="overflow-hidden rounded-lg shadow-lg transform transition duration-300 hover:scale-105"
+            class="overflow-hidden rounded-lg shadow-lg transform transition duration-300 hover:scale-105 gallery-item"
           >
             <img
-              src="https://via.placeholder.com/400x300?text=Cupcakes+Variados"
-              alt="Cupcakes Variados"
+              src="https://via.placeholder.com/400x300?text=Tematicas"
+              alt="Productos Temáticos"
               lang="es"
               class="w-full h-60 object-cover"
             />
             <img
-              src="https://via.placeholder.com/400x300?text=Assorted+Cupcakes"
-              alt="Assorted Cupcakes"
+              src="https://via.placeholder.com/400x300?text=Themed"
+              alt="Themed Products"
               lang="en"
               class="w-full h-60 object-cover"
             />
+            <p><span lang="es">Temáticas</span><span lang="en">Themed</span></p>
           </div>
+
           <div
-            class="overflow-hidden rounded-lg shadow-lg transform transition duration-300 hover:scale-105"
+            class="overflow-hidden rounded-lg shadow-lg transform transition duration-300 hover:scale-105 gallery-item"
           >
             <img
-              src="https://via.placeholder.com/400x300?text=Postre+Tipico+1"
-              alt="Postre Típico 1"
+              src="https://via.placeholder.com/400x300?text=Box+Cake"
+              alt="Box Cake"
               lang="es"
               class="w-full h-60 object-cover"
             />
             <img
-              src="https://via.placeholder.com/400x300?text=Typical+Dessert+1"
-              alt="Typical Dessert 1"
+              src="https://via.placeholder.com/400x300?text=Box+Cake"
+              alt="Box Cake"
               lang="en"
               class="w-full h-60 object-cover"
             />
+            <p>
+              <span lang="es">Box cake</span><span lang="en">Box cake</span>
+            </p>
           </div>
+
           <div
-            class="overflow-hidden rounded-lg shadow-lg transform transition duration-300 hover:scale-105"
+            class="overflow-hidden rounded-lg shadow-lg transform transition duration-300 hover:scale-105 gallery-item"
           >
             <img
-              src="https://via.placeholder.com/400x300?text=Galletas+Decoradas"
-              alt="Galletas Decoradas"
+              src="https://via.placeholder.com/400x300?text=Cupcakes"
+              alt="Cupcakes"
               lang="es"
               class="w-full h-60 object-cover"
             />
             <img
-              src="https://via.placeholder.com/400x300?text=Decorated+Cookies"
-              alt="Decorated Cookies"
+              src="https://via.placeholder.com/400x300?text=Cupcakes"
+              alt="Cupcakes"
               lang="en"
               class="w-full h-60 object-cover"
             />
+            <p>
+              <span lang="es">Cupcakes</span><span lang="en">Cupcakes</span>
+            </p>
           </div>
+
           <div
-            class="overflow-hidden rounded-lg shadow-lg transform transition duration-300 hover:scale-105"
+            class="overflow-hidden rounded-lg shadow-lg transform transition duration-300 hover:scale-105 gallery-item"
           >
             <img
-              src="https://via.placeholder.com/400x300?text=Pastel+de+Frutas"
-              alt="Pastel de Frutas"
+              src="https://via.placeholder.com/400x300?text=Bocaditos+Dulces"
+              alt="Bocaditos Dulces"
               lang="es"
               class="w-full h-60 object-cover"
             />
             <img
-              src="https://via.placeholder.com/400x300?text=Fruit+Cake"
-              alt="Fruit Cake"
+              src="https://via.placeholder.com/400x300?text=Sweet+Bites"
+              alt="Sweet Bites"
               lang="en"
               class="w-full h-60 object-cover"
             />
+            <p>
+              <span lang="es">Bocaditos dulces</span
+              ><span lang="en">Sweet bites</span>
+            </p>
           </div>
+
           <div
-            class="overflow-hidden rounded-lg shadow-lg transform transition duration-300 hover:scale-105"
+            class="overflow-hidden rounded-lg shadow-lg transform transition duration-300 hover:scale-105 gallery-item"
           >
             <img
-              src="https://via.placeholder.com/400x300?text=Mesa+de+Postres"
-              alt="Mesa de Postres"
+              src="https://via.placeholder.com/400x300?text=Shots"
+              alt="Shots (Mini postres)"
               lang="es"
               class="w-full h-60 object-cover"
             />
             <img
-              src="https://via.placeholder.com/400x300?text=Dessert+Table"
-              alt="Dessert Table"
+              src="https://via.placeholder.com/400x300?text=Shots"
+              alt="Shots (Mini Desserts)"
               lang="en"
               class="w-full h-60 object-cover"
             />
-          </div>
-          <div
-            class="overflow-hidden rounded-lg shadow-lg transform transition duration-300 hover:scale-105"
-          >
-            <img
-              src="https://via.placeholder.com/400x300?text=Postre+Tipico+2"
-              alt="Postre Típico 2"
-              lang="es"
-              class="w-full h-60 object-cover"
-            />
-            <img
-              src="https://via.placeholder.com/400x300?text=Typical+Dessert+2"
-              alt="Typical Dessert 2"
-              lang="en"
-              class="w-full h-60 object-cover"
-            />
-          </div>
-          <div
-            class="overflow-hidden rounded-lg shadow-lg transform transition duration-300 hover:scale-105"
-          >
-            <img
-              src="https://via.placeholder.com/400x300?text=Brownies"
-              alt="Brownies"
-              lang="es"
-              class="w-full h-60 object-cover"
-            />
-            <img
-              src="https://via.placeholder.com/400x300?text=Brownies"
-              alt="Brownies"
-              lang="en"
-              class="w-full h-60 object-cover"
-            />
+            <p>
+              <span lang="es">Shots (Mini postres)</span
+              ><span lang="en">Shots (Mini desserts)</span>
+            </p>
           </div>
         </div>
       </div>
@@ -561,7 +567,7 @@
               data-lucide="cookie"
               class="w-12 h-12 text-marca-acento1 mb-4"
             ></i>
-            <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
+            <h3 class="2xl font-serif text-marca-oscuro mb-2">
               <span lang="es">Galletas Artesanales</span>
               <span lang="en">Artisanal Cookies</span>
             </h3>
@@ -837,36 +843,57 @@
             <span lang="en">Our Sweet Story in Envigado</span>
           </h2>
           <p class="text-marca-oscuro leading-relaxed mb-4">
-            <span lang="es"
-              >Desde el corazón de Envigado, nace [Nombre de la Repostería], un
-              sueño hecho realidad por [Nombre del Fundador/a] hace [Número]
-              años. Inspirados en las recetas tradicionales de nuestras abuelas
-              y la calidez de nuestra tierra antioqueña, nos dedicamos a crear
-              postres que no solo deleitan el paladar, sino que también cuentan
-              una historia.</span
-            >
-            <span lang="en"
-              >From the heart of Envigado, [Bakery Name] is born, a dream made
-              reality by [Founder's Name] [Number] years ago. Inspired by our
-              grandmothers' traditional recipes and the warmth of our Antioquian
-              land, we dedicate ourselves to creating desserts that not only
-              delight the palate but also tell a story.</span
-            >
+            <span lang="es">
+              Soy Luz Marina Londoño, soñadora y amante de la repostería; esposa
+              y madre de dos niñas, quienes han sido mi inspiración y motivación
+              para iniciar en éste mundo. He trabajado diferentes manualidades y
+              ésto me ha ayudado a desarrollar habilidades como: La dedicación,
+              la calma, el amor y el esmero para cuidar cada detalle de mis
+              creaciones. Dios y mi familia son mi todo, celebrar un año más de
+              vida es muy importante para mí.
+            </span>
+            <span lang="en">
+              I am Luz Marina Londoño, a dreamer and lover of baking; a wife and
+              mother of two girls, who have been my inspiration and motivation
+              to start in this world. I have worked with different crafts, and
+              this has helped me develop skills such as: dedication, calmness,
+              love, and care to attend to every detail of my creations. God and
+              my family are my everything; celebrating another year of life is
+              very important to me.
+            </span>
+          </p>
+          <p class="text-marca-oscuro leading-relaxed mb-4">
+            <span lang="es">
+              Inicié haciendo las tortas para mis hijas, por lo tanto decidí
+              capacitarme y realicé varios cursos presenciales y virtuales,
+              además de investigar y seguir en mejoramiento continuo; también
+              realicé un diplomado de emprendimiento, donde me dieron un gran
+              apoyo y gracias a ésto pude ampliar mis capacidades, conocimientos
+              y seguridad para llegar a más personas.
+            </span>
+            <span lang="en">
+              I started by making cakes for my daughters, so I decided to get
+              training and took several in-person and online courses, in
+              addition to researching and continuing in continuous improvement;
+              I also completed an entrepreneurship diploma, where I received
+              great support, and thanks to this, I was able to expand my skills,
+              knowledge, and confidence to reach more people.
+            </span>
           </p>
           <p class="text-marca-oscuro leading-relaxed">
-            <span lang="es"
-              >Cada ingrediente es seleccionado con esmero, cada pastel es
-              horneado con pasión y cada detalle es cuidado con amor artesanal.
-              Somos más que una repostería, somos parte de la tradición
-              envigadeña, endulzando momentos especiales para nuestras familias
-              y amigos.</span
-            >
-            <span lang="en"
-              >Each ingredient is selected with care, each cake is baked with
-              passion, and every detail is crafted with artisanal love. We are
-              more than a bakery; we are part of Envigado's tradition,
-              sweetening special moments for our families and friends.</span
-            >
+            <span lang="es">
+              Suave Bocado nació en marzo del 2013; desde un acogedor taller que
+              adecué en mi hogar cuido de cada detalle, para que tanto el sabor
+              como la presentación se complementen; y los clientes vean y
+              sientan el amor como el ingrediente principal. Gracias por su
+              confianza y apoyo.
+            </span>
+            <span lang="en">
+              Suave Bocado was born in March 2013; from a cozy workshop I set up
+              in my home, I take care of every detail, so that both the flavor
+              and presentation complement each other; and clients see and feel
+              love as the main ingredient. Thank you for your trust and support.
+            </span>
           </p>
         </div>
       </div>
@@ -1288,7 +1315,7 @@
           //
           // La respuesta de la IA (botResponse) debería ser recibida por el frontend
           // (posiblemente a través de una nueva llamada a tu backend) y luego se llamaría a:
-          // addMessage(botResponse, 'bot'); // addMessage ahora espera solo el texto en español
+          // addMessage(botResponseEs, 'bot'); // addMessage ahora espera solo el texto en español
           //
           // Por ahora, simularemos una respuesta de la IA después de un breve retraso
           setTimeout(() => {
