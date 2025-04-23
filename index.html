@@ -201,6 +201,20 @@
         font-weight: 600; /* Texto en negrita para destacar la categoría */
         color: #6a2e35; /* Color oscuro de la marca */
       }
+
+      /* Estilo específico para el ítem de Artesanales con sub-grid */
+      .artesanales-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas */
+        gap: 8px; /* Espacio entre las imágenes */
+        margin-top: 8px; /* Espacio entre el título y la sub-galería */
+      }
+      .artesanales-grid img {
+        width: 100%; /* Asegura que la imagen llene su celda en la sub-grid */
+        height: auto; /* Mantiene la proporción */
+        object-fit: cover;
+        border-radius: 4px; /* Bordes ligeramente redondeados para las imágenes pequeñas */
+      }
     </style>
   </head>
   <body class="font-sans text-marca-oscuro bg-marca-claro" data-lang="es">
@@ -388,21 +402,54 @@
           <div
             class="overflow-hidden rounded-lg shadow-lg transform transition duration-300 hover:scale-105 gallery-item"
           >
-            <img
-              src="./image/Galería/artesanales/artesanales-02 Large.jpeg"
-              alt="Productos Artesanales"
-              lang="es"
-              class="w-full h-60 object-cover"
-            />
-            <img
-              src="./image/Galería/artesanales/artesanales-02 Large.jpeg"
-              alt="Artisanal Products"
-              lang="en"
-              class="w-full h-60 object-cover"
-            />
             <p>
               <span lang="es">Artesanales</span><span lang="en">Artisanal</span>
             </p>
+            <div class="artesanales-grid">
+              <img
+                src="./image/Galería/artesanales/artesanales-02 Large.jpeg"
+                alt="Torta Artesanal 1"
+                lang="es"
+              />
+              <img
+                src="./image/Galería/artesanales/artesanales-02 Large.jpeg"
+                alt="Artisanal Cake 1"
+                lang="en"
+              />
+
+              <img
+                src="./image/Galería/artesanales/artesanales-02 Large.jpeg"
+                alt="Torta Artesanal 2"
+                lang="es"
+              />
+              <img
+                src="./image/Galería/artesanales/artesanales-02 Large.jpeg"
+                alt="Artisanal Cake 2"
+                lang="en"
+              />
+
+              <img
+                src="./image/Galería/artesanales/artesanales-02 Large.jpeg"
+                alt="Torta Artesanal 3"
+                lang="es"
+              />
+              <img
+                src="./image/Galería/artesanales/artesanales-02 Large.jpeg"
+                alt="Artisanal Cake 3"
+                lang="en"
+              />
+
+              <img
+                src="./image/Galería/artesanales/artesanales-02 Large.jpeg"
+                alt="Torta Artesanal 4"
+                lang="es"
+              />
+              <img
+                src="./image/Galería/artesanales/artesanales-02 Large.jpeg"
+                alt="Artisanal Cake 4"
+                lang="en"
+              />
+            </div>
           </div>
 
           <div
@@ -567,7 +614,7 @@
               data-lucide="cookie"
               class="w-12 h-12 text-marca-acento1 mb-4"
             ></i>
-            <h3 class="2xl font-serif text-marca-oscuro mb-2">
+            <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
               <span lang="es">Galletas Artesanales</span>
               <span lang="en">Artisanal Cookies</span>
             </h3>
@@ -1156,7 +1203,7 @@
         } else if (lang === "en") {
           siteTitle.textContent = "Suave bocado Bakery - Envigado"; // Ejemplo de título en inglés
           chatInputEs.style.display = "none"; // Ocultar input en español
-          chatInputEn.style.display = "block"; // Mostrar input en inglés
+          chatInputEn.style.display = "block";
         }
 
         // Guarda el idioma seleccionado en localStorage
