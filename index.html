@@ -183,38 +183,79 @@
       .carousel-slide img {
         width: 100%;
         height: 100%;
-        object-fit: cover; /* Asegura que la imagen cubra el contenedor sin distorsionarse */
+        object-fit: cover; /* Asegura que la imagen cubra el área sin distorsionarse */
       }
       /* --- Fin Estilos para el Carrusel --- */
 
-      /* Estilo para la galería de categorías */
-      .gallery-item {
-        text-align: center; /* Centra la imagen y el texto */
-      }
-      .gallery-item img {
-        display: block; /* Asegura que la imagen tome su ancho y permita centrado de texto debajo */
-        margin-left: auto; /* Centra la imagen si es más estrecha que su contenedor */
-        margin-right: auto; /* Centra la imagen si es más estrecha que su contenedor */
-      }
-      .gallery-item p {
-        margin-top: 8px; /* Espacio entre la imagen y el texto */
-        font-weight: 600; /* Texto en negrita para destacar la categoría */
-        color: #6a2e35; /* Color oscuro de la marca */
+      /* --- Estilos para Galería tipo Pinterest (con CSS Columns) --- */
+      .pinterest-grid {
+        /* Configuración principal usando columnas */
+        column-count: 1; /* Default para móviles */
+        column-gap: 16px; /* Espacio entre columnas */
       }
 
-      /* Estilo específico para el ítem de Artesanales con sub-grid */
-      .artesanales-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr); /* 2 columnas */
-        gap: 8px; /* Espacio entre las imágenes */
-        margin-top: 8px; /* Espacio entre el título y la sub-galería */
+      /* Columnas responsivas */
+      @media (min-width: 640px) {
+        /* sm breakpoint */
+        .pinterest-grid {
+          column-count: 2;
+        }
       }
-      .artesanales-grid img {
-        width: 100%; /* Asegura que la imagen llene su celda en la sub-grid */
-        height: auto; /* Mantiene la proporción */
-        object-fit: cover;
-        border-radius: 4px; /* Bordes ligeramente redondeados para las imágenes pequeñas */
+      @media (min-width: 768px) {
+        /* md breakpoint */
+        .pinterest-grid {
+          column-count: 3;
+        }
       }
+      @media (min-width: 1024px) {
+        /* lg breakpoint */
+        .pinterest-grid {
+          column-count: 4;
+        }
+      }
+
+      .gallery-item {
+        /* Estilo para cada contenedor de imagen en la cuadrícula */
+        border-radius: 8px; /* Bordes redondeados */
+        overflow: hidden; /* Asegura que la imagen redondeada no se desborde */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+        transition: transform 0.3s ease-in-out; /* Transición suave al pasar el ratón */
+        cursor: pointer; /* Indica que es interactivo */
+        /* Espacio entre los ítems dentro de una columna */
+        margin-bottom: 16px;
+
+        /* IMPORTANTE: Previene que el ítem se rompa a través de las columnas */
+        break-inside: avoid-column;
+        -webkit-break-inside: avoid-column; /* Para navegadores Webkit */
+        page-break-inside: avoid; /* Para impresión (aunque no es el foco) */
+
+        /* Necesario para que margin-bottom funcione correctamente en columnas */
+        display: inline-block;
+        width: 100%;
+      }
+
+      .gallery-item:hover {
+        transform: scale(1.03); /* Ligeramente más grande al pasar el ratón */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada */
+      }
+
+      .gallery-item img {
+        display: block;
+        width: 100%; /* La imagen ocupa todo el ancho de su contenedor */
+        height: auto; /* Mantiene la proporción de la imagen */
+        object-fit: cover; /* Asegura que la imagen cubra el área sin distorsionarse */
+      }
+
+      /* Estilo para un pie de foto o texto dentro del ítem */
+      .gallery-item-caption {
+        padding: 8px;
+        text-align: center;
+        font-size: 0.9em;
+        color: #6a2e35;
+        background-color: #fff; /* Fondo blanco para el pie de foto */
+      }
+
+      /* --- Fin Estilos para Galería tipo Pinterest --- */
     </style>
   </head>
   <body class="font-sans text-marca-oscuro bg-marca-claro" data-lang="es">
@@ -396,160 +437,351 @@
           <span lang="es">Nuestra Galería de Dulzura</span>
           <span lang="en">Our Sweetness Gallery</span>
         </h2>
-        <div
-          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
-        >
-          <div
-            class="overflow-hidden rounded-lg shadow-lg transform transition duration-300 hover:scale-105 gallery-item"
-          >
-            <p>
+        <div class="pinterest-grid">
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/artesanales/artesanales-01 Large.jpeg"
+              alt="Torta Artesanal 1"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/artesanales/artesanales-01 Large.jpeg"
+              alt="Artisanal Cake 1"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
               <span lang="es">Artesanales</span><span lang="en">Artisanal</span>
-            </p>
-            <div class="artesanales-grid">
-              <img
-                src="./image/Galería/artesanales/artesanales-02 Large.jpeg"
-                alt="Torta Artesanal 1"
-                lang="es"
-              />
-              <img
-                src="./image/Galería/artesanales/artesanales-02 Large.jpeg"
-                alt="Artisanal Cake 1"
-                lang="en"
-              />
-
-              <img
-                src="./image/Galería/artesanales/artesanales-02 Large.jpeg"
-                alt="Torta Artesanal 2"
-                lang="es"
-              />
-              <img
-                src="./image/Galería/artesanales/artesanales-02 Large.jpeg"
-                alt="Artisanal Cake 2"
-                lang="en"
-              />
-
-              <img
-                src="./image/Galería/artesanales/artesanales-02 Large.jpeg"
-                alt="Torta Artesanal 3"
-                lang="es"
-              />
-              <img
-                src="./image/Galería/artesanales/artesanales-02 Large.jpeg"
-                alt="Artisanal Cake 3"
-                lang="en"
-              />
-
-              <img
-                src="./image/Galería/artesanales/artesanales-02 Large.jpeg"
-                alt="Torta Artesanal 4"
-                lang="es"
-              />
-              <img
-                src="./image/Galería/artesanales/artesanales-02 Large.jpeg"
-                alt="Artisanal Cake 4"
-                lang="en"
-              />
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/artesanales/artesanales-02 Large.jpeg"
+              alt="Torta Artesanal 2"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/artesanales/artesanales-02 Large.jpeg"
+              alt="Artisanal Cake 2"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Artesanales</span><span lang="en">Artisanal</span>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/artesanales/artesanales-03 Large.jpeg"
+              alt="Torta Artesanal 3"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/artesanales/artesanales-03 Large.jpeg"
+              alt="Artisanal Cake 3"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Artesanales</span><span lang="en">Artisanal</span>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/artesanales/artesanales-04 Large.jpeg"
+              alt="Torta Artesanal 4"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/artesanales/artesanales-04 Large.jpeg"
+              alt="Artisanal Cake 4"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Artesanales</span><span lang="en">Artisanal</span>
             </div>
           </div>
 
-          <div
-            class="overflow-hidden rounded-lg shadow-lg transform transition duration-300 hover:scale-105 gallery-item"
-          >
+          <div class="gallery-item">
             <img
-              src="https://via.placeholder.com/400x300?text=Tematicas"
-              alt="Productos Temáticos"
+              src="./image/Galería/bocaditos dulces/bocaditos dulces-01.jpeg"
+              alt="Bocadito Dulce 1"
               lang="es"
-              class="w-full h-60 object-cover"
             />
             <img
-              src="https://via.placeholder.com/400x300?text=Themed"
-              alt="Themed Products"
+              src="./image/Galería/bocaditos dulces/bocaditos dulces-01.jpeg"
+              alt="Sweet Bite 1"
               lang="en"
-              class="w-full h-60 object-cover"
             />
-            <p><span lang="es">Temáticas</span><span lang="en">Themed</span></p>
-          </div>
-
-          <div
-            class="overflow-hidden rounded-lg shadow-lg transform transition duration-300 hover:scale-105 gallery-item"
-          >
-            <img
-              src="https://via.placeholder.com/400x300?text=Box+Cake"
-              alt="Box Cake"
-              lang="es"
-              class="w-full h-60 object-cover"
-            />
-            <img
-              src="https://via.placeholder.com/400x300?text=Box+Cake"
-              alt="Box Cake"
-              lang="en"
-              class="w-full h-60 object-cover"
-            />
-            <p>
-              <span lang="es">Box cake</span><span lang="en">Box cake</span>
-            </p>
-          </div>
-
-          <div
-            class="overflow-hidden rounded-lg shadow-lg transform transition duration-300 hover:scale-105 gallery-item"
-          >
-            <img
-              src="https://via.placeholder.com/400x300?text=Cupcakes"
-              alt="Cupcakes"
-              lang="es"
-              class="w-full h-60 object-cover"
-            />
-            <img
-              src="https://via.placeholder.com/400x300?text=Cupcakes"
-              alt="Cupcakes"
-              lang="en"
-              class="w-full h-60 object-cover"
-            />
-            <p>
-              <span lang="es">Cupcakes</span><span lang="en">Cupcakes</span>
-            </p>
-          </div>
-
-          <div
-            class="overflow-hidden rounded-lg shadow-lg transform transition duration-300 hover:scale-105 gallery-item"
-          >
-            <img
-              src="https://via.placeholder.com/400x300?text=Bocaditos+Dulces"
-              alt="Bocaditos Dulces"
-              lang="es"
-              class="w-full h-60 object-cover"
-            />
-            <img
-              src="https://via.placeholder.com/400x300?text=Sweet+Bites"
-              alt="Sweet Bites"
-              lang="en"
-              class="w-full h-60 object-cover"
-            />
-            <p>
+            <div class="gallery-item-caption">
               <span lang="es">Bocaditos dulces</span
               ><span lang="en">Sweet bites</span>
-            </p>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/bocaditos dulces/bocaditos dulces-02.jpeg"
+              alt="Bocadito Dulce 2"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/bocaditos dulces/bocaditos dulces-02.jpeg"
+              alt="Sweet Bite 2"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Bocaditos dulces</span
+              ><span lang="en">Sweet bites</span>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/bocaditos dulces/bocaditos dulces-03.jpeg"
+              alt="Bocadito Dulce 3"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/bocaditos dulces/bocaditos dulces-03.jpeg"
+              alt="Sweet Bite 3"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Bocaditos dulces</span
+              ><span lang="en">Sweet bites</span>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/bocaditos dulces/bocaditos dulces-04.jpeg"
+              alt="Bocadito Dulce 4"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/bocaditos dulces/bocaditos dulces-04.jpeg"
+              alt="Sweet Bite 4"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Bocaditos dulces</span
+              ><span lang="en">Sweet bites</span>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/bocaditos dulces/bocaditos dulces-05.jpeg"
+              alt="Bocadito Dulce 5"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/bocaditos dulces/bocaditos dulces-05.jpeg"
+              alt="Sweet Bite 5"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Bocaditos dulces</span
+              ><span lang="en">Sweet bites</span>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/bocaditos dulces/bocaditos dulces-06.jpeg"
+              alt="Bocadito Dulce 6"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/bocaditos dulces/bocaditos dulces-06.jpeg"
+              alt="Sweet Bite 6"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Bocaditos dulces</span
+              ><span lang="en">Sweet bites</span>
+            </div>
           </div>
 
-          <div
-            class="overflow-hidden rounded-lg shadow-lg transform transition duration-300 hover:scale-105 gallery-item"
-          >
+          <div class="gallery-item">
             <img
-              src="https://via.placeholder.com/400x300?text=Shots"
-              alt="Shots (Mini postres)"
+              src="./image/Galería/box cake/box cake-01.jpeg"
+              alt="Box Cake 1"
               lang="es"
-              class="w-full h-60 object-cover"
             />
             <img
-              src="https://via.placeholder.com/400x300?text=Shots"
-              alt="Shots (Mini Desserts)"
+              src="./image/Galería/box cake/box cake-01.jpeg"
+              alt="Box Cake 1"
               lang="en"
-              class="w-full h-60 object-cover"
             />
-            <p>
+            <div class="gallery-item-caption">
+              <span lang="es">Box cake</span><span lang="en">Box cake</span>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/box cake/box cake-02.jpeg"
+              alt="Box Cake 2"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/box cake/box cake-02.jpeg"
+              alt="Box Cake 2"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Box cake</span><span lang="en">Box cake</span>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/box cake/box cake-03.jpeg"
+              alt="Box Cake 3"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/box cake/box cake-03.jpeg"
+              alt="Box Cake 3"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Box cake</span><span lang="en">Box cake</span>
+            </div>
+          </div>
+
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/cupcakes/cupcakes-01.jpeg"
+              alt="Cupcake 1"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/cupcakes/cupcakes-01.jpeg"
+              alt="Cupcake 1"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Cupcakes</span><span lang="en">Cupcakes</span>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/cupcakes/cupcakes-02.jpeg"
+              alt="Cupcake 2"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/cupcakes/cupcakes-02.jpeg"
+              alt="Cupcake 2"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Cupcakes</span><span lang="en">Cupcakes</span>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/cupcakes/cupcakes-03.jpeg"
+              alt="Cupcake 3"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/cupcakes/cupcakes-03.jpeg"
+              alt="Cupcake 3"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Cupcakes</span><span lang="en">Cupcakes</span>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/cupcakes/cupcakes-04.jpeg"
+              alt="Cupcake 4"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/cupcakes/cupcakes-04.jpeg"
+              alt="Cupcake 4"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Cupcakes</span><span lang="en">Cupcakes</span>
+            </div>
+          </div>
+
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/postres/postres-01.jpeg"
+              alt="Shot Mini postre 1"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/postres/postres-01.jpeg"
+              alt="Shot Mini Dessert 1"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
               <span lang="es">Shots (Mini postres)</span
               ><span lang="en">Shots (Mini desserts)</span>
-            </p>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/postres/postres-02.jpeg"
+              alt="Shot Mini postre 2"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/postres/postres-02.jpeg"
+              alt="Shot Mini Dessert 2"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Shots (Mini postres)</span
+              ><span lang="en">Shots (Mini desserts)</span>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/postres/postres-03.jpeg"
+              alt="Shot Mini postre 3"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/postres/postres-03.jpeg"
+              alt="Shot Mini Dessert 3"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Shots (Mini postres)</span
+              ><span lang="en">Shots (Mini desserts)</span>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/postres/postres-04.jpeg"
+              alt="Shot Mini postre 4"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/postres/postres-04.jpeg"
+              alt="Shot Mini Dessert 4"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Shots (Mini postres)</span
+              ><span lang="en">Shots (Mini desserts)</span>
+            </div>
+          </div>
+
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/artesanales/artesanales-02 Large.jpeg"
+              alt="Tematica Ejemplo"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/artesanales/artesanales-02 Large.jpeg"
+              alt="Themed Example"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Temáticas</span><span lang="en">Themed</span>
+            </div>
           </div>
         </div>
       </div>
@@ -1203,7 +1435,7 @@
         } else if (lang === "en") {
           siteTitle.textContent = "Suave bocado Bakery - Envigado"; // Ejemplo de título en inglés
           chatInputEs.style.display = "none"; // Ocultar input en español
-          chatInputEn.style.display = "block";
+          chatInputEn.style.display = "block"; // Mostrar input en inglés
         }
 
         // Guarda el idioma seleccionado en localStorage
@@ -1362,7 +1594,7 @@
           //
           // La respuesta de la IA (botResponse) debería ser recibida por el frontend
           // (posiblemente a través de una nueva llamada a tu backend) y luego se llamaría a:
-          // addMessage(botResponseEs, 'bot'); // addMessage ahora espera solo el texto en español
+          // addMessage(botResponseEs, 'bot'); // Usamos addMessage original que maneja ambos spans
           //
           // Por ahora, simularemos una respuesta de la IA después de un breve retraso
           setTimeout(() => {
