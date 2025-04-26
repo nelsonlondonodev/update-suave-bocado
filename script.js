@@ -6,8 +6,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Script para el menú móvil
 document.addEventListener("DOMContentLoaded", () => {
-  const mobileMenuButton = document.getElementById("mobile-menu-button");
-  const mobileMenu = document.getElementById("mobile-menu");
+  // Reemplazamos getElementById con querySelector
+  const mobileMenuButton = document.querySelector("#mobile-menu-button");
+  const mobileMenu = document.querySelector("#mobile-menu");
 
   if (mobileMenuButton && mobileMenu) {
     mobileMenuButton.addEventListener("click", () => {
@@ -15,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Opcional: Cerrar menú al hacer clic en un enlace (para desplazamiento suave,
-    // aunque en un sitio multipágina redirigirá)
+    // aunque en un sitio multipágina redirigirá) - querySelectorAll ya se usaba
     document.querySelectorAll("#mobile-menu a").forEach((link) => {
       link.addEventListener("click", () => {
         mobileMenu.classList.add("hidden");
@@ -30,16 +31,25 @@ document.addEventListener("DOMContentLoaded", () => {
     "#language-switcher .lang-button"
   );
   const body = document.body;
-  const siteTitle = document.querySelector("title"); // Selecciona la etiqueta title
-  // Seleccionamos los inputs de chat por su ID
-  const chatInputEs = document.getElementById("chat-input");
-  const chatInputEn = document.getElementById("chat-input-en");
+  const siteTitle = document.querySelector("title"); // querySelector ya se usaba
+  // Reemplazamos getElementById con querySelector
+  const chatInputEs = document.querySelector("#chat-input");
+  const chatInputEn = document.querySelector("#chat-input-en");
+  // querySelector ya se usaba
+  const botMessageInitial = document.querySelector(
+    '.message.bot span[lang="es"]'
+  );
+  const botMessageInitialEn = document.querySelector(
+    '.message.bot span[lang="en"]'
+  );
+  // Reemplazamos getElementById con querySelector
+  const dynamicMessageBar = document.querySelector("#dynamic-message-bar");
 
   // Función para cambiar el idioma
-  function changeLanguage(lang) {
-    body.setAttribute("data-lang", lang); // Cambia el atributo data-lang del body
+  window.changeLanguage = function (lang) {
+    body.setAttribute("data-lang", lang); // setAttribute es correcto
 
-    // Actualiza la clase 'active' en los botones de idioma
+    // Actualiza la clase 'active' en los botones de idioma - classList es correcto
     languageButtons.forEach((button) => {
       if (button.getAttribute("data-lang") === lang) {
         button.classList.add("active");
@@ -48,115 +58,139 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // Actualizar el título de la página en la pestaña del navegador (esto es opcional y requiere lógica para cada página)
-    // Una alternativa es tener el título en el HTML de cada página y no cambiarlo dinámicamente así.
-    // Para un sitio multipágina, es más común que el título se defina estáticamente en cada archivo HTML.
-    // Por simplicidad aquí, mantendremos la lógica previa, pero ten en cuenta esta distinción.
-    if (siteTitle) {
-      const currentPage = window.location.pathname.split("/").pop(); // Obtiene el nombre del archivo actual
-      let baseTitle = "Suave bocado Repostería - Envigado"; // Título base en español
-      if (currentPage === "galeria.html") {
-        baseTitle =
-          lang === "es" ? "Galería - Suave bocado" : "Gallery - Suave bocado";
-      } else if (currentPage === "productos.html") {
-        baseTitle =
-          lang === "es"
-            ? "Productos - Suave bocado"
-            : "Products - Suave bocado";
-      } else if (currentPage === "reseñas.html") {
-        baseTitle =
-          lang === "es" ? "Reseñas - Suave bocado" : "Reviews - Suave bocado";
-      } else if (currentPage === "acerca-de.html") {
-        baseTitle =
-          lang === "es"
-            ? "Acerca de - Suave bocado"
-            : "About Us - Suave bocado";
-      } else if (currentPage === "contacto.html") {
-        baseTitle =
-          lang === "es" ? "Contacto - Suave bocado" : "Contact - Suave bocado";
-      } else {
-        // index.html o cualquier otra página
-        baseTitle =
-          lang === "es"
-            ? "Suave bocado Repostería - Envigado"
-            : "Suave bocado Bakery - Envigado";
-      }
-      siteTitle.textContent = baseTitle;
-    }
-
-    // Configura la visibilidad del input de chat según el idioma
-    if (chatInputEs && chatInputEn) {
+    // Actualizar el título de la página en la pestaña del navegador - textContent es correcto
+    const titleEs = document.querySelector('title[lang="es"]');
+    const titleEn = document.querySelector('title[lang="en"]');
+    if (siteTitle && titleEs && titleEn) {
       if (lang === "es") {
-        chatInputEs.style.display = "block"; // Mostrar input en español
-        chatInputEn.style.display = "none"; // Ocultar input en inglés
-      } else {
-        chatInputEs.style.display = "none"; // Ocultar input en español
-        chatInputEn.style.display = "block"; // Mostrar input en inglés
+        siteTitle.textContent = titleEs.textContent;
+      } else if (lang === "en") {
+        siteTitle.textContent = titleEn.textContent;
       }
     }
 
-    // Guarda el idioma seleccionado en localStorage
+    // Configura la visibilidad de los inputs de chat según el idioma - style.display es correcto
+    if (chatInputEs)
+      chatInputEs.style.display = lang === "es" ? "block" : "none";
+    if (chatInputEn)
+      chatInputEn.style.display = lang === "en" ? "block" : "none";
+
+    // Asegura que los mensajes existentes en el chat se muestren en el idioma correcto - style.display es correcto
+    document
+      .querySelectorAll("#chat-body .message")
+      .forEach((messageElement) => {
+        const spanEs = messageElement.querySelector('span[lang="es"]');
+        const spanEn = messageElement.querySelector('span[lang="en"]');
+        if (spanEs)
+          spanEs.style.display =
+            lang === "es"
+              ? messageElement.classList.contains("bot") ||
+                (messageElement.classList.contains("user") &&
+                  spanEs.textContent.trim() !== "")
+                ? "block"
+                : "none"
+              : "none";
+        if (spanEn)
+          spanEn.style.display =
+            lang === "en"
+              ? messageElement.classList.contains("bot") ||
+                (messageElement.classList.contains("user") &&
+                  spanEn.textContent.trim() !== "")
+                ? "block"
+                : "none"
+              : "none";
+      });
+
+    // *** Actualizar el mensaje visible en la barra dinámica al cambiar de idioma ***
+    if (dynamicMessageBar && dynamicMessageBar.messagesData) {
+      const currentMessageIndex = parseInt(
+        dynamicMessageBar.dataset.currentMessageIndex || 0
+      );
+      const messageData = dynamicMessageBar.messagesData[currentMessageIndex];
+      if (messageData) {
+        // Limpiamos el contenido existente
+        dynamicMessageBar.textContent = ""; // Usamos textContent para limpiar de forma segura
+
+        // Creamos y añadimos los spans de nuevo usando createElement y appendChild
+        const spanEs = document.createElement("span");
+        spanEs.setAttribute("lang", "es");
+        spanEs.textContent = messageData.es;
+
+        const spanEn = document.createElement("span");
+        spanEn.setAttribute("lang", "en");
+        spanEn.textContent = messageData.en;
+
+        dynamicMessageBar.appendChild(spanEs);
+        dynamicMessageBar.appendChild(spanEn);
+
+        // Asegurar visibilidad según el idioma actual - style.display es correcto
+        if (lang === "es") {
+          if (spanEn) spanEn.style.display = "none";
+          if (spanEs) spanEs.style.display = "inline"; // Usamos inline para texto dentro de un div
+        } else {
+          if (spanEs) spanEs.style.display = "none";
+          if (spanEn) spanEn.style.display = "inline";
+        }
+      }
+    }
+
+    // Guarda el idioma seleccionado en localStorage - localStorage es correcto
     localStorage.setItem("preferredLanguage", lang);
-  }
+  };
 
   // Al cargar la página, verifica si hay un idioma guardado en localStorage
   const savedLanguage = localStorage.getItem("preferredLanguage");
-  if (savedLanguage) {
-    changeLanguage(savedLanguage); // Si hay uno guardado, úsalo
-  } else {
-    // Si no hay idioma guardado, usa el idioma por defecto definido en el HTML (lang="es" en el body)
-    const initialLang = body.lang || "es";
-    body.setAttribute("data-lang", initialLang);
-    // Asegura que el botón de idioma por defecto esté activo visualmente
-    const defaultButton = document.querySelector(
-      `#language-switcher .lang-button[data-lang="${initialLang}"]`
-    );
-    if (defaultButton) {
-      defaultButton.classList.add("active");
-    }
-    // Configura la visibilidad inicial de los inputs de chat
-    if (chatInputEs && chatInputEn) {
-      if (initialLang === "es") {
-        chatInputEs.style.display = "block";
-        chatInputEn.style.display = "none";
-      } else {
-        chatInputEs.style.display = "none";
-        chatInputEn.style.display = "block";
-      }
-    }
-  }
+  const initialLang = savedLanguage || body.lang || "es"; // Usa guardado, si no el del body, si no 'es'
+  changeLanguage(initialLang); // Aplica el idioma inicial
 
-  // Añade listeners a los botones de idioma
+  // Añade listeners a los botones de idioma - addEventListener es correcto
   languageButtons.forEach((button) => {
     button.addEventListener("click", () => {
       const lang = button.getAttribute("data-lang");
       changeLanguage(lang);
     });
   });
+
+  // Asegurar visibilidad inicial del mensaje del bot si existe - style.display es correcto
+  if (botMessageInitial && botMessageInitialEn) {
+    const currentLang = body.getAttribute("data-lang") || "es";
+    if (currentLang === "es") {
+      botMessageInitialEn.style.display = "none";
+      botMessageInitial.style.display = "block";
+    } else {
+      botMessageInitial.style.display = "none";
+      botMessageInitialEn.style.display = "block";
+    }
+  }
 });
 
 // Script para la funcionalidad básica del Chatbot (frontend)
 document.addEventListener("DOMContentLoaded", () => {
-  const chatWidget = document.getElementById("chatbot-widget");
-  const chatHeader = document.getElementById("chat-header");
-  const toggleChatButton = document.getElementById("toggle-chat");
-  const chatBody = document.getElementById("chat-body");
-  const chatInput = document.getElementById("chat-input"); // Input en español
-  const chatInputEn = document.getElementById("chat-input-en"); // Input en inglés
-  const sendButton = document.getElementById("send-button");
-  const body = document.body; // Necesario para obtener el idioma actual
+  // Reemplazamos getElementById con querySelector
+  const chatWidget = document.querySelector("#chatbot-widget");
+  const chatHeader = document.querySelector("#chat-header");
+  const toggleChatButton = document.querySelector("#toggle-chat");
+  const chatBody = document.querySelector("#chat-body");
+  const chatInput = document.querySelector("#chat-input"); // Input en español
+  const chatInputEn = document.querySelector("#chat-input-en"); // Input en inglés
+  const sendButton = document.querySelector("#send-button");
+  const body = document.body; // Document.body es correcto
 
-  // Alternar visibilidad del chat
+  // Guardamos los SVG como strings para asignarlos a innerHTML (esto es aceptable para SVG estáticos controlados)
+  const chatIconSvg =
+    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>';
+  const minusIconSvg =
+    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-minus"><line x1="5" x2="19" y1="12" y2="12"/></svg>';
+
+  // Alternar visibilidad del chat - addEventListener es correcto
   if (chatHeader && chatWidget && toggleChatButton) {
     chatHeader.addEventListener("click", () => {
-      chatWidget.classList.toggle("collapsed");
-      // Cambiar el icono del botón al expandir/colapsar
+      chatWidget.classList.toggle("collapsed"); // classList es correcto
+      // Cambiar el icono del botón al expandir/colapsar - Usamos innerHTML para el SVG (controlado y estático)
       if (chatWidget.classList.contains("collapsed")) {
-        toggleChatButton.innerHTML =
-          '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>'; // Ícono de chat
+        toggleChatButton.innerHTML = chatIconSvg;
       } else {
-        toggleChatButton.innerHTML =
-          '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-minus"><line x1="5" x2="19" y1="12" y2="12"/></svg>'; // Ícono de menos
+        toggleChatButton.innerHTML = minusIconSvg;
       }
       // Inicializar íconos de Lucide si cambian
       lucide.createIcons();
@@ -164,67 +198,78 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Función para añadir un mensaje al chat
-  // NOTA: En un sitio multipágina real, la lógica del chatbot
-  // para comunicarse con un backend y obtener respuestas de la IA
-  // sería más compleja y podría requerir un servidor.
-  // Esta es una simulación básica del frontend.
   function addMessage(messageText, sender, lang) {
+    // Usamos createElement para crear el elemento del mensaje
     const messageElement = document.createElement("div");
-    messageElement.classList.add("message", sender);
-    // Para simplificar la simulación en el frontend,
-    // el mensaje del bot simulado incluirá ambos idiomas.
-    // En un escenario real con backend, recibirías la respuesta
-    // traducida o la traducirías en el frontend de forma más robusta.
+    messageElement.classList.add("message", sender); // classList es correcto
+
     if (sender === "user") {
-      messageElement.innerHTML = `<span lang="${lang}">${messageText}</span>`;
+      // Usamos createElement y textContent para el mensaje del usuario
+      const span = document.createElement("span");
+      span.setAttribute("lang", lang); // setAttribute es correcto
+      span.textContent = messageText; // textContent es seguro para texto plano
+      messageElement.appendChild(span); // appendChild es correcto
     } else {
-      // bot message (simulated)
+      // Bot message (simulated) - Usamos createElement y textContent para los spans
       const botResponseEs = "¿En qué más puedo ayudarte?";
       const botResponseEn = "How else can I assist you?";
-      messageElement.innerHTML = `<span lang="es">${botResponseEs}</span><span lang="en">${botResponseEn}</span>`;
-      // Asegurar visibilidad del idioma correcto para el mensaje del bot simulado
-      const botSpanEs = messageElement.querySelector('[lang="es"]');
-      const botSpanEn = messageElement.querySelector('[lang="en"]');
-      if (lang === "es") {
-        botSpanEn.style.display = "none";
-        botSpanEs.style.display = "block";
+
+      const spanEs = document.createElement("span");
+      spanEs.setAttribute("lang", "es");
+      spanEs.textContent = botResponseEs;
+
+      const spanEn = document.createElement("span");
+      spanEn.setAttribute("lang", "en");
+      spanEn.textContent = botResponseEn;
+
+      messageElement.appendChild(spanEs);
+      messageElement.appendChild(spanEn);
+
+      // Asegurar visibilidad del idioma correcto para el mensaje del bot simulado - style.display es correcto
+      const currentLang = body.getAttribute("data-lang") || "es";
+      const botSpanEs = messageElement.querySelector('[lang="es"]'); // querySelector es correcto
+      const botSpanEn = messageElement.querySelector('[lang="en"]'); // querySelector es correcto
+      if (currentLang === "es") {
+        if (botSpanEn) botSpanEn.style.display = "none";
+        if (botSpanEs) botSpanEs.style.display = "block";
       } else {
-        botSpanEs.style.display = "none";
-        botSpanEn.style.display = "block";
+        if (botSpanEs) botSpanEs.style.display = "none";
+        if (botSpanEn) botSpanEn.style.display = "block";
       }
     }
 
     if (chatBody) {
-      chatBody.appendChild(messageElement);
-      // Hacer scroll automático hacia abajo
+      chatBody.appendChild(messageElement); // appendChild es correcto
+      // Hacer scroll automático hacia abajo - scrollTop es correcto
       chatBody.scrollTop = chatBody.scrollHeight;
     }
   }
 
-  // Evento al enviar mensaje (botón o Enter)
+  // Evento al enviar mensaje (botón o Enter) - handleSendMessage es correcto
   function handleSendMessage() {
     const currentLang = body.getAttribute("data-lang") || "es";
     const inputElement = currentLang === "es" ? chatInput : chatInputEn;
-    const userMessage = inputElement.value.trim();
+    const userMessage = inputElement ? inputElement.value.trim() : ""; // value y trim son correctos
 
     if (userMessage) {
       // Añadir el mensaje del usuario
       addMessage(userMessage, "user", currentLang);
 
-      inputElement.value = ""; // Limpiar input
+      if (inputElement) inputElement.value = ""; // value es correcto
 
       // *** SIMULACIÓN DE RESPUESTA DE LA IA (EN UN CASO REAL, ESTO IRÍA A UN BACKEND) ***
       setTimeout(() => {
+        // setTimeout es correcto
         addMessage("", "bot", currentLang); // Llama con cadena vacía, la función genera el texto multilingüe simulado
-      }, 1000); // Simula un retraso de 1 segundo
+      }, 1000);
     }
   }
 
   if (sendButton) {
-    sendButton.addEventListener("click", handleSendMessage);
+    sendButton.addEventListener("click", handleSendMessage); // addEventListener es correcto
   }
 
-  // Listener para la tecla Enter en ambos inputs (español e inglés)
+  // Listener para la tecla Enter en ambos inputs (español e inglés) - addEventListener es correcto
   if (chatInput) {
     chatInput.addEventListener("keypress", (event) => {
       if (event.key === "Enter") {
@@ -241,4 +286,255 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// Script para el carrusel (SOLO DEBE IR EN INDEX.HTML) - No se incluye aquí en script.js
+// --- Script para filtrar productos por categoría de galería (Solo relevante en productos-galeria.html) ---
+document.addEventListener("DOMContentLoaded", () => {
+  // querySelectorAll ya se usaba
+  const galleryItems = document.querySelectorAll(".gallery-item");
+  const productCards = document.querySelectorAll(".product-card");
+  // Reemplazamos getElementById con querySelector
+  const showAllButton = document.querySelector("#show-all-products");
+
+  // Si no encontramos los elementos de galería o productos, salimos del script
+  if (galleryItems.length === 0 || productCards.length === 0) {
+    return;
+  }
+
+  // Función para filtrar los productos
+  function filterProducts(category) {
+    productCards.forEach((card) => {
+      // getAttribute es correcto
+      const cardCategory = card.getAttribute("data-category");
+
+      if (category === "all" || cardCategory === category) {
+        card.style.display = "block"; // style.display es correcto
+      } else {
+        card.style.display = "none"; // style.display es correcto
+      }
+    });
+  }
+
+  // Añadir event listeners a cada ítem de la galería - addEventListener es correcto
+  galleryItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      // getAttribute es correcto
+      const selectedCategory = item.getAttribute("data-category");
+      if (selectedCategory) {
+        filterProducts(selectedCategory);
+        // Opcional: Desplazarse a la sección de productos después de filtrar - getElementById -> querySelector, scrollIntoView es correcto
+        const productosSection = document.querySelector("#productos");
+        if (productosSection) {
+          productosSection.scrollIntoView({ behavior: "smooth" });
+        }
+      }
+    });
+  });
+
+  // Añadir event listener al botón "Mostrar Todos" - addEventListener es correcto
+  if (showAllButton) {
+    showAllButton.addEventListener("click", () => {
+      filterProducts("all"); // Llama a la función de filtro con 'all'
+    });
+  }
+});
+// --- Fin Script para filtrar productos ---
+
+// --- Script para la barra de mensajes dinámicos ---
+document.addEventListener("DOMContentLoaded", () => {
+  // Reemplazamos getElementById con querySelector
+  const dynamicMessageBar = document.querySelector("#dynamic-message-bar");
+  const body = document.body; // Document.body es correcto
+
+  // Solo ejecutar este script si el elemento de la barra existe
+  if (!dynamicMessageBar) {
+    return;
+  }
+
+  // Lista de mensajes (en ambos idiomas)
+  const messages = [
+    {
+      es: "¡Bienvenido/a a Suave bocado Repostería!",
+      en: "Welcome to Suave bocado Bakery!",
+    },
+    {
+      es: "Haz tus pedidos con al menos 1 día de anticipación.",
+      en: "Place your orders at least 1 day in advance.",
+    },
+    {
+      es: "Recoge tu pedido directamente en nuestra tienda en Envigado.",
+      en: "Pick up your order directly at our store in Envigado.",
+    },
+    {
+      es: "¡Síguenos en nuestras redes sociales!",
+      en: "Follow us on our social media!",
+    },
+    // Puedes añadir más mensajes aquí
+  ];
+
+  let currentMessageIndex = 0;
+  let messageInterval;
+  const messageDuration = 5000; // Tiempo en milisegundos que se muestra cada mensaje (ej: 5 segundos)
+
+  // Guardamos la lista de mensajes en el elemento para que la función changeLanguage acceda a ella
+  dynamicMessageBar.messagesData = messages;
+  // Guardamos el índice actual también
+  dynamicMessageBar.dataset.currentMessageIndex = currentMessageIndex;
+
+  // Función para mostrar el mensaje actual
+  function displayCurrentMessage() {
+    const currentLang = body.getAttribute("data-lang") || "es";
+    const message = messages[currentMessageIndex];
+
+    if (message) {
+      // *** Reemplazamos innerHTML con createElement y textContent ***
+      dynamicMessageBar.textContent = ""; // Limpiamos el contenido existente de forma segura
+
+      const spanEs = document.createElement("span"); // Creamos el span para español
+      spanEs.setAttribute("lang", "es");
+      spanEs.textContent = message.es; // Establecemos el texto de forma segura
+
+      const spanEn = document.createElement("span"); // Creamos el span para inglés
+      spanEn.setAttribute("lang", "en");
+      spanEn.textContent = message.en; // Establecemos el texto de forma segura
+
+      dynamicMessageBar.appendChild(spanEs); // Añadimos el span de español
+      dynamicMessageBar.appendChild(spanEn); // Añadimos el span de inglés
+
+      // Asegurar visibilidad según el idioma actual - style.display es correcto
+      // querySelector es correcto para encontrar los spans recién creados
+      const displayedSpanEs = dynamicMessageBar.querySelector('[lang="es"]');
+      const displayedSpanEn = dynamicMessageBar.querySelector('[lang="en"]');
+
+      if (currentLang === "es") {
+        if (displayedSpanEn) displayedSpanEn.style.display = "none";
+        if (displayedSpanEs) displayedSpanEs.style.display = "inline"; // Usamos inline para texto dentro de un div
+      } else {
+        if (displayedSpanEs) displayedSpanEs.style.display = "none";
+        if (displayedSpanEn) displayedSpanEn.style.display = "inline";
+      }
+    }
+    // Actualizamos el índice guardado en el elemento
+    dynamicMessageBar.dataset.currentMessageIndex = currentMessageIndex; // dataset es correcto
+  }
+
+  // Función para ir al siguiente mensaje
+  function showNextMessage() {
+    currentMessageIndex++;
+    if (currentMessageIndex >= messages.length) {
+      currentMessageIndex = 0; // Vuelve al principio
+    }
+    displayCurrentMessage();
+  }
+
+  // Iniciar la rotación de mensajes
+  function startMessageRotation() {
+    // Mostrar el primer mensaje inmediatamente
+    displayCurrentMessage();
+    // Luego, iniciar el intervalo para rotar los mensajes
+    messageInterval = setInterval(showNextMessage, messageDuration); // setInterval es correcto
+  }
+
+  // Detener la rotación de mensajes
+  function stopMessageRotation() {
+    clearInterval(messageInterval); // clearInterval es correcto
+  }
+
+  // Iniciar la rotación cuando el DOM esté listo
+  startMessageRotation();
+
+  // Opcional: Pausar la rotación al pasar el ratón sobre la barra - addEventListener es correcto
+  dynamicMessageBar.addEventListener("mouseenter", stopMessageRotation);
+  dynamicMessageBar.addEventListener("mouseleave", startMessageRotation);
+
+  // La lógica de actualización del mensaje al cambiar de idioma ya fue integrada
+  // en la función changeLanguage en el bloque de manejo de idiomas.
+});
+// --- Fin Script para la barra de mensajes dinámicos ---
+
+// --- Script específico del carrusel para index.html ---
+document.addEventListener("DOMContentLoaded", () => {
+  let slideIndex = 0;
+  let carouselInterval; // Variable para almacenar el ID del intervalo
+
+  // querySelectorAll ya se usaba
+  const slides = document.querySelectorAll("#inicio .carousel-slide");
+  // Reemplazamos getElementById con querySelector
+  const prevButton = document.querySelector("#carousel-prev");
+  const nextButton = document.querySelector("#carousel-next");
+
+  // Solo ejecutar este script si los elementos del carrusel existen (es decir, en index.html)
+  if (slides.length === 0) {
+    return;
+  }
+
+  const totalSlides = slides.length; // Definimos totalSlides aquí después de la verificación
+
+  // Función para mostrar una slide específica
+  function showSlide(index) {
+    // Asegura que el índice esté dentro del rango
+    if (index >= totalSlides) {
+      slideIndex = 0;
+    } else if (index < 0) {
+      slideIndex = totalSlides - 1;
+    } else {
+      slideIndex = index;
+    }
+
+    // Oculta todas las slides - classList es correcto
+    slides.forEach((slide) => {
+      slide.classList.remove("active");
+    });
+
+    // Muestra la slide actual - classList es correcto
+    slides[slideIndex].classList.add("active");
+
+    // Reinicia el intervalo automático después de un cambio manual
+    resetInterval(); // Llamada a función interna, correcto
+  }
+
+  // Función para avanzar al siguiente slide (usada por el botón y el intervalo)
+  function nextSlide() {
+    showSlide(slideIndex + 1); // Llamada a función interna, correcto
+  }
+
+  // Función para retroceder al slide anterior (usada por el botón)
+  function prevSlide() {
+    showSlide(slideIndex - 1); // Llamada a función interna, correcto
+  }
+
+  // Función para iniciar o reiniciar el intervalo automático
+  function startInterval() {
+    stopInterval(); // Asegura que no haya múltiples intervalos corriendo
+    carouselInterval = setInterval(nextSlide, intervalTime); // setInterval es correcto
+  }
+
+  // Función para detener el intervalo automático
+  function stopInterval() {
+    clearInterval(carouselInterval); // clearInterval es correcto
+  }
+
+  // Función para reiniciar el intervalo (detiene el actual e inicia uno nuevo)
+  function resetInterval() {
+    stopInterval();
+    startInterval();
+  }
+
+  // Añadir event listeners a los botones (si existen) - addEventListener es correcto
+  if (prevButton && nextButton) {
+    prevButton.addEventListener("click", prevSlide);
+    nextButton.addEventListener("click", nextSlide);
+  }
+
+  // Inicia el carrusel automático al cargar la página
+  showSlide(slideIndex); // Muestra la primera slide
+  startInterval(); // Inicia el ciclo automático
+
+  // Opcional: Pausar el carrusel al pasar el ratón sobre él - addEventListener es correcto
+  const carouselContainer = document.querySelector(
+    "#inicio .carousel-container"
+  ); // querySelector es correcto
+  if (carouselContainer) {
+    carouselContainer.addEventListener("mouseenter", stopInterval);
+    carouselContainer.addEventListener("mouseleave", startInterval);
+  }
+});
+// --- Fin Script específico del carrusel ---
