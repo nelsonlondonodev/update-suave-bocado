@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title lang="es">Suave bocado Repostería - Inicio</title>
-    <title lang="en">Suave bocado Bakery - Home</title>
+    <title lang="es">Suave bocado Repostería - Contacto</title>
+    <title lang="en">Suave bocado Bakery - Contact</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -139,55 +139,151 @@
 
     <div class="pt-20"></div>
 
-    <section
-      id="inicio"
-      class="relative h-screen flex items-center justify-center"
-    >
-      <div class="carousel-container absolute inset-0">
-        <div class="carousel-slide active">
-          <img
-            src="./image/imagen1Bg Large.jpeg"
-            alt="Imagen de repostería 1"
-          />
-        </div>
-        <div class="carousel-slide">
-          <img
-            src="./image/imagen2Bg Large copy.jpeg"
-            alt="Imagen de repostería 2"
-          />
-        </div>
-        <div class="carousel-slide">
-          <img
-            src="./image/imagen2Bg Large copy.jpeg"
-            alt="Imagen de repostería 3"
-          />
-        </div>
-      </div>
+    <section id="contacto" class="py-16 bg-marca-complemento1">
+      <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-serif text-marca-oscuro text-center mb-12">
+          <span lang="es">Contáctanos</span>
+          <span lang="en">Contact Us</span>
+        </h2>
+        <div class="flex flex-col md:flex-row gap-12">
+          <div class="md:w-1/2 bg-white p-8 rounded-lg shadow-lg">
+            <h3 class="text-2xl font-serif text-marca-oscuro mb-6">
+              <span lang="es">Envíanos un Mensaje</span>
+              <span lang="en">Send Us a Message</span>
+            </h3>
+            <form action="#" method="POST">
+              <div class="mb-4">
+                <label
+                  for="nombre"
+                  class="block text-marca-oscuro text-sm font-bold mb-2"
+                  ><span lang="es">Nombre:</span
+                  ><span lang="en">Name:</span></label
+                >
+                <input
+                  type="text"
+                  id="nombre"
+                  name="nombre"
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-marca-oscuro leading-tight focus:outline-none focus:shadow-outline"
+                  required
+                />
+              </div>
+              <div class="mb-4">
+                <label
+                  for="correo"
+                  class="block text-marca-oscuro text-sm font-bold mb-2"
+                  ><span lang="es">Correo Electrónico:</span
+                  ><span lang="en">Email:</span></label
+                >
+                <input
+                  type="email"
+                  id="correo"
+                  name="correo"
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-marca-oscuro leading-tight focus:outline-none focus:shadow-outline"
+                  required
+                />
+              </div>
+              <div class="mb-6">
+                <label
+                  for="mensaje"
+                  class="block text-marca-oscuro text-sm font-bold mb-2"
+                  ><span lang="es">Mensaje:</span
+                  ><span lang="en">Message:</span></label
+                >
+                <textarea
+                  id="mensaje"
+                  name="mensaje"
+                  rows="5"
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-marca-oscuro leading-tight focus:outline-none focus:shadow-outline"
+                  required
+                ></textarea>
+              </div>
+              <div class="flex items-center justify-center">
+                <button
+                  type="submit"
+                  class="bg-marca-acento1 hover:bg-marca-complemento2 text-marca-oscuro hover:text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-300 ease-in-out"
+                >
+                  <span lang="es">Enviar Mensaje</span>
+                  <span lang="en">Send Message</span>
+                </button>
+              </div>
+            </form>
+          </div>
+          <div class="md:w-1/2">
+            <h3 class="text-2xl font-serif text-marca-oscuro mb-6">
+              <span lang="es">Encuéntranos</span>
+              <span lang="en">Find Us</span>
+            </h3>
+            <div class="flex items-center mb-4">
+              <i
+                data-lucide="map-pin"
+                class="w-6 h-6 text-marca-oscuro mr-3"
+              ></i>
+              <p class="text-marca-oscuro">
+                <span lang="es"
+                  >Dirección Ficticia, Envigado, Antioquia, Colombia</span
+                >
+                <span lang="en"
+                  >Fictional Address, Envigado, Antioquia, Colombia</span
+                >
+              </p>
+            </div>
+            <div class="flex items-center mb-4">
+              <i data-lucide="phone" class="w-6 h-6 text-marca-oscuro mr-3"></i>
+              <p class="text-marca-oscuro">+57 300 123 4567</p>
+            </div>
+            <div class="flex items-center mb-6">
+              <i data-lucide="mail" class="w-6 h-6 text-marca-oscuro mr-3"></i>
+              <p class="text-marca-oscuro">info@reposteriadelicias.com</p>
+            </div>
 
-      <div class="absolute inset-0 bg-marca-oscuro opacity-25"></div>
+            <div class="flex space-x-6 mb-8 justify-center md:justify-start">
+              <a
+                href="https://www.instagram.com/suavebocado/"
+                target="_blank"
+                aria-label="Instagram"
+                class="text-marca-oscuro hover:text-marca-acento1 transition duration-300"
+              >
+                <i data-lucide="instagram" class="w-8 h-8"></i>
+              </a>
+              <a
+                href="https://www.facebook.com/suavebocado?locale=es_ES"
+                target="_blank"
+                aria-label="Facebook"
+                class="text-marca-oscuro hover:text-marca-acento1 transition duration-300"
+              >
+                <i data-lucide="facebook" class="w-8 h-8"></i>
+              </a>
+              <a
+                href="https://www.tiktok.com/@suave.bocado?_t=8p9vCYiDRGY&_r=1"
+                target="_blank"
+                aria-label="TikTok"
+                class="text-marca-oscuro hover:text-marca-acento1 transition duration-300"
+              >
+                <i data-lucide="tiktok" class="w-8 h-8"></i>
+              </a>
+              <a
+                href="#"
+                target="_blank"
+                aria-label="WhatsApp"
+                class="text-marca-oscuro hover:text-marca-acento1 transition duration-300"
+              >
+                <i data-lucide="whatsapp" class="w-8 h-8"></i>
+              </a>
+            </div>
 
-      <div
-        class="relative z-10 p-8 rounded-lg max-w-2xl text-center text-white"
-      >
-        <h1
-          class="text-5xl md:text-6xl font-serif font-bold mb-4 text-white drop-shadow-lg"
-        >
-          <span lang="es">Delicias Hechas con Amor en Envigado</span>
-          <span lang="en">Delights Made with Love in Envigado</span>
-        </h1>
-        <p class="text-xl md:text-2xl font-light italic">
-          <span lang="es"
-            >"Donde cada bocado es una dulce historia artesanal"</span
-          >
-          <span lang="en">"Where every bite is a sweet artisanal story"</span>
-        </p>
-        <a
-          href="productos-galeria.html"
-          class="mt-8 inline-block bg-marca-acento1 text-marca-oscuro font-semibold py-3 px-8 rounded-full hover:bg-marca-complemento2 hover:text-white transition duration-300 ease-in-out shadow-lg"
-        >
-          <span lang="es">Explora Nuestros Productos</span>
-          <span lang="en">Explore Our Products</span>
-        </a>
+            <div class="w-full h-64 rounded-lg shadow-lg overflow-hidden">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12345.678910111213!2d-75.576359!3d6.168056!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e4682819f0d67a1%3A0xa2554c864c10e416!2sEnvigado%2C%20Antioquia!5e0!3m2!1ses!2sco!4v1678888888888!5m2!1ses!2sco"
+                width="100%"
+                height="100%"
+                style="border: 0"
+                allowfullscreen=""
+                loading="lazy"
+              >
+              </iframe>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -253,41 +349,6 @@
     </div>
     <script>
       lucide.createIcons();
-    </script>
-    <script>
-      let slideIndex = 0;
-      const slides = document.querySelectorAll("#inicio .carousel-slide");
-      const totalSlides = slides.length;
-      const intervalTime = 5000; // Tiempo en milisegundos (5 segundos)
-
-      function showSlides() {
-        // Oculta todas las slides
-        slides.forEach((slide) => {
-          slide.classList.remove("active");
-        });
-
-        // Muestra la slide actual
-        slides[slideIndex].classList.add("active");
-
-        // Avanza al siguiente índice
-        slideIndex++;
-
-        // Reinicia al principio si llega al final
-        if (slideIndex >= totalSlides) {
-          slideIndex = 0;
-        }
-
-        // Llama a la función nuevamente después del intervalo de tiempo
-        setTimeout(showSlides, intervalTime);
-      }
-
-      // Inicia el carrusel al cargar la página
-      document.addEventListener("DOMContentLoaded", () => {
-        if (totalSlides > 0) {
-          // Solo inicia si hay slides
-          showSlides();
-        }
-      });
     </script>
     <script src="script.js"></script>
   </body>
