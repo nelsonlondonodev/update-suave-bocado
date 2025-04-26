@@ -1,0 +1,229 @@
+/* Estilos personalizados si es necesario (mínimo con Tailwind) */
+html {
+  scroll-behavior: smooth; /* Desplazamiento suave al hacer clic en enlaces de anclaje */
+}
+/* Estilo para las estrellas de reseña (ejemplo simple) */
+.rating .star {
+  color: #ffd700; /* Color dorado para las estrellas */
+  display: inline-block;
+  margin-right: 2px;
+}
+/* Ajuste para el tamaño del logo */
+.logo-img {
+  max-height: 70px; /* Ajustado a 70px */
+  width: auto;
+}
+
+/* --- Estilos para manejo de idiomas --- */
+/* Oculta por defecto los elementos que no sean del idioma activo */
+body[data-lang="es"] [lang="en"],
+body[data-lang="en"] [lang="es"] {
+  display: none;
+}
+/* Asegura que el idioma activo se muestre */
+body[data-lang="es"] [lang="es"],
+body[data-lang="en"] [lang="en"] {
+  display: block; /* O inline, inline-block, flex, grid según el elemento original */
+}
+
+/* Ajustes específicos si algunos elementos con lang='en' o lang='es' no se muestran correctamente */
+body[data-lang="es"] span[lang="es"],
+body[data-lang="en"] span[lang="en"] {
+  display: inline;
+}
+
+/* Estilo para los botones de idioma activos */
+#language-switcher .lang-button.active {
+  font-weight: bold;
+  text-decoration: underline;
+  color: #6a2e35; /* Color oscuro de la marca */
+}
+/* --- Fin Estilos para manejo de idiomas --- */
+
+/* --- Estilos para el Chatbot --- */
+#chatbot-widget {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  width: 300px; /* Ancho del chat */
+  max-height: 400px; /* Altura máxima */
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#chat-header {
+  background-color: #6a2e35; /* Color oscuro de la marca */
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+}
+
+#chat-body {
+  flex-grow: 1;
+  padding: 10px;
+  overflow-y: auto; /* Permite scroll si el contenido excede la altura máxima */
+  background-color: #ffe8e1; /* Color claro de la marca */
+  display: flex;
+  flex-direction: column;
+}
+
+.message {
+  margin-bottom: 8px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  max-width: 80%;
+}
+
+.message.user {
+  align-self: flex-end;
+  background-color: #ffc4d1; /* Color de acento */
+  color: #6a2e35; /* Color oscuro */
+}
+
+.message.bot {
+  align-self: flex-start;
+  background-color: #e0e0e0; /* Gris claro */
+  color: #333; /* Gris oscuro */
+}
+
+#chat-input-area {
+  display: flex;
+  padding: 10px;
+  background-color: #f1f1f1; /* Gris muy claro */
+}
+
+#chat-input-area input {
+  flex-grow: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 8px;
+  font-size: 0.9em;
+}
+
+#chat-input-area button {
+  background-color: #8cbcb9; /* Color complemento */
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#chat-input-area button:hover {
+  background-color: #3c6e71; /* Color complemento oscuro */
+}
+/* Oculta el cuerpo del chat por defecto */
+#chatbot-widget.collapsed #chat-body,
+#chatbot-widget.collapsed #chat-input-area {
+  display: none;
+}
+/* --- Fin Estilos para el Chatbot --- */
+
+/* --- Estilos para el Carrusel --- */
+/* Estos estilos solo son relevantes para index.html */
+.carousel-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.carousel-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0; /* Oculta por defecto */
+  transition: opacity 1s ease-in-out; /* Transición suave */
+}
+.carousel-slide.active {
+  opacity: 1; /* Muestra la slide activa */
+}
+.carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Asegura que la imagen cubra el contenedor sin distorsionarse */
+}
+/* --- Fin Estilos para el Carrusel --- */
+
+/* --- Estilos para Galería tipo Pinterest (con CSS Columns) --- */
+/* Estos estilos solo son relevantes para galeria.html */
+.pinterest-grid {
+  /* Configuración principal usando columnas */
+  column-count: 1; /* Default para móviles */
+  column-gap: 16px; /* Espacio entre columnas */
+}
+
+/* Columnas responsivas */
+@media (min-width: 640px) {
+  /* sm breakpoint */
+  .pinterest-grid {
+    column-count: 2;
+  }
+}
+@media (min-width: 768px) {
+  /* md breakpoint */
+  .pinterest-grid {
+    column-count: 3;
+  }
+}
+@media (min-width: 1024px) {
+  /* lg breakpoint */
+  .pinterest-grid {
+    column-count: 4;
+  }
+}
+
+.gallery-item {
+  /* Estilo para cada contenedor de imagen en la cuadrícula */
+  border-radius: 8px; /* Bordes redondeados */
+  overflow: hidden; /* Asegura que la imagen redondeada no se desborde */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  transition: transform 0.3s ease-in-out; /* Transición suave al pasar el ratón */
+  cursor: pointer; /* Indica que es interactivo */
+  /* Espacio entre los ítems dentro de una columna */
+  margin-bottom: 16px;
+
+  /* IMPORTANTE: Previene que el ítem se rompa a través de las columnas */
+  break-inside: avoid-column;
+  -webkit-break-inside: avoid-column; /* Para navegadores Webkit */
+  page-break-inside: avoid; /* Para impresión (aunque no es el foco) */
+
+  /* Necesario para que margin-bottom funcione correctamente en columnas */
+  display: inline-block;
+  width: 100%;
+}
+
+.gallery-item:hover {
+  transform: scale(1.03); /* Ligeramente más grande al pasar el ratón */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada */
+}
+
+.gallery-item img {
+  display: block;
+  width: 100%; /* La imagen ocupa todo el ancho de su contenedor */
+  height: auto; /* Mantiene la proporción de la imagen */
+  object-fit: cover; /* Asegura que la imagen cubra el área sin distorsionarse */
+}
+
+/* Estilo para un pie de foto o texto dentro del ítem */
+.gallery-item-caption {
+  padding: 8px;
+  text-align: center;
+  font-size: 0.9em;
+  color: #6a2e35;
+  background-color: #fff; /* Fondo blanco para el pie de foto */
+}
+
+/* --- Fin Estilos para Galería tipo Pinterest --- */

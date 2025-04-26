@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title lang="es">Suave bocado Repostería - Productos y Galería</title>
+    <title lang="en">Suave bocado Bakery - Products and Gallery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              // Paleta de colores de la marca
+              "marca-claro": "#FFE8E1", // Principal 1
+              "marca-oscuro": "#6A2E35", // Principal 2
+              "marca-acento1": "#FFC4D1", // Complementario 1 (Rosa)
+              "marca-complemento1": "#8CBCB9", // Complementario 2 (Verde azulado claro)
+              "marca-complemento2": "#3C6E71", // Complementario 3 (Verde azulado oscuro)
+            },
+            fontFamily: {
+              // Tipografía amigable (ejemplo, podrías cambiarla)
+              sans: ["Poppins", "sans-serif"],
+              serif: ["Playfair Display", "serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="font-sans text-marca-oscuro bg-marca-claro" data-lang="es">
+    <header class="bg-white shadow-lg fixed top-0 left-0 right-0 z-50">
+      <nav
+        class="container mx-auto px-6 py-4 flex justify-between items-center"
+      >
+        <a href="index.html" class="flex items-center">
+          <img
+            src="./image/Logo suave1.png"
+            alt="Logo Suave bocado Repostería"
+            class="logo-img mr-2"
+          />
+        </a>
+
+        <div id="language-switcher" class="flex items-center space-x-2">
+          <button
+            class="lang-button text-marca-oscuro hover:text-marca-complemento2 transition duration-300 active"
+            data-lang="es"
+          >
+            ES
+          </button>
+          <span class="text-marca-oscuro">|</span>
+          <button
+            class="lang-button text-marca-oscuro hover:text-marca-complemento2 transition duration-300"
+            data-lang="en"
+          >
+            EN
+          </button>
+        </div>
+
+        <div class="hidden md:flex space-x-6">
+          <a
+            href="index.html"
+            class="text-marca-oscuro hover:text-marca-complemento2 transition duration-300"
+            ><span lang="es">Inicio</span><span lang="en">Home</span></a
+          >
+          <a
+            href="productos-galeria.html"
+            class="text-marca-oscuro hover:text-marca-complemento2 transition duration-300"
+            ><span lang="es">Productos y Galería</span
+            ><span lang="en">Products & Gallery</span></a
+          >
+          <a
+            href="nosotros-resenas.html"
+            class="text-marca-oscuro hover:text-marca-complemento2 transition duration-300"
+            ><span lang="es">Nosotros y Reseñas</span
+            ><span lang="en">About Us & Reviews</span></a
+          >
+          <a
+            href="contacto.html"
+            class="text-marca-oscuro hover:text-marca-complemento2 transition duration-300"
+            ><span lang="es">Contacto</span><span lang="en">Contact</span></a
+          >
+        </div>
+        <div class="md:hidden">
+          <button
+            id="mobile-menu-button"
+            class="text-marca-oscuro focus:outline-none"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-menu"
+            >
+              <line x1="4" x2="20" y1="12" y2="12" />
+              <line x1="4" x2="20" y1="6" y2="6" />
+              <line x1="4" x2="20" y1="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+      </nav>
+      <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg">
+        <a
+          href="index.html"
+          class="block px-6 py-3 text-marca-oscuro hover:bg-marca-acento1 transition duration-300"
+          ><span lang="es">Inicio</span><span lang="en">Home</span></a
+        >
+        <a
+          href="productos-galeria.html"
+          class="block px-6 py-3 text-marca-oscuro hover:bg-marca-acento1 transition duration-300"
+          ><span lang="es">Productos y Galería</span
+          ><span lang="en">Products & Gallery</span></a
+        >
+        <a
+          href="nosotros-resenas.html"
+          class="block px-6 py-3 text-marca-oscuro hover:bg-marca-acento1 transition duration-300"
+          ><span lang="es">Nosotros y Reseñas</span
+          ><span lang="en">About Us & Reviews</span></a
+        >
+        <a
+          href="contacto.html"
+          class="block px-6 py-3 text-marca-oscuro hover:bg-marca-acento1 transition duration-300"
+          ><span lang="es">Contacto</span><span lang="en">Contact</span></a
+        >
+      </div>
+    </header>
+
+    <div class="pt-20"></div>
+
+    <section id="productos" class="py-16 bg-marca-complemento1">
+      <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-serif text-marca-oscuro text-center mb-12">
+          <span lang="es">Nuestros Productos Destacados</span>
+          <span lang="en">Our Featured Products</span>
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div
+            class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl"
+          >
+            <i data-lucide="cake" class="w-12 h-12 text-marca-acento1 mb-4"></i>
+            <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
+              <span lang="es">Pastel Selva Negra</span>
+              <span lang="en">Black Forest Cake</span>
+            </h3>
+            <p class="text-marca-oscuro mb-4">
+              <span lang="es"
+                >Clásico bizcocho de chocolate, crema y cerezas. Una
+                delicia.</span
+              >
+              <span lang="en"
+                >Classic chocolate sponge cake, cream, and cherries. A
+                delight.</span
+              >
+            </p>
+            <span class="text-2xl font-bold text-marca-oscuro"
+              >$ 45.000 COP</span
+            >
+          </div>
+          <div
+            class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl"
+          >
+            <i
+              data-lucide="cupcake"
+              class="w-12 h-12 text-marca-acento1 mb-4"
+            ></i>
+            <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
+              <span lang="es">Set de Cupcakes Gourmet</span>
+              <span lang="en">Gourmet Cupcake Set</span>
+            </h3>
+            <p class="text-marca-oscuro mb-4">
+              <span lang="es"
+                >Variedad de sabores exquisitos con decoraciones únicas.</span
+              >
+              <span lang="en"
+                >Variety of exquisite flavors with unique decorations.</span
+              >
+            </p>
+            <span class="text-2xl font-bold text-marca-oscuro"
+              >$ 6.000 COP (cada uno)</span
+            >
+          </div>
+          <div
+            class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl"
+          >
+            <i
+              data-lucide="cookie"
+              class="w-12 h-12 text-marca-acento1 mb-4"
+            ></i>
+            <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
+              <span lang="es">Galletas Artesanales</span>
+              <span lang="en">Artisanal Cookies</span>
+            </h3>
+            <p class="text-marca-oscuro mb-4">
+              <span lang="es"
+                >Hechas a mano con los mejores ingredientes, crujientes y
+                deliciosas.</span
+              >
+              <span lang="en"
+                >Handmade with the best ingredients, crunchy and
+                delicious.</span
+              >
+            </p>
+            <span class="text-2xl font-bold text-marca-oscuro"
+              >$ 3.000 COP (paquete)</span
+            >
+          </div>
+          <div
+            class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl"
+          >
+            <i data-lucide="cake" class="w-12 h-12 text-marca-acento1 mb-4"></i>
+            <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
+              <span lang="es">Torta de Nata</span>
+              <span lang="en">Cream Cake</span>
+            </h3>
+            <p class="text-marca-oscuro mb-4">
+              <span lang="es"
+                >Tradición de la abuela, suave y esponjosa con el toque justo de
+                dulzura.</span
+              >
+              <span lang="en"
+                >Grandma's tradition, soft and fluffy with just the right touch
+                of sweetness.</span
+              >
+            </p>
+            <span class="text-2xl font-bold text-marca-oscuro"
+              >$ 38.000 COP</span
+            >
+          </div>
+          <div
+            class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl"
+          >
+            <i
+              data-lucide="ice-cream"
+              class="w-12 h-12 text-marca-acento1 mb-4"
+            ></i>
+            <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
+              <span lang="es">Postre de las 3 Leches</span>
+              <span lang="en">Three Milk Dessert</span>
+            </h3>
+            <p class="text-marca-oscuro mb-4">
+              <span lang="es">Húmedo y cremoso, un clásico irresistible.</span>
+              <span lang="en">Moist and creamy, an irresistible classic.</span>
+            </p>
+            <span class="text-2xl font-bold text-marca-oscuro"
+              >$ 8.000 COP (porción)</span
+            >
+          </div>
+          <div
+            class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl"
+          >
+            <i
+              data-lucide="bonfire"
+              class="w-12 h-12 text-marca-acento1 mb-4"
+            ></i>
+            <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
+              <span lang="es">Volcán de Chocolate</span>
+              <span lang="en">Chocolate Lava Cake</span>
+            </h3>
+            <p class="text-marca-oscuro mb-4">
+              <span lang="es"
+                >El centro perfecto y fundido, servido caliente.</span
+              >
+              <span lang="en">The perfect molten center, served warm.</span>
+            </p>
+            <span class="text-2xl font-bold text-marca-oscuro"
+              >$ 10.000 COP (porción)</span
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="galeria" class="py-16 bg-marca-claro">
+      <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-serif text-marca-oscuro text-center mb-12">
+          <span lang="es">Nuestra Galería de Dulzura</span>
+          <span lang="en">Our Sweetness Gallery</span>
+        </h2>
+        <div class="pinterest-grid">
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/artesanales/artesanales-01 Large.jpeg"
+              alt="Torta Artesanal 1"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/artesanales/artesanales-01 Large.jpeg"
+              alt="Artisanal Cake 1"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Artesanales</span><span lang="en">Artisanal</span>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/artesanales/artesanales-02 Large.jpeg"
+              alt="Torta Artesanal 2"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/artesanales/artesanales-02 Large.jpeg"
+              alt="Artisanal Cake 2"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Artesanales</span><span lang="en">Artisanal</span>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/artesanales/artesanales-03 Large.jpeg"
+              alt="Torta Artesanal 3"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/artesanales/artesanales-03 Large.jpeg"
+              alt="Artisanal Cake 3"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Artesanales</span><span lang="en">Artisanal</span>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/artesanales/artesanales-04 Large.jpeg"
+              alt="Torta Artesanal 4"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/artesanales/artesanales-04 Large.jpeg"
+              alt="Artisanal Cake 4"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Artesanales</span><span lang="en">Artisanal</span>
+            </div>
+          </div>
+
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/bocaditos dulces/bocaditos dulces-01.jpeg"
+              alt="Bocadito Dulce 1"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/bocaditos dulces/bocaditos dulces-01.jpeg"
+              alt="Sweet Bite 1"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Bocaditos dulces</span
+              ><span lang="en">Sweet bites</span>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/bocaditos dulces/bocaditos dulces-02.jpeg"
+              alt="Bocadito Dulce 2"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/bocaditos dulces/bocaditos dulces-02.jpeg"
+              alt="Sweet Bite 2"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Bocaditos dulces</span
+              ><span lang="en">Sweet bites</span>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/bocaditos dulces/bocaditos dulces-03.jpeg"
+              alt="Bocadito Dulce 3"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/bocaditos dulces/bocaditos dulces-03.jpeg"
+              alt="Sweet Bite 3"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Bocaditos dulces</span
+              ><span lang="en">Sweet bites</span>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/bocaditos dulces/bocaditos dulces-04.jpeg"
+              alt="Bocadito Dulce 4"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/bocaditos dulces/bocaditos dulces-04.jpeg"
+              alt="Sweet Bite 4"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Bocaditos dulces</span
+              ><span lang="en">Sweet bites</span>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/bocaditos dulces/bocaditos dulces-05.jpeg"
+              alt="Bocadito Dulce 5"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/bocaditos dulces/bocaditos dulces-05.jpeg"
+              alt="Sweet Bite 5"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Bocaditos dulces</span
+              ><span lang="en">Sweet bites</span>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/bocaditos dulces/bocaditos dulces-06.jpeg"
+              alt="Bocadito Dulce 6"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/bocaditos dulces/bocaditos dulces-06.jpeg"
+              alt="Sweet Bite 6"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Bocaditos dulces</span
+              ><span lang="en">Sweet bites</span>
+            </div>
+          </div>
+
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/box cake/box cake-01.jpeg"
+              alt="Box Cake 1"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/box cake/box cake-01.jpeg"
+              alt="Box Cake 1"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Box cake</span><span lang="en">Box cake</span>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/box cake/box cake-02.jpeg"
+              alt="Box Cake 2"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/box cake/box cake-02.jpeg"
+              alt="Box Cake 2"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Box cake</span><span lang="en">Box cake</span>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/box cake/box cake-03.jpeg"
+              alt="Box Cake 3"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/box cake/box cake-03.jpeg"
+              alt="Box Cake 3"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Box cake</span><span lang="en">Box cake</span>
+            </div>
+          </div>
+
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/cupcakes/cupcakes-01.jpeg"
+              alt="Cupcake 1"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/cupcakes/cupcakes-01.jpeg"
+              alt="Cupcake 1"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Cupcakes</span><span lang="en">Cupcakes</span>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/cupcakes/cupcakes-02.jpeg"
+              alt="Cupcake 2"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/cupcakes/cupcakes-02.jpeg"
+              alt="Cupcake 2"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Cupcakes</span><span lang="en">Cupcakes</span>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/cupcakes/cupcakes-03.jpeg"
+              alt="Cupcake 3"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/cupcakes/cupcakes-03.jpeg"
+              alt="Cupcake 3"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Cupcakes</span><span lang="en">Cupcakes</span>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/cupcakes/cupcakes-04.jpeg"
+              alt="Cupcake 4"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/cupcakes/cupcakes-04.jpeg"
+              alt="Cupcake 4"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Cupcakes</span><span lang="en">Cupcakes</span>
+            </div>
+          </div>
+
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/postres/postres-01.jpeg"
+              alt="Postre 1"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/postres/postres-01.jpeg"
+              alt="Dessert 1"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Postres</span><span lang="en">Desserts</span>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/postres/postres-02.jpeg"
+              alt="Postre 2"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/postres/postres-02.jpeg"
+              alt="Dessert 2"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Postres</span><span lang="en">Desserts</span>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/postres/postres-03.jpeg"
+              alt="Postre 3"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/postres/postres-03.jpeg"
+              alt="Dessert 3"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Postres</span><span lang="en">Desserts</span>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/postres/postres-04.jpeg"
+              alt="Postre 4"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/postres/postres-04.jpeg"
+              alt="Dessert 4"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Postres</span><span lang="en">Desserts</span>
+            </div>
+          </div>
+
+          <div class="gallery-item">
+            <img
+              src="./image/Galería/artesanales/artesanales-02 Large.jpeg"
+              alt="Tematica Ejemplo"
+              lang="es"
+            />
+            <img
+              src="./image/Galería/artesanales/artesanales-02 Large.jpeg"
+              alt="Themed Example"
+              lang="en"
+            />
+            <div class="gallery-item-caption">
+              <span lang="es">Temáticas</span><span lang="en">Themed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="bg-marca-oscuro text-white py-8 text-center">
+      <div class="container mx-auto px-6">
+        <p>
+          <span lang="es"
+            >© 2025 Suave bocado Repostería. Todos los derechos
+            reservados.</span
+          >
+          <span lang="en"
+            >© 2025 Suave bocado Repostería. All rights reserved.</span
+          >
+        </p>
+      </div>
+    </footer>
+
+    <div id="chatbot-widget" class="collapsed">
+      <div id="chat-header">
+        <span lang="es">Pregúntale a Suave Bocado</span>
+        <span lang="en">Ask Suave Bocado</span>
+        <button id="toggle-chat" class="text-white focus:outline-none">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-minus"
+          >
+            <line x1="5" x2="19" y1="12" y2="12" />
+          </svg>
+        </button>
+      </div>
+      <div id="chat-body">
+        <div class="message bot">
+          <span lang="es">¡Hola! Soy bocadito</span>
+          <span lang="en">¡Hello! I am bocadito</span>
+        </div>
+      </div>
+      <div id="chat-input-area">
+        <input
+          type="text"
+          id="chat-input"
+          placeholder="Escribe tu mensaje..."
+          lang="es"
+        />
+        <input
+          type="text"
+          id="chat-input-en"
+          placeholder="Type your message..."
+          lang="en"
+        />
+        <button id="send-button">
+          <span lang="es">Enviar</span>
+          <span lang="en">Send</span>
+        </button>
+      </div>
+    </div>
+    <script>
+      lucide.createIcons();
+    </script>
+    <script src="script.js"></script>
+  </body>
+</html>
