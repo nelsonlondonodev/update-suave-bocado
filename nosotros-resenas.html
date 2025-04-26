@@ -33,9 +33,69 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
     <link rel="stylesheet" href="style.css" />
+    <style>
+      /* Añadir estilos para los botones de navegación del carrusel (aunque no esté el carrusel en esta página, se mantienen por si acaso o por consistencia, aunque idealmente solo irían en index.html o css específico) */
+      /* Nota: Para optimización real, estos estilos específicos del carrusel solo deberían cargar en index.html */
+      .carousel-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 20;
+        padding: 12px;
+        background-color: rgba(255, 255, 255, 0.5);
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        color: #6a2e35;
+      }
+
+      .carousel-button:hover {
+        background-color: rgba(255, 255, 255, 0.8);
+      }
+
+      .carousel-button.prev {
+        left: 20px;
+      }
+
+      .carousel-button.next {
+        right: 20px;
+      }
+      .carousel-button svg {
+        width: 24px;
+        height: 24px;
+      }
+
+      /* Estilo para la barra de mensajes dinámicos */
+      #dynamic-message-bar {
+        background-color: #8cbcb9; /* Color complemento 1 */
+        color: #6a2e35; /* Color oscuro de la marca */
+        text-align: center;
+        padding: 8px 0;
+        font-size: 0.9em;
+        width: 100%;
+      }
+      /* Asegura que el encabezado fijo tenga espacio para la barra de mensajes */
+      header {
+        top: 35px; /* Ajusta este valor según la altura de la barra de mensajes */
+      }
+      /* Ajuste para el contenido principal debajo del encabezado fijo */
+      .pt-20 {
+        padding-top: calc(
+          20px + 35px
+        ); /* Suma el ajuste original más la altura de la barra */
+      }
+    </style>
   </head>
   <body class="font-sans text-marca-oscuro bg-marca-claro" data-lang="es">
     <header class="bg-white shadow-lg fixed top-0 left-0 right-0 z-50">
+      <div
+        id="dynamic-message-bar"
+        class="w-full text-sm py-2 text-center bg-marca-complemento1 text-marca-oscuro"
+      >
+        <span lang="es">Cargando mensajes...</span>
+        <span lang="en">Loading messages...</span>
+      </div>
       <nav
         class="container mx-auto px-6 py-4 flex justify-between items-center"
       >

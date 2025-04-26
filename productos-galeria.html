@@ -33,9 +33,69 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
     <link rel="stylesheet" href="style.css" />
+    <style>
+      /* Añadir estilos para los botones de navegación del carrusel (aunque no esté el carrusel en esta página, se mantienen por si acaso o por consistencia, aunque idealmente solo irían en index.html o css específico) */
+      /* Nota: Para optimización real, estos estilos específicos del carrusel solo deberían cargar en index.html */
+      .carousel-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 20;
+        padding: 12px;
+        background-color: rgba(255, 255, 255, 0.5);
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        color: #6a2e35;
+      }
+
+      .carousel-button:hover {
+        background-color: rgba(255, 255, 255, 0.8);
+      }
+
+      .carousel-button.prev {
+        left: 20px;
+      }
+
+      .carousel-button.next {
+        right: 20px;
+      }
+      .carousel-button svg {
+        width: 24px;
+        height: 24px;
+      }
+
+      /* Estilo para la barra de mensajes dinámicos */
+      #dynamic-message-bar {
+        background-color: #8cbcb9; /* Color complemento 1 */
+        color: #6a2e35; /* Color oscuro de la marca */
+        text-align: center;
+        padding: 8px 0;
+        font-size: 0.9em;
+        width: 100%;
+      }
+      /* Asegura que el encabezado fijo tenga espacio para la barra de mensajes */
+      header {
+        top: 35px; /* Ajusta este valor según la altura de la barra de mensajes */
+      }
+      /* Ajuste para el contenido principal debajo del encabezado fijo */
+      .pt-20 {
+        padding-top: calc(
+          20px + 35px
+        ); /* Suma el ajuste original más la altura de la barra */
+      }
+    </style>
   </head>
   <body class="font-sans text-marca-oscuro bg-marca-claro" data-lang="es">
     <header class="bg-white shadow-lg fixed top-0 left-0 right-0 z-50">
+      <div
+        id="dynamic-message-bar"
+        class="w-full text-sm py-2 text-center bg-marca-complemento1 text-marca-oscuro"
+      >
+        <span lang="es">Cargando mensajes...</span>
+        <span lang="en">Loading messages...</span>
+      </div>
       <nav
         class="container mx-auto px-6 py-4 flex justify-between items-center"
       >
@@ -147,7 +207,8 @@
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div
-            class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl"
+            class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl product-card"
+            data-category="artesanales"
           >
             <i data-lucide="cake" class="w-12 h-12 text-marca-acento1 mb-4"></i>
             <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
@@ -169,7 +230,8 @@
             >
           </div>
           <div
-            class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl"
+            class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl product-card"
+            data-category="cupcakes"
           >
             <i
               data-lucide="cupcake"
@@ -192,7 +254,8 @@
             >
           </div>
           <div
-            class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl"
+            class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl product-card"
+            data-category="bocaditos-dulces"
           >
             <i
               data-lucide="cookie"
@@ -217,7 +280,8 @@
             >
           </div>
           <div
-            class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl"
+            class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl product-card"
+            data-category="artesanales"
           >
             <i data-lucide="cake" class="w-12 h-12 text-marca-acento1 mb-4"></i>
             <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
@@ -239,7 +303,8 @@
             >
           </div>
           <div
-            class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl"
+            class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl product-card"
+            data-category="postres"
           >
             <i
               data-lucide="ice-cream"
@@ -258,7 +323,8 @@
             >
           </div>
           <div
-            class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl"
+            class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl product-card"
+            data-category="postres"
           >
             <i
               data-lucide="bonfire"
@@ -279,6 +345,15 @@
             >
           </div>
         </div>
+        <div class="text-center mt-12">
+          <button
+            id="show-all-products"
+            class="inline-block bg-marca-acento1 hover:bg-marca-complemento2 text-marca-oscuro hover:text-white font-bold py-2 px-6 rounded-full focus:outline-none focus:shadow-outline transition duration-300 ease-in-out"
+          >
+            <span lang="es">Mostrar Todos los Productos</span>
+            <span lang="en">Show All Products</span>
+          </button>
+        </div>
       </div>
     </section>
 
@@ -289,7 +364,7 @@
           <span lang="en">Our Sweetness Gallery</span>
         </h2>
         <div class="pinterest-grid">
-          <div class="gallery-item">
+          <div class="gallery-item" data-category="artesanales">
             <img
               src="./image/Galería/artesanales/artesanales-01 Large.jpeg"
               alt="Torta Artesanal 1"
@@ -306,7 +381,7 @@
               <span lang="es">Artesanales</span><span lang="en">Artisanal</span>
             </div>
           </div>
-          <div class="gallery-item">
+          <div class="gallery-item" data-category="artesanales">
             <img
               src="./image/Galería/artesanales/artesanales-02 Large.jpeg"
               alt="Torta Artesanal 2"
@@ -323,7 +398,7 @@
               <span lang="es">Artesanales</span><span lang="en">Artisanal</span>
             </div>
           </div>
-          <div class="gallery-item">
+          <div class="gallery-item" data-category="artesanales">
             <img
               src="./image/Galería/artesanales/artesanales-03 Large.jpeg"
               alt="Torta Artesanal 3"
@@ -340,7 +415,7 @@
               <span lang="es">Artesanales</span><span lang="en">Artisanal</span>
             </div>
           </div>
-          <div class="gallery-item">
+          <div class="gallery-item" data-category="artesanales">
             <img
               src="./image/Galería/artesanales/artesanales-04 Large.jpeg"
               alt="Torta Artesanal 4"
@@ -358,7 +433,7 @@
             </div>
           </div>
 
-          <div class="gallery-item">
+          <div class="gallery-item" data-category="bocaditos-dulces">
             <img
               src="./image/Galería/bocaditos dulces/bocaditos dulces-01.jpeg"
               alt="Bocadito Dulce 1"
@@ -376,7 +451,7 @@
               ><span lang="en">Sweet bites</span>
             </div>
           </div>
-          <div class="gallery-item">
+          <div class="gallery-item" data-category="bocaditos-dulces">
             <img
               src="./image/Galería/bocaditos dulces/bocaditos dulces-02.jpeg"
               alt="Bocadito Dulce 2"
@@ -394,7 +469,7 @@
               ><span lang="en">Sweet bites</span>
             </div>
           </div>
-          <div class="gallery-item">
+          <div class="gallery-item" data-category="bocaditos-dulces">
             <img
               src="./image/Galería/bocaditos dulces/bocaditos dulces-03.jpeg"
               alt="Bocadito Dulce 3"
@@ -412,7 +487,7 @@
               ><span lang="en">Sweet bites</span>
             </div>
           </div>
-          <div class="gallery-item">
+          <div class="gallery-item" data-category="bocaditos-dulces">
             <img
               src="./image/Galería/bocaditos dulces/bocaditos dulces-04.jpeg"
               alt="Bocadito Dulce 4"
@@ -430,7 +505,7 @@
               ><span lang="en">Sweet bites</span>
             </div>
           </div>
-          <div class="gallery-item">
+          <div class="gallery-item" data-category="bocaditos-dulces">
             <img
               src="./image/Galería/bocaditos dulces/bocaditos dulces-05.jpeg"
               alt="Bocadito Dulce 5"
@@ -448,7 +523,7 @@
               ><span lang="en">Sweet bites</span>
             </div>
           </div>
-          <div class="gallery-item">
+          <div class="gallery-item" data-category="bocaditos-dulces">
             <img
               src="./image/Galería/bocaditos dulces/bocaditos dulces-06.jpeg"
               alt="Bocadito Dulce 6"
@@ -467,7 +542,7 @@
             </div>
           </div>
 
-          <div class="gallery-item">
+          <div class="gallery-item" data-category="box-cake">
             <img
               src="./image/Galería/box cake/box cake-01.jpeg"
               alt="Box Cake 1"
@@ -484,7 +559,7 @@
               <span lang="es">Box cake</span><span lang="en">Box cake</span>
             </div>
           </div>
-          <div class="gallery-item">
+          <div class="gallery-item" data-category="box-cake">
             <img
               src="./image/Galería/box cake/box cake-02.jpeg"
               alt="Box Cake 2"
@@ -501,7 +576,7 @@
               <span lang="es">Box cake</span><span lang="en">Box cake</span>
             </div>
           </div>
-          <div class="gallery-item">
+          <div class="gallery-item" data-category="box-cake">
             <img
               src="./image/Galería/box cake/box cake-03.jpeg"
               alt="Box Cake 3"
@@ -519,7 +594,7 @@
             </div>
           </div>
 
-          <div class="gallery-item">
+          <div class="gallery-item" data-category="cupcakes">
             <img
               src="./image/Galería/cupcakes/cupcakes-01.jpeg"
               alt="Cupcake 1"
@@ -536,7 +611,7 @@
               <span lang="es">Cupcakes</span><span lang="en">Cupcakes</span>
             </div>
           </div>
-          <div class="gallery-item">
+          <div class="gallery-item" data-category="cupcakes">
             <img
               src="./image/Galería/cupcakes/cupcakes-02.jpeg"
               alt="Cupcake 2"
@@ -553,7 +628,7 @@
               <span lang="es">Cupcakes</span><span lang="en">Cupcakes</span>
             </div>
           </div>
-          <div class="gallery-item">
+          <div class="gallery-item" data-category="cupcakes">
             <img
               src="./image/Galería/cupcakes/cupcakes-03.jpeg"
               alt="Cupcake 3"
@@ -570,7 +645,7 @@
               <span lang="es">Cupcakes</span><span lang="en">Cupcakes</span>
             </div>
           </div>
-          <div class="gallery-item">
+          <div class="gallery-item" data-category="cupcakes">
             <img
               src="./image/Galería/cupcakes/cupcakes-04.jpeg"
               alt="Cupcake 4"
@@ -588,7 +663,7 @@
             </div>
           </div>
 
-          <div class="gallery-item">
+          <div class="gallery-item" data-category="postres">
             <img
               src="./image/Galería/postres/postres-01.jpeg"
               alt="Postre 1"
@@ -605,7 +680,7 @@
               <span lang="es">Postres</span><span lang="en">Desserts</span>
             </div>
           </div>
-          <div class="gallery-item">
+          <div class="gallery-item" data-category="postres">
             <img
               src="./image/Galería/postres/postres-02.jpeg"
               alt="Postre 2"
@@ -622,7 +697,7 @@
               <span lang="es">Postres</span><span lang="en">Desserts</span>
             </div>
           </div>
-          <div class="gallery-item">
+          <div class="gallery-item" data-category="postres">
             <img
               src="./image/Galería/postres/postres-03.jpeg"
               alt="Postre 3"
@@ -639,7 +714,7 @@
               <span lang="es">Postres</span><span lang="en">Desserts</span>
             </div>
           </div>
-          <div class="gallery-item">
+          <div class="gallery-item" data-category="postres">
             <img
               src="./image/Galería/postres/postres-04.jpeg"
               alt="Postre 4"
@@ -657,7 +732,7 @@
             </div>
           </div>
 
-          <div class="gallery-item">
+          <div class="gallery-item" data-category="tematicas">
             <img
               src="./image/Galería/artesanales/artesanales-02 Large.jpeg"
               alt="Tematica Ejemplo"

@@ -33,9 +33,81 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
     <link rel="stylesheet" href="style.css" />
+    <style>
+      /* Añadir estilos para los botones de navegación del carrusel */
+      .carousel-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        /* Ajustar la posición para que estén dentro del contenedor del carrusel */
+        z-index: 20; /* Asegura que estén por encima de las imágenes y la capa oscura */
+        padding: 12px;
+        background-color: rgba(
+          255,
+          255,
+          255,
+          0.5
+        ); /* Fondo semi-transparente */
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        color: #6a2e35; /* Color oscuro de la marca */
+      }
+
+      .carousel-button:hover {
+        background-color: rgba(
+          255,
+          255,
+          255,
+          0.8
+        ); /* Fondo más opaco al pasar el ratón */
+      }
+
+      .carousel-button.prev {
+        left: 20px; /* Posición a la izquierda */
+      }
+
+      .carousel-button.next {
+        right: 20px; /* Posición a la derecha */
+      }
+      /* Asegura que los íconos Lucide dentro del botón tengan un tamaño apropiado */
+      .carousel-button svg {
+        width: 24px;
+        height: 24px;
+      }
+
+      /* Estilo para la barra de mensajes dinámicos */
+      #dynamic-message-bar {
+        background-color: #8cbcb9; /* Color complemento 1 */
+        color: #6a2e35; /* Color oscuro de la marca */
+        text-align: center;
+        padding: 8px 0;
+        font-size: 0.9em;
+        /* Asegura que esté al inicio del header */
+        width: 100%;
+      }
+      /* Asegura que el encabezado fijo tenga espacio para la barra de mensajes */
+      header {
+        top: 35px; /* Ajusta este valor según la altura de la barra de mensajes */
+      }
+      /* Ajuste para el contenido principal debajo del encabezado fijo */
+      .pt-20 {
+        padding-top: calc(
+          20px + 35px
+        ); /* Suma el ajuste original más la altura de la barra */
+      }
+    </style>
   </head>
   <body class="font-sans text-marca-oscuro bg-marca-claro" data-lang="es">
     <header class="bg-white shadow-lg fixed top-0 left-0 right-0 z-50">
+      <div
+        id="dynamic-message-bar"
+        class="w-full text-sm py-2 text-center bg-marca-complemento1 text-marca-oscuro"
+      >
+        <span lang="es">Cargando mensajes...</span>
+        <span lang="en">Loading messages...</span>
+      </div>
       <nav
         class="container mx-auto px-6 py-4 flex justify-between items-center"
       >
@@ -167,6 +239,39 @@
         </div>
       </div>
 
+      <button id="carousel-prev" class="carousel-button prev">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-chevron-left"
+        >
+          <path d="m15 18-6-6 6-6" />
+        </svg>
+      </button>
+      <button id="carousel-next" class="carousel-button next">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-chevron-right"
+        >
+          <path d="m9 18 6-6-6-6" />
+        </svg>
+      </button>
+
       <div class="absolute inset-0 bg-marca-oscuro opacity-25"></div>
 
       <div
@@ -256,41 +361,6 @@
     </div>
     <script>
       lucide.createIcons();
-    </script>
-    <script>
-      let slideIndex = 0;
-      const slides = document.querySelectorAll("#inicio .carousel-slide");
-      const totalSlides = slides.length;
-      const intervalTime = 5000; // Tiempo en milisegundos (5 segundos)
-
-      function showSlides() {
-        // Oculta todas las slides
-        slides.forEach((slide) => {
-          slide.classList.remove("active");
-        });
-
-        // Muestra la slide actual
-        slides[slideIndex].classList.add("active");
-
-        // Avanza al siguiente índice
-        slideIndex++;
-
-        // Reinicia al principio si llega al final
-        if (slideIndex >= totalSlides) {
-          slideIndex = 0;
-        }
-
-        // Llama a la función nuevamente después del intervalo de tiempo
-        setTimeout(showSlides, intervalTime);
-      }
-
-      // Inicia el carrusel al cargar la página
-      document.addEventListener("DOMContentLoaded", () => {
-        if (totalSlides > 0) {
-          // Solo inicia si hay slides
-          showSlides();
-        }
-      });
     </script>
     <script src="script.js"></script>
   </body>
