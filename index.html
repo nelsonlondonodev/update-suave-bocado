@@ -14,24 +14,24 @@
               // Paleta de colores de la marca
               "marca-claro": "#FFE8E1", // Principal 1
               "marca-oscuro": "#6A2E35", // Principal 2
-              "marca-acento1": "#FFC4D1", // Complementario 1 (Rosa)
+              "marca-acento1": "#FFC4D1", // Complementario 1 (Rosa) - Nota: El manual usa FCA9C1, ajustando a FF C4 D1 usado previamente
               "marca-complemento1": "#8CBCB9", // Complementario 2 (Verde azulado claro)
               "marca-complemento2": "#3C6E71", // Complementario 3 (Verde azulado oscuro)
             },
             fontFamily: {
-              // Tipografía amigable (ejemplo, podrías cambiarla)
-              sans: ["Poppins", "sans-serif"],
-              serif: ["Playfair Display", "serif"],
+              // Tipografía según el manual de marca
+              sans: ["Montserrat", "sans-serif"], // Texto corrido: Montserrat regular
+              serif: ["Quicksand", "sans-serif"], // Títulos: Quicksand bold - Nota: Quicksand es sans-serif, pero la marca lo usa para títulos (usaremos font-bold en los elementos)
             },
           },
         },
       };
     </script>
     <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&family=Quicksand:wght@700&display=swap"
       rel="stylesheet"
     />
-    <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="style.css" />
     <style>
       /* Añadir estilos para los botones de navegación del carrusel */
@@ -175,6 +175,7 @@
               stroke-linecap="round"
               stroke-linejoin="round"
               class="lucide lucide-menu"
+              data-lucide="menu"
             >
               <line x1="4" x2="20" y1="12" y2="12" />
               <line x1="4" x2="20" y1="6" y2="6" />
@@ -218,22 +219,57 @@
       <div class="carousel-container absolute inset-0">
         <div class="carousel-slide active">
           <img
-            src="./image/imagen1Bg Large.jpeg"
-            alt="Imagen de repostería 1"
+            src="./image/carrusel/carrusel-1.jpeg"
+            alt="Imagen de carrusel 1"
             loading="lazy"
           />
         </div>
         <div class="carousel-slide">
           <img
-            src="./image/imagen2Bg Large copy.jpeg"
-            alt="Imagen de repostería 2"
+            src="./image/carrusel/carrusel-2.jpeg"
+            alt="Imagen de carrusel 2"
             loading="lazy"
           />
         </div>
         <div class="carousel-slide">
           <img
-            src="./image/imagen2Bg Large copy.jpeg"
-            alt="Imagen de repostería 3"
+            src="./image/carrusel/carrusel-3.jpeg"
+            alt="Imagen de carrusel 3"
+            loading="lazy"
+          />
+        </div>
+        <div class="carousel-slide">
+          <img
+            src="./image/carrusel/carrusel-4.jpeg"
+            alt="Imagen de carrusel 4"
+            loading="lazy"
+          />
+        </div>
+        <div class="carousel-slide">
+          <img
+            src="./image/carrusel/carrusel-5.jpeg"
+            alt="Imagen de carrusel 5"
+            loading="lazy"
+          />
+        </div>
+        <div class="carousel-slide">
+          <img
+            src="./image/carrusel/carrusel-6.jpeg"
+            alt="Imagen de carrusel 6"
+            loading="lazy"
+          />
+        </div>
+        <div class="carousel-slide">
+          <img
+            src="./image/carrusel/carrusel-7.jpeg"
+            alt="Imagen de carrusel 7"
+            loading="lazy"
+          />
+        </div>
+        <div class="carousel-slide">
+          <img
+            src="./image/carrusel/carrusel-8.jpeg"
+            alt="Imagen de carrusel 8"
             loading="lazy"
           />
         </div>
@@ -291,11 +327,99 @@
         </p>
         <a
           href="productos-galeria.html"
-          class="mt-8 inline-block bg-marca-acento1 text-marca-oscuro font-semibold py-3 px-8 rounded-full hover:bg-marca-complemento2 hover:text-white transition duration-300 ease-in-out shadow-lg"
+          class="mt-8 inline-block bg-marca-acento1 hover:bg-marca-complemento2 text-marca-oscuro font-semibold py-3 px-8 rounded-full hover:text-white transition duration-300 ease-in-out shadow-lg"
         >
           <span lang="es">Explora Nuestros Productos</span>
           <span lang="en">Explore Our Products</span>
         </a>
+      </div>
+    </section>
+
+    <section id="featured-products" class="py-16 bg-marca-complemento1">
+      <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-serif text-marca-oscuro text-center mb-12">
+          <span lang="es">Nuestros Productos Estrella</span>
+          <span lang="en">Our Featured Products</span>
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div
+            class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl"
+          >
+            <img
+              src="./image/placeholder-featured1.jpg"
+              alt="Producto Destacado 1"
+              class="w-full h-40 object-cover rounded-md mb-4"
+              loading="lazy"
+            />
+            <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
+              <span lang="es">Nombre Producto 1</span>
+              <span lang="en">Product Name 1</span>
+            </h3>
+            <p class="text-marca-oscuro mb-4">
+              <span lang="es"
+                >Breve descripción o gancho de este producto estrella.</span
+              >
+              <span lang="en"
+                >Brief description or hook for this featured product.</span
+              >
+            </p>
+          </div>
+
+          <div
+            class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl"
+          >
+            <img
+              src="./image/placeholder-featured2.jpg"
+              alt="Producto Destacado 2"
+              class="w-full h-40 object-cover rounded-md mb-4"
+              loading="lazy"
+            />
+            <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
+              <span lang="es">Nombre Producto 2</span>
+              <span lang="en">Product Name 2</span>
+            </h3>
+            <p class="text-marca-oscuro mb-4">
+              <span lang="es"
+                >Breve descripción o gancho de este producto estrella.</span
+              >
+              <span lang="en"
+                >Brief description or hook for this featured product.</span
+              >
+            </p>
+          </div>
+
+          <div
+            class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl"
+          >
+            <img
+              src="./image/placeholder-featured3.jpg"
+              alt="Producto Destacado 3"
+              class="w-full h-40 object-cover rounded-md mb-4"
+              loading="lazy"
+            />
+            <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
+              <span lang="es">Nombre Producto 3</span>
+              <span lang="en">Product Name 3</span>
+            </h3>
+            <p class="text-marca-oscuro mb-4">
+              <span lang="es"
+                >Breve descripción o gancho de este producto estrella.</span
+              >
+              <span lang="en"
+                >Brief description or hook for this featured product.</span
+              >
+            </p>
+          </div>
+        </div>
+        <div class="text-center mt-12">
+          <a
+            href="productos-galeria.html"
+            class="inline-block bg-marca-acento1 hover:bg-marca-complemento2 text-marca-oscuro hover:text-white font-bold py-2 px-6 rounded-full focus:outline-none focus:shadow-outline transition duration-300 ease-in-out"
+          >
+            <span lang="es">Ver Todos Nuestros Productos</span>
+            <span lang="en">View All Our Products</span>
+          </a>
+        </div>
       </div>
     </section>
 
@@ -359,9 +483,6 @@
         </button>
       </div>
     </div>
-    <script>
-      lucide.createIcons();
-    </script>
     <script src="script.js"></script>
   </body>
 </html>

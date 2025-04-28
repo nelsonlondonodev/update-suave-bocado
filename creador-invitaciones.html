@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title lang="es">Suave bocado Repostería - Creador de Invitaciones</title>
+    <title lang="en">Suave bocado Bakery - Invitation Creator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              // Paleta de colores de la marca
+              "marca-claro": "#FFE8E1", // Principal 1
+              "marca-oscuro": "#6A2E35", // Principal 2
+              "marca-acento1": "#FFC4D1", // Complementario 1 (Rosa)
+              "marca-complemento1": "#8CBCB9", // Complementario 2 (Verde azulado claro)
+              "marca-complemento2": "#3C6E71", // Complementario 3 (Verde azulado oscuro)
+            },
+            fontFamily: {
+              // Tipografía amigable (ejemplo, podrías cambiarla)
+              sans: ["Poppins", "sans-serif"],
+              serif: ["Playfair Display", "serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      /* Asegura que el encabezado fijo tenga espacio para la barra de mensajes */
+      header {
+        top: 35px; /* Ajusta este valor según la altura de la barra de mensajes */
+      }
+      /* Ajuste para el contenido principal debajo del encabezado fijo */
+      .pt-20 {
+        padding-top: calc(
+          20px + 35px
+        ); /* Suma el ajuste original más la altura de la barra */
+      }
+      /* Estilo para la barra de mensajes dinámicos */
+      #dynamic-message-bar {
+        background-color: #8cbcb9; /* Color complemento 1 */
+        color: #6a2e35; /* Color oscuro de la marca */
+        text-align: center;
+        padding: 8px 0;
+        font-size: 0.9em;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body class="font-sans text-marca-oscuro bg-marca-claro" data-lang="es">
+    <header class="bg-white shadow-lg fixed top-0 left-0 right-0 z-50">
+      <div
+        id="dynamic-message-bar"
+        class="w-full text-sm py-2 text-center bg-marca-complemento1 text-marca-oscuro"
+      >
+        <span lang="es">Cargando mensajes...</span>
+        <span lang="en">Loading messages...</span>
+      </div>
+      <nav
+        class="container mx-auto px-6 py-4 flex justify-between items-center"
+      >
+        <a href="index.html" class="flex items-center">
+          <img
+            src="./image/Logo suave1.png"
+            alt="Logo Suave bocado Repostería"
+            class="logo-img mr-2"
+          />
+        </a>
+
+        <div id="language-switcher" class="flex items-center space-x-2">
+          <button
+            class="lang-button text-marca-oscuro hover:text-marca-complemento2 transition duration-300 active"
+            data-lang="es"
+          >
+            ES
+          </button>
+          <span class="text-marca-oscuro">|</span>
+          <button
+            class="lang-button text-marca-oscuro hover:text-marca-complemento2 transition duration-300"
+            data-lang="en"
+          >
+            EN
+          </button>
+        </div>
+
+        <div class="hidden md:flex space-x-6">
+          <a
+            href="index.html"
+            class="text-marca-oscuro hover:text-marca-complemento2 transition duration-300"
+            ><span lang="es">Inicio</span><span lang="en">Home</span></a
+          >
+          <a
+            href="productos-galeria.html"
+            class="text-marca-oscuro hover:text-marca-complemento2 transition duration-300"
+            ><span lang="es">Productos y Galería</span
+            ><span lang="en">Products & Gallery</span></a
+          >
+          <a
+            href="nosotros-resenas.html"
+            class="text-marca-oscuro hover:text-marca-complemento2 transition duration-300"
+            ><span lang="es">Nosotros y Reseñas</span
+            ><span lang="en">About Us & Reviews</span></a
+          >
+          <a
+            href="contacto.html"
+            class="text-marca-oscuro hover:text-marca-complemento2 transition duration-300"
+            ><span lang="es">Contacto</span><span lang="en">Contact</span></a
+          >
+          <a
+            href="creador-invitaciones.html"
+            class="text-marca-oscuro hover:text-marca-complemento2 transition duration-300"
+            ><span lang="es">Crear Invitación</span
+            ><span lang="en">Create Invitation</span></a
+          >
+        </div>
+        <div class="md:hidden">
+          <button
+            id="mobile-menu-button"
+            class="text-marca-oscuro focus:outline-none"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-menu"
+            >
+              <line x1="4" x2="20" y1="12" y2="12" />
+              <line x1="4" x2="20" y1="6" y2="6" />
+              <line x1="4" x2="20" y1="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+      </nav>
+      <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg">
+        <a
+          href="index.html"
+          class="block px-6 py-3 text-marca-oscuro hover:bg-marca-acento1 transition duration-300"
+          ><span lang="es">Inicio</span><span lang="en">Home</span></a
+        >
+        <a
+          href="productos-galeria.html"
+          class="block px-6 py-3 text-marca-oscuro hover:bg-marca-acento1 transition duration-300"
+          ><span lang="es">Productos y Galería</span
+          ><span lang="en">Products & Gallery</span></a
+        >
+        <a
+          href="nosotros-resenas.html"
+          class="block px-6 py-3 text-marca-oscuro hover:bg-marca-acento1 transition duration-300"
+          ><span lang="es">Nosotros y Reseñas</span
+          ><span lang="en">About Us & Reviews</span></a
+        >
+        <a
+          href="contacto.html"
+          class="block px-6 py-3 text-marca-oscuro hover:bg-marca-acento1 transition duration-300"
+          ><span lang="es">Contacto</span><span lang="en">Contact</span></a
+        >
+        <a
+          href="creador-invitaciones.html"
+          class="block px-6 py-3 text-marca-oscuro hover:bg-marca-acento1 transition duration-300"
+          ><span lang="es">Crear Invitación</span
+          ><span lang="en">Create Invitation</span></a
+        >
+      </div>
+    </header>
+
+    <div class="pt-20"></div>
+
+    <section id="creador-invitaciones" class="py-16 bg-marca-claro">
+      <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-serif text-marca-oscuro text-center mb-12">
+          <span lang="es">Crea tu Invitación Personalizada</span>
+          <span lang="en">Create Your Personalized Invitation</span>
+        </h2>
+
+        <div class="flex flex-col lg:flex-row gap-12">
+          <div class="lg:w-1/2 bg-white p-8 rounded-lg shadow-lg">
+            <h3 class="text-2xl font-serif text-marca-oscuro mb-6">
+              <span lang="es">Detalles del Evento</span>
+              <span lang="en">Event Details</span>
+            </h3>
+            <form id="invitation-form">
+              <div class="mb-4">
+                <label
+                  for="event-type"
+                  class="block text-marca-oscuro text-sm font-bold mb-2"
+                  ><span lang="es">Tipo de Evento:</span
+                  ><span lang="en">Event Type:</span></label
+                >
+                <select
+                  id="event-type"
+                  name="event-type"
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-marca-oscuro leading-tight focus:outline-none focus:shadow-outline"
+                  required
+                >
+                  <option value="">
+                    <span lang="es">Selecciona uno</span
+                    ><span lang="en">Select one</span>
+                  </option>
+                  <option value="cumpleanos">
+                    <span lang="es">Cumpleaños</span
+                    ><span lang="en">Birthday</span>
+                  </option>
+                  <option value="boda">
+                    <span lang="es">Boda</span><span lang="en">Wedding</span>
+                  </option>
+                  <option value="bautizo">
+                    <span lang="es">Bautizo</span><span lang="en">Baptism</span>
+                  </option>
+                  <option value="babyshower">
+                    <span lang="es">Baby Shower</span
+                    ><span lang="en">Baby Shower</span>
+                  </option>
+                  <option value="otro">
+                    <span lang="es">Otro</span><span lang="en">Other</span>
+                  </option>
+                </select>
+              </div>
+              <div class="mb-4">
+                <label
+                  for="honored-name"
+                  class="block text-marca-oscuro text-sm font-bold mb-2"
+                  ><span lang="es">Nombre del Homenajeado/a:</span
+                  ><span lang="en">Honoree's Name:</span></label
+                >
+                <input
+                  type="text"
+                  id="honored-name"
+                  name="honored-name"
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-marca-oscuro leading-tight focus:outline-none focus:shadow-outline"
+                  required
+                />
+              </div>
+              <div class="mb-4">
+                <label
+                  for="event-date"
+                  class="block text-marca-oscuro text-sm font-bold mb-2"
+                  ><span lang="es">Fecha del Evento:</span
+                  ><span lang="en">Event Date:</span></label
+                >
+                <input
+                  type="date"
+                  id="event-date"
+                  name="event-date"
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-marca-oscuro leading-tight focus:outline-none focus:shadow-outline"
+                  required
+                />
+              </div>
+              <div class="mb-4">
+                <label
+                  for="event-time"
+                  class="block text-marca-oscuro text-sm font-bold mb-2"
+                  ><span lang="es">Hora del Evento:</span
+                  ><span lang="en">Event Time:</span></label
+                >
+                <input
+                  type="time"
+                  id="event-time"
+                  name="event-time"
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-marca-oscuro leading-tight focus:outline-none focus:shadow-outline"
+                  required
+                />
+              </div>
+              <div class="mb-4">
+                <label
+                  for="event-location"
+                  class="block text-marca-oscuro text-sm font-bold mb-2"
+                  ><span lang="es">Lugar del Evento:</span
+                  ><span lang="en">Event Location:</span></label
+                >
+                <input
+                  type="text"
+                  id="event-location"
+                  name="event-location"
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-marca-oscuro leading-tight focus:outline-none focus:shadow-outline"
+                  required
+                />
+              </div>
+              <div class="mb-4">
+                <label
+                  for="rsvp-info"
+                  class="block text-marca-oscuro text-sm font-bold mb-2"
+                  ><span lang="es">Información de Confirmación (RSVP):</span
+                  ><span lang="en">RSVP Information:</span></label
+                >
+                <textarea
+                  id="rsvp-info"
+                  name="rsvp-info"
+                  rows="3"
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-marca-oscuro leading-tight focus:outline-none focus:shadow-outline"
+                ></textarea>
+              </div>
+              <div class="mb-6">
+                <label
+                  for="additional-notes"
+                  class="block text-marca-oscuro text-sm font-bold mb-2"
+                  ><span lang="es">Notas Adicionales (Opcional):</span
+                  ><span lang="en">Additional Notes (Optional):</span></label
+                >
+                <textarea
+                  id="additional-notes"
+                  name="additional-notes"
+                  rows="3"
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-marca-oscuro leading-tight focus:outline-none focus:shadow-outline"
+                ></textarea>
+              </div>
+
+              <h3 class="text-2xl font-serif text-marca-oscuro mb-6">
+                <span lang="es">Selecciona una Plantilla</span>
+                <span lang="en">Select a Template</span>
+              </h3>
+              <div
+                id="template-selection"
+                class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6"
+              >
+                <div
+                  class="template-option border-2 border-marca-claro rounded-lg overflow-hidden cursor-pointer hover:border-marca-acento1 transition duration-300"
+                  data-template="template1"
+                >
+                  <img
+                    src="placeholder-template1.jpg"
+                    alt="Plantilla 1"
+                    class="w-full h-auto"
+                  />
+                </div>
+                <div
+                  class="template-option border-2 border-marca-claro rounded-lg overflow-hidden cursor-pointer hover:border-marca-acento1 transition duration-300"
+                  data-template="template2"
+                >
+                  <img
+                    src="placeholder-template2.jpg"
+                    alt="Plantilla 2"
+                    class="w-full h-auto"
+                  />
+                </div>
+                <div
+                  class="template-option border-2 border-marca-claro rounded-lg overflow-hidden cursor-pointer hover:border-marca-acento1 transition duration-300"
+                  data-template="template3"
+                >
+                  <img
+                    src="placeholder-template3.jpg"
+                    alt="Plantilla 3"
+                    class="w-full h-auto"
+                  />
+                </div>
+              </div>
+
+              <div class="flex items-center justify-center">
+                <button
+                  type="submit"
+                  class="bg-marca-acento1 hover:bg-marca-complemento2 text-marca-oscuro hover:text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-300 ease-in-out"
+                >
+                  <span lang="es">Generar Invitación</span>
+                  <span lang="en">Generate Invitation</span>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div class="lg:w-1/2 bg-white p-8 rounded-lg shadow-lg">
+            <h3 class="text-2xl font-serif text-marca-oscuro mb-6">
+              <span lang="es">Vista Previa de la Invitación</span>
+              <span lang="en">Invitation Preview</span>
+            </h3>
+            <div
+              id="invitation-preview"
+              class="w-full h-auto border-2 border-dashed border-gray-300 flex items-center justify-center text-center text-gray-500 p-4"
+            >
+              <span lang="es"
+                >Tu invitación aparecerá aquí después de ingresar los
+                detalles.</span
+              >
+              <span lang="en"
+                >Your invitation will appear here after entering details.</span
+              >
+            </div>
+
+            <h3 class="text-2xl font-serif text-marca-oscuro mt-8 mb-4">
+              <span lang="es">Opciones Adicionales</span>
+              <span lang="en">Additional Options</span>
+            </h3>
+            <p class="text-marca-oscuro text-sm italic">
+              <span lang="es"
+                >Aquí podrías añadir opciones como formato de descarga (JPG,
+                PDF) o tamaño de la invitación. Esto requeriría lógica de
+                backend.</span
+              >
+              <span lang="en"
+                >Here you could add options like download format (JPG, PDF) or
+                invitation size. This would require backend logic.</span
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="bg-marca-oscuro text-white py-8 text-center">
+      <div class="container mx-auto px-6">
+        <p>
+          <span lang="es"
+            >© 2025 Suave bocado Repostería. Todos los derechos
+            reservados.</span
+          >
+          <span lang="en"
+            >© 2025 Suave bocado Repostería. All rights reserved.</span
+          >
+        </p>
+      </div>
+    </footer>
+
+    <div id="chatbot-widget" class="collapsed">
+      <div id="chat-header">
+        <span lang="es">Pregúntale a Suave Bocado</span>
+        <span lang="en">Ask Suave Bocado</span>
+        <button id="toggle-chat" class="text-white focus:outline-none">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-minus"
+          >
+            <line x1="5" x2="19" y1="12" y2="12" />
+          </svg>
+        </button>
+      </div>
+      <div id="chat-body">
+        <div class="message bot">
+          <span lang="es">¡Hola! Soy bocadito</span>
+          <span lang="en">¡Hello! I am bocadito</span>
+        </div>
+      </div>
+      <div id="chat-input-area">
+        <input
+          type="text"
+          id="chat-input"
+          placeholder="Escribe tu mensaje..."
+          lang="es"
+        />
+        <input
+          type="text"
+          id="chat-input-en"
+          placeholder="Type your message..."
+          lang="en"
+        />
+        <button id="send-button">
+          <span lang="es">Enviar</span>
+          <span lang="en">Send</span>
+        </button>
+      </div>
+    </div>
+    <script>
+      lucide.createIcons();
+    </script>
+    <script src="script.js"></script>
+  </body>
+</html>
