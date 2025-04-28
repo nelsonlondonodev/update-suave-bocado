@@ -14,24 +14,24 @@
               // Paleta de colores de la marca
               "marca-claro": "#FFE8E1", // Principal 1
               "marca-oscuro": "#6A2E35", // Principal 2
-              "marca-acento1": "#FFC4D1", // Complementario 1 (Rosa)
+              "marca-acento1": "#FFC4D1", // Complementario 1 (Rosa) - Nota: El manual usa FCA9C1, ajustando a FF C4 D1 usado previamente
               "marca-complemento1": "#8CBCB9", // Complementario 2 (Verde azulado claro)
               "marca-complemento2": "#3C6E71", // Complementario 3 (Verde azulado oscuro)
             },
             fontFamily: {
-              // Tipografía amigable (ejemplo, podrías cambiarla)
-              sans: ["Poppins", "sans-serif"],
-              serif: ["Playfair Display", "serif"],
+              // Tipografía según el manual de marca
+              sans: ["Montserrat", "sans-serif"], // Texto corrido: Montserrat regular
+              serif: ["Quicksand", "sans-serif"], // Títulos: Quicksand bold - Nota: Quicksand es sans-serif, pero la marca lo usa para títulos (usaremos font-bold en los elementos)
             },
           },
         },
       };
     </script>
     <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&family=Quicksand:wght@700&display=swap"
       rel="stylesheet"
     />
-    <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="style.css" />
     <style>
       /* Añadir estilos para los botones de navegación del carrusel (aunque no esté el carrusel en esta página, se mantienen por si acaso o por consistencia, aunque idealmente solo irían en index.html o css específico) */
@@ -407,9 +407,7 @@
         </button>
       </div>
     </div>
-    <script>
-      lucide.createIcons();
-    </script>
+
     <script src="script.js"></script>
   </body>
 </html>
