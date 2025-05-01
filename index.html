@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="./image/favicon/favicon.png" />
     <title lang="es">Suave bocado Repostería - Inicio</title>
     <title lang="en">Suave bocado Bakery - Home</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -31,82 +32,32 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&family=Quicksand:wght@700&display=swap"
       rel="stylesheet"
     />
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
     <link rel="stylesheet" href="style.css" />
-    <style>
-      /* Añadir estilos para los botones de navegación del carrusel */
-      .carousel-button {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        /* Ajustar la posición para que estén dentro del contenedor del carrusel */
-        z-index: 20; /* Asegura que estén por encima de las imágenes y la capa oscura */
-        padding: 12px;
-        background-color: rgba(
-          255,
-          255,
-          255,
-          0.5
-        ); /* Fondo semi-transparente */
-        border: none;
-        border-radius: 50%;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-        color: #6a2e35; /* Color oscuro de la marca */
-      }
-
-      .carousel-button:hover {
-        background-color: rgba(
-          255,
-          255,
-          255,
-          0.8
-        ); /* Fondo más opaco al pasar el ratón */
-      }
-
-      .carousel-button.prev {
-        left: 20px; /* Posición a la izquierda */
-      }
-
-      .carousel-button.next {
-        right: 20px; /* Posición a la derecha */
-      }
-      /* Asegura que los íconos Lucide dentro del botón tengan un tamaño apropiado */
-      .carousel-button svg {
-        width: 24px;
-        height: 24px;
-      }
-
-      /* Estilo para la barra de mensajes dinámicos */
-      #dynamic-message-bar {
-        background-color: #8cbcb9; /* Color complemento 1 */
-        color: #6a2e35; /* Color oscuro de la marca */
-        text-align: center;
-        padding: 8px 0;
-        font-size: 0.9em;
-        /* Asegura que esté al inicio del header */
-        width: 100%;
-      }
-      /* Asegura que el encabezado fijo tenga espacio para la barra de mensajes */
-      header {
-        top: 35px; /* Ajusta este valor según la altura de la barra de mensajes */
-      }
-      /* Ajuste para el contenido principal debajo del encabezado fijo */
-      .pt-20 {
-        padding-top: calc(
-          20px + 35px
-        ); /* Suma el ajuste original más la altura de la barra */
-      }
-    </style>
   </head>
   <body class="font-sans text-marca-oscuro bg-marca-claro" data-lang="es">
     <header class="bg-white shadow-lg fixed top-0 left-0 right-0 z-50">
       <div
         id="dynamic-message-bar"
-        class="w-full text-sm py-2 text-center bg-marca-complemento1 text-marca-oscuro"
+        class="w-full text-sm py-2 text-center bg-marca-complemento1 text-marca-oscuro flex items-center justify-center relative"
       >
-        <span lang="es">Cargando mensajes...</span>
-        <span lang="en">Loading messages...</span>
+        <button id="message-prev" class="message-nav-button absolute left-2">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <span id="message-text">
+          <span lang="es">¡Pedidos personalizados para tus celebraciones!</span>
+          <span lang="en">Custom orders for your celebrations!</span>
+        </span>
+        <button id="message-next" class="message-nav-button absolute right-2">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
       </div>
       <nav
         class="container mx-auto px-6 py-4 flex justify-between items-center"
@@ -164,23 +115,7 @@
             id="mobile-menu-button"
             class="text-marca-oscuro focus:outline-none"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="lucide lucide-menu"
-              data-lucide="menu"
-            >
-              <line x1="4" x2="20" y1="12" y2="12" />
-              <line x1="4" x2="20" y1="6" y2="6" />
-              <line x1="4" x2="20" y1="18" y2="18" />
-            </svg>
+            <i class="fa-solid fa-bars"></i>
           </button>
         </div>
       </nav>
@@ -214,211 +149,427 @@
 
     <section
       id="inicio"
-      class="relative h-screen flex items-center justify-center"
+      class="relative h-screen flex items-center justify-center text-white text-center overflow-hidden"
     >
       <div class="carousel-container absolute inset-0">
-        <div class="carousel-slide active">
-          <img
-            src="./image/carrusel/carrusel-1.jpeg"
-            alt="Imagen de carrusel 1"
-            loading="lazy"
-          />
+        <div
+          class="carousel-slide active absolute inset-0 flex items-center justify-center"
+          style="
+            background: url('./image/carrusel/carrusel-1.jpeg') no-repeat center
+              center/cover;
+          "
+        >
+          <div class="bg-black bg-opacity-50 p-8 rounded-lg">
+            <h1 class="text-5xl font-serif mb-4">
+              <span lang="es">Delicias Hechas con Amor en Envigado</span>
+              <span lang="en">Delights Made with Love in Envigado</span>
+            </h1>
+            <p class="text-xl mb-8">
+              <span lang="es"
+                >"Donde cada bocado es una dulce historia artesanal"</span
+              >
+              <span lang="en"
+                >"Where every bite is a sweet artisanal story"</span
+              >
+            </p>
+            <a
+              href="productos-galeria.html"
+              class="bg-marca-acento1 hover:bg-marca-complemento2 text-marca-oscuro hover:text-white font-bold py-3 px-8 rounded-full transition duration-300 ease-in-out inline-block"
+            >
+              <span lang="es">Explora Nuestros Productos</span>
+              <span lang="en">Explore Our Products</span>
+            </a>
+          </div>
         </div>
-        <div class="carousel-slide">
-          <img
-            src="./image/carrusel/carrusel-2.jpeg"
-            alt="Imagen de carrusel 2"
-            loading="lazy"
-          />
+        <div
+          class="carousel-slide absolute inset-0 flex items-center justify-center"
+          style="
+            background: url('./image/carrusel/carrusel-2.jpeg') no-repeat center
+              center/cover;
+          "
+        >
+          <div class="bg-black bg-opacity-50 p-8 rounded-lg">
+            <h1 class="text-5xl font-serif mb-4">
+              <span lang="es">Endulza tus Momentos Especiales</span>
+              <span lang="en">Sweeten Your Special Moments</span>
+            </h1>
+            <p class="text-xl mb-8">
+              <span lang="es"
+                >Pasteles personalizados para cada celebración</span
+              >
+              <span lang="en">Personalized cakes for every celebration</span>
+            </p>
+            <a
+              href="contacto.html"
+              class="bg-marca-acento1 hover:bg-marca-complemento2 text-marca-oscuro hover:text-white font-bold py-3 px-8 rounded-full transition duration-300 ease-in-out inline-block"
+            >
+              <span lang="es">¡Haz tu Pedido!</span>
+              <span lang="en">Place Your Order!</span>
+            </a>
+          </div>
         </div>
-        <div class="carousel-slide">
-          <img
-            src="./image/carrusel/carrusel-3.jpeg"
-            alt="Imagen de carrusel 3"
-            loading="lazy"
-          />
+        <div
+          class="carousel-slide absolute inset-0 flex items-center justify-center"
+          style="
+            background: url('./image/carrusel/carrusel-3.jpeg') no-repeat center
+              center/cover;
+          "
+        >
+          <div class="bg-black bg-opacity-50 p-8 rounded-lg">
+            <h1 class="text-5xl font-serif mb-4">
+              <span lang="es">Sabores Únicos</span>
+              <span lang="en">Unique Flavors</span>
+            </h1>
+            <p class="text-xl mb-8">
+              <span lang="es">Postres artesanales que te sorprenderán</span>
+              <span lang="en">Artisanal desserts that will surprise you</span>
+            </p>
+            <a
+              href="productos-galeria.html"
+              class="bg-marca-acento1 hover:bg-marca-complemento2 text-marca-oscuro hover:text-white font-bold py-3 px-8 rounded-full transition duration-300 ease-in-out inline-block"
+            >
+              <span lang="es">Ver Postres</span>
+              <span lang="en">View Desserts</span>
+            </a>
+          </div>
         </div>
-        <div class="carousel-slide">
-          <img
-            src="./image/carrusel/carrusel-4.jpeg"
-            alt="Imagen de carrusel 4"
-            loading="lazy"
-          />
+        <div
+          class="carousel-slide absolute inset-0 flex items-center justify-center"
+          style="
+            background: url('./image/carrusel/carrusel-4.jpeg') no-repeat center
+              center/cover;
+          "
+        >
+          <div class="bg-black bg-opacity-50 p-8 rounded-lg">
+            <h1 class="text-5xl font-serif mb-4">
+              <span lang="es">Pedidos Especiales</span>
+              <span lang="en">Special Orders</span>
+            </h1>
+            <p class="text-xl mb-8">
+              <span lang="es">Cuéntanos tu idea y la haremos realidad</span>
+              <span lang="en">Tell us your idea and we'll make it reality</span>
+            </p>
+            <a
+              href="contacto.html"
+              class="bg-marca-acento1 hover:bg-marca-complemento2 text-marca-oscuro hover:text-white font-bold py-3 px-8 rounded-full transition duration-300 ease-in-out inline-block"
+            >
+              <span lang="es">Contactar</span>
+              <span lang="en">Contact Us</span>
+            </a>
+          </div>
         </div>
-        <div class="carousel-slide">
-          <img
-            src="./image/carrusel/carrusel-5.jpeg"
-            alt="Imagen de carrusel 5"
-            loading="lazy"
-          />
+        <div
+          class="carousel-slide absolute inset-0 flex items-center justify-center"
+          style="
+            background: url('./image/carrusel/carrusel-5.jpeg') no-repeat center
+              center/cover;
+          "
+        >
+          <div class="bg-black bg-opacity-50 p-8 rounded-lg">
+            <h1 class="text-5xl font-serif mb-4">
+              <span lang="es">Momentos Inolvidables</span>
+              <span lang="en">Unforgettable Moments</span>
+            </h1>
+            <p class="text-xl mb-8">
+              <span lang="es">Haz de cada celebración un evento dulce</span>
+              <span lang="en">Make every celebration a sweet event</span>
+            </p>
+            <a
+              href="nosotros-resenas.html"
+              class="bg-marca-acento1 hover:bg-marca-complemento2 text-marca-oscuro hover:text-white font-bold py-3 px-8 rounded-full transition duration-300 ease-in-out inline-block"
+            >
+              <span lang="es">Nuestra Historia</span>
+              <span lang="en">Our Story</span>
+            </a>
+          </div>
         </div>
-        <div class="carousel-slide">
-          <img
-            src="./image/carrusel/carrusel-6.jpeg"
-            alt="Imagen de carrusel 6"
-            loading="lazy"
-          />
+        <div
+          class="carousel-slide absolute inset-0 flex items-center justify-center"
+          style="
+            background: url('./image/carrusel/carrusel-6.jpeg') no-repeat center
+              center/cover;
+          "
+        >
+          <div class="bg-black bg-opacity-50 p-8 rounded-lg">
+            <h1 class="text-5xl font-serif mb-4">
+              <span lang="es">Visítanos en Envigado</span>
+              <span lang="en">Visit Us in Envigado</span>
+            </h1>
+            <p class="text-xl mb-8">
+              <span lang="es"
+                >¡Te esperamos con los brazos abiertos y el horno
+                encendido!</span
+              >
+              <span lang="en"
+                >We're waiting for you with open arms and the oven on!</span
+              >
+            </p>
+            <a
+              href="contacto.html"
+              class="bg-marca-acento1 hover:bg-marca-complemento2 text-marca-oscuro hover:text-white font-bold py-3 px-8 rounded-full transition duration-300 ease-in-out inline-block"
+            >
+              <span lang="es">Encuéntranos</span>
+              <span lang="en">Find Us</span>
+            </a>
+          </div>
         </div>
-        <div class="carousel-slide">
-          <img
-            src="./image/carrusel/carrusel-7.jpeg"
-            alt="Imagen de carrusel 7"
-            loading="lazy"
-          />
+        <div
+          class="carousel-slide absolute inset-0 flex items-center justify-center"
+          style="
+            background: url('./image/carrusel/carrusel-7.jpeg') no-repeat center
+              center/cover;
+          "
+        >
+          <div class="bg-black bg-opacity-50 p-8 rounded-lg">
+            <h1 class="text-5xl font-serif mb-4">
+              <span lang="es">Frescura Garantizada</span>
+              <span lang="en">Guaranteed Freshness</span>
+            </h1>
+            <p class="text-xl mb-8">
+              <span lang="es"
+                >Usamos solo ingredientes de la mejor calidad, ¡siempre!</span
+              >
+              <span lang="en"
+                >We only use the best quality ingredients, always!</span
+              >
+            </p>
+            <a
+              href="productos-galeria.html"
+              class="bg-marca-acento1 hover:bg-marca-complemento2 text-marca-oscuro hover:text-white font-bold py-3 px-8 rounded-full transition duration-300 ease-in-out inline-block"
+            >
+              <span lang="es">Ver Productos</span>
+              <span lang="en">View Products</span>
+            </a>
+          </div>
         </div>
-        <div class="carousel-slide">
-          <img
-            src="./image/carrusel/carrusel-8.jpeg"
-            alt="Imagen de carrusel 8"
-            loading="lazy"
-          />
+        <div
+          class="carousel-slide absolute inset-0 flex items-center justify-center"
+          style="
+            background: url('./image/carrusel/carrusel-8.jpeg') no-repeat center
+              center/cover;
+          "
+        >
+          <div class="bg-black bg-opacity-50 p-8 rounded-lg">
+            <h1 class="text-5xl font-serif mb-4">
+              <span lang="es">El Detalle Perfecto</span>
+              <span lang="en">The Perfect Detail</span>
+            </h1>
+            <p class="text-xl mb-8">
+              <span lang="es"
+                >Sorprende a esa persona especial con un dulce regalo</span
+              >
+              <span lang="en"
+                >Surprise that special person with a sweet gift</span
+              >
+            </p>
+            <a
+              href="productos-galeria.html"
+              class="bg-marca-acento1 hover:bg-marca-complemento2 text-marca-oscuro hover:text-white font-bold py-3 px-8 rounded-full transition duration-300 ease-in-out inline-block"
+            >
+              <span lang="es">Explorar Regalos</span>
+              <span lang="en">Explore Gifts</span>
+            </a>
+          </div>
         </div>
       </div>
-
       <button id="carousel-prev" class="carousel-button prev">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="lucide lucide-chevron-left"
-        >
-          <path d="m15 18-6-6 6-6" />
-        </svg>
+        <i class="fa-solid fa-chevron-left"></i>
       </button>
       <button id="carousel-next" class="carousel-button next">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="lucide lucide-chevron-right"
-        >
-          <path d="m9 18 6-6-6-6" />
-        </svg>
+        <i class="fa-solid fa-chevron-right"></i>
       </button>
-
-      <div class="absolute inset-0 bg-marca-oscuro opacity-25"></div>
-
-      <div
-        class="relative z-10 p-8 rounded-lg max-w-2xl text-center text-white"
-      >
-        <h1
-          class="text-5xl md:text-6xl font-serif font-bold mb-4 text-white drop-shadow-lg"
-        >
-          <span lang="es">Delicias Hechas con Amor en Envigado</span>
-          <span lang="en">Delights Made with Love in Envigado</span>
-        </h1>
-        <p class="text-xl md:text-2xl font-light italic">
-          <span lang="es"
-            >"Donde cada bocado es una dulce historia artesanal"</span
-          >
-          <span lang="en">"Where every bite is a sweet artisanal story"</span>
-        </p>
-        <a
-          href="productos-galeria.html"
-          class="mt-8 inline-block bg-marca-acento1 hover:bg-marca-complemento2 text-marca-oscuro font-semibold py-3 px-8 rounded-full hover:text-white transition duration-300 ease-in-out shadow-lg"
-        >
-          <span lang="es">Explora Nuestros Productos</span>
-          <span lang="en">Explore Our Products</span>
-        </a>
+      <div class="absolute bottom-8 right-8 text-2xl font-serif">
+        <span lang="es">Feliz Cumpleaños</span>
+        <span lang="en">Happy Birthday</span>
       </div>
     </section>
 
-    <section id="featured-products" class="py-16 bg-marca-complemento1">
+    <section
+      id="featured-products"
+      class="py-16 bg-marca-complemento1 text-marca-oscuro text-center"
+    >
       <div class="container mx-auto px-6">
-        <h2 class="text-4xl font-serif text-marca-oscuro text-center mb-12">
+        <h2 class="text-4xl font-serif mb-8">
           <span lang="es">Nuestros Productos Estrella</span>
-          <span lang="en">Our Featured Products</span>
+          <span lang="en">Our Star Products</span>
         </h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div
-            class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl"
+            class="bg-white p-6 rounded-lg shadow-lg transform transition duration-300 hover:scale-105"
           >
-            <img
-              src="./image/placeholder-featured1.jpg"
-              alt="Producto Destacado 1"
-              class="w-full h-40 object-cover rounded-md mb-4"
-              loading="lazy"
-            />
-            <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
-              <span lang="es">Nombre Producto 1</span>
-              <span lang="en">Product Name 1</span>
+            <i
+              class="fa-solid fa-cake-candles text-marca-acento1 text-5xl mb-4"
+            ></i>
+            <h3 class="text-2xl font-serif mb-2">
+              <span lang="es">Pastel Selva Negra</span>
+              <span lang="en">Black Forest Cake</span>
             </h3>
-            <p class="text-marca-oscuro mb-4">
+            <p class="mb-4">
               <span lang="es"
-                >Breve descripción o gancho de este producto estrella.</span
+                >Clásico bizcocho de chocolate, crema y cerezas.</span
               >
               <span lang="en"
-                >Brief description or hook for this featured product.</span
+                >Classic chocolate sponge cake, cream, and cherries.</span
+              >
+            </p>
+            <span class="text-xl font-bold">$ 45.000 COP</span>
+          </div>
+          <div
+            class="bg-white p-6 rounded-lg shadow-lg transform transition duration-300 hover:scale-105"
+          >
+            <i class="fa-solid fa-cupcake text-marca-acento1 text-5xl mb-4"></i>
+            <h3 class="text-2xl font-serif mb-2">
+              <span lang="es">Cupcakes Gourmet</span>
+              <span lang="en">Gourmet Cupcakes</span>
+            </h3>
+            <p class="mb-4">
+              <span lang="es">Variedad de sabores exquisitos.</span>
+              <span lang="en">Variety of exquisite flavors.</span>
+            </p>
+            <span class="text-xl font-bold">$ 6.000 COP (c/u)</span>
+          </div>
+          <div
+            class="bg-white p-6 rounded-lg shadow-lg transform transition duration-300 hover:scale-105"
+          >
+            <i
+              class="fa-solid fa-cookie-bite text-marca-acento1 text-5xl mb-4"
+            ></i>
+            <h3 class="text-2xl font-serif mb-2">
+              <span lang="es">Galletas Artesanales</span>
+              <span lang="en">Artisanal Cookies</span>
+            </h3>
+            <p class="mb-4">
+              <span lang="es">Hechas a mano, crujientes y deliciosas.</span>
+              <span lang="en">Handmade, crunchy and delicious.</span>
+            </p>
+            <span class="text-xl font-bold">$ 3.000 COP (paquete)</span>
+          </div>
+        </div>
+        <div class="mt-10">
+          <a
+            href="productos-galeria.html"
+            class="bg-marca-acento1 hover:bg-marca-complemento2 text-marca-oscuro hover:text-white font-bold py-3 px-8 rounded-full transition duration-300 ease-in-out inline-block"
+          >
+            <span lang="es">Ver Todos los Productos</span>
+            <span lang="en">View All Products</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="why-choose-us"
+      class="py-16 bg-marca-claro text-marca-oscuro text-center"
+    >
+      <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-serif mb-8">
+          <span lang="es">Por Qué Elegir Suave Bocado</span>
+          <span lang="en">Why Choose Suave Bocado</span>
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="p-6 rounded-lg shadow-lg bg-white">
+            <i class="fa-solid fa-heart text-marca-acento1 text-5xl mb-4"></i>
+            <h3 class="text-2xl font-serif mb-2">
+              <span lang="es">Hecho con Amor</span>
+              <span lang="en">Made with Love</span>
+            </h3>
+            <p>
+              <span lang="es"
+                >Cada postre es preparado con dedicación y pasión
+                artesanal.</span
+              >
+              <span lang="en"
+                >Every dessert is prepared with dedication and artisanal
+                passion.</span
               >
             </p>
           </div>
-
-          <div
-            class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl"
-          >
-            <img
-              src="./image/placeholder-featured2.jpg"
-              alt="Producto Destacado 2"
-              class="w-full h-40 object-cover rounded-md mb-4"
-              loading="lazy"
-            />
-            <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
-              <span lang="es">Nombre Producto 2</span>
-              <span lang="en">Product Name 2</span>
+          <div class="p-6 rounded-lg shadow-lg bg-white">
+            <i
+              class="fa-solid fa-seedling text-marca-acento1 text-5xl mb-4"
+            ></i>
+            <h3 class="text-2xl font-serif mb-2">
+              <span lang="es">Ingredientes Frescos</span>
+              <span lang="en">Fresh Ingredients</span>
             </h3>
-            <p class="text-marca-oscuro mb-4">
+            <p>
               <span lang="es"
-                >Breve descripción o gancho de este producto estrella.</span
+                >Seleccionamos cuidadosamente los mejores ingredientes de
+                calidad.</span
               >
               <span lang="en"
-                >Brief description or hook for this featured product.</span
+                >We carefully select the best quality ingredients.</span
               >
             </p>
           </div>
-
-          <div
-            class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl"
-          >
-            <img
-              src="./image/placeholder-featured3.jpg"
-              alt="Producto Destacado 3"
-              class="w-full h-40 object-cover rounded-md mb-4"
-              loading="lazy"
-            />
-            <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
-              <span lang="es">Nombre Producto 3</span>
-              <span lang="en">Product Name 3</span>
+          <div class="p-6 rounded-lg shadow-lg bg-white">
+            <i class="fa-solid fa-medal text-marca-acento1 text-5xl mb-4"></i>
+            <h3 class="text-2xl font-serif mb-2">
+              <span lang="es">Calidad Artesanal</span>
+              <span lang="en">Artisanal Quality</span>
             </h3>
-            <p class="text-marca-oscuro mb-4">
+            <p>
               <span lang="es"
-                >Breve descripción o gancho de este producto estrella.</span
+                >Técnicas tradicionales para un sabor y presentación
+                excepcionales.</span
               >
               <span lang="en"
-                >Brief description or hook for this featured product.</span
+                >Traditional techniques for exceptional flavor and
+                presentation.</span
               >
             </p>
           </div>
         </div>
-        <div class="text-center mt-12">
+        <div class="mt-10">
           <a
-            href="productos-galeria.html"
-            class="inline-block bg-marca-acento1 hover:bg-marca-complemento2 text-marca-oscuro hover:text-white font-bold py-2 px-6 rounded-full focus:outline-none focus:shadow-outline transition duration-300 ease-in-out"
+            href="nosotros-resenas.html"
+            class="bg-marca-acento1 hover:bg-marca-complemento2 text-marca-oscuro hover:text-white font-bold py-3 px-8 rounded-full transition duration-300 ease-in-out inline-block"
           >
-            <span lang="es">Ver Todos Nuestros Productos</span>
-            <span lang="en">View All Our Products</span>
+            <span lang="es">Conoce Nuestra Historia</span>
+            <span lang="en">Learn Our Story</span>
           </a>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="social-media"
+      class="py-16 bg-marca-complemento2 text-white text-center"
+    >
+      <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-serif mb-8">
+          <span lang="es">Síguenos en Nuestras Redes Sociales</span>
+          <span lang="en">Follow Us on Our Social Media</span>
+        </h2>
+        <div class="flex justify-center space-x-6 text-4xl">
+          <a
+            href="https://www.instagram.com/suavebocado/"
+            target="_blank"
+            aria-label="Instagram"
+            class="hover:text-marca-acento1 transition duration-300"
+            ><i class="fa-brands fa-instagram"></i
+          ></a>
+          <a
+            href="https://www.facebook.com/suavebocado?locale=es_ES"
+            target="_blank"
+            aria-label="Facebook"
+            class="hover:text-marca-acento1 transition duration-300"
+            ><i class="fa-brands fa-facebook-f"></i
+          ></a>
+          <a
+            href="https://www.tiktok.com/@suave.bocado?_t=8p9vCYiDRGY&_r=1"
+            target="_blank"
+            aria-label="TikTok"
+            class="hover:text-marca-acento1 transition duration-300"
+            ><i class="fa-brands fa-tiktok"></i
+          ></a>
+          <a
+            href="#"
+            target="_blank"
+            aria-label="WhatsApp"
+            class="hover:text-marca-acento1 transition duration-300"
+            ><i class="fa-brands fa-whatsapp"></i
+          ></a>
         </div>
       </div>
     </section>
@@ -437,52 +588,15 @@
       </div>
     </footer>
 
-    <div id="chatbot-widget" class="collapsed">
-      <div id="chat-header">
-        <span lang="es">Pregúntale a Suave Bocado</span>
-        <span lang="en">Ask Suave Bocado</span>
-        <button id="toggle-chat" class="text-white focus:outline-none">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="lucide lucide-minus"
-          >
-            <line x1="5" x2="19" y1="12" y2="12" />
-          </svg>
-        </button>
-      </div>
-      <div id="chat-body">
-        <div class="message bot">
-          <span lang="es">¡Hola! Soy bocadito</span>
-          <span lang="en">¡Hello! I am bocadito</span>
-        </div>
-      </div>
-      <div id="chat-input-area">
-        <input
-          type="text"
-          id="chat-input"
-          placeholder="Escribe tu mensaje..."
-          lang="es"
-        />
-        <input
-          type="text"
-          id="chat-input-en"
-          placeholder="Type your message..."
-          lang="en"
-        />
-        <button id="send-button">
-          <span lang="es">Enviar</span>
-          <span lang="en">Send</span>
-        </button>
-      </div>
-    </div>
+    <a
+      href="https://wa.me/573146791484?text=Hola%2C%20tengo%20una%20pregunta%20sobre%20los%20productos%20de%20Suave%20Bocado."
+      class="whatsapp-fab"
+      target="_blank"
+      aria-label="Contactar por WhatsApp"
+    >
+      <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
     <script src="script.js"></script>
   </body>
 </html>
