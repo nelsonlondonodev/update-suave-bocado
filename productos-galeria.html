@@ -31,7 +31,13 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&family=Quicksand:wght@700&display=swap"
       rel="stylesheet"
     />
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <link rel="stylesheet" href="style.css" />
     <style>
       /* Añadir estilos para los botones de navegación del carrusel (aunque no esté el carrusel en esta página, se mantienen por si acaso o por consistencia, aunque idealmente solo irían en index.html o css específico) */
@@ -61,9 +67,11 @@
       .carousel-button.next {
         right: 20px;
       }
-      .carousel-button svg {
+      /* Adjusted: Styling for Font Awesome icons within carousel buttons */
+      .carousel-button i.fa-solid {
         width: 24px;
         height: 24px;
+        font-size: 24px; /* Font Awesome uses font-size */
       }
 
       /* Estilo para la barra de mensajes dinámicos */
@@ -84,6 +92,87 @@
         padding-top: calc(
           20px + 35px
         ); /* Suma el ajuste original más la altura de la barra */
+      }
+      /* Added/Ensured: Styling for Font Awesome icons in this file */
+      /* These should be covered by the full style.css, but included in case a minimal style.css is used */
+      #mobile-menu-button i.fa-solid,
+      #toggle-chat i.fa-solid {
+        width: 24px;
+        height: 24px;
+        font-size: 24px;
+      }
+      .product-card i.fa-solid {
+        width: 3rem;
+        height: 3rem;
+        font-size: 3rem;
+        color: #ffc4d1;
+        margin-bottom: 1rem;
+        display: inline-block;
+      }
+      /* No specific Font Awesome icons in Why Choose Us on this page */
+      /* No specific Font Awesome icons in Contact section on this page */
+      /* No specific Font Awesome icons in Social Media section on this page */
+
+      /* Styles specific to Gallery (Pinterest style) */
+      .pinterest-grid {
+        display: grid;
+        /* Use CSS Grid with masonry-like columns */
+        /* You might need a polyfill or adjust based on browser support */
+        /* A simpler approach is using Flexbox or pure CSS columns */
+
+        /* Example using CSS Columns (simple masonry): */
+        column-count: 1; /* Default for small screens */
+        column-gap: 1rem; /* Gap between columns */
+
+        /* Adjust column count for larger screens */
+        @media (min-width: 768px) {
+          /* md breakpoint */
+          column-count: 2;
+        }
+
+        @media (min-width: 1024px) {
+          /* lg breakpoint */
+          column-count: 3;
+        }
+      }
+
+      .gallery-item {
+        /* Break inside columns if using CSS columns */
+        break-inside: avoid;
+        margin-bottom: 1rem; /* Space between items */
+        position: relative; /* For caption positioning */
+        overflow: hidden; /* Hide overflowing parts of the image */
+        border-radius: 8px; /* Match Tailwind rounded-lg */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Match Tailwind shadow-lg */
+      }
+
+      .gallery-item img {
+        display: block; /* Remove extra space below image */
+        width: 100%; /* Make image fill the column width */
+        height: auto; /* Maintain aspect ratio */
+      }
+
+      .gallery-item-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(
+          0,
+          0,
+          0,
+          0.6
+        ); /* Semi-transparent dark background */
+        color: white;
+        padding: 8px;
+        text-align: center;
+        font-size: 0.8em;
+        opacity: 0; /* Hidden by default */
+        transition: opacity 0.3s ease;
+      }
+
+      .gallery-item:hover .gallery-item-caption {
+        opacity: 1; /* Show caption on hover */
       }
     </style>
   </head>
@@ -152,22 +241,7 @@
             id="mobile-menu-button"
             class="text-marca-oscuro focus:outline-none"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="lucide lucide-menu"
-            >
-              <line x1="4" x2="20" y1="12" y2="12" />
-              <line x1="4" x2="20" y1="6" y2="6" />
-              <line x1="4" x2="20" y1="18" y2="18" />
-            </svg>
+            <i class="fa-solid fa-bars"></i>
           </button>
         </div>
       </nav>
@@ -210,7 +284,9 @@
             class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl product-card"
             data-category="artesanales"
           >
-            <i data-lucide="cake" class="w-12 h-12 text-marca-acento1 mb-4"></i>
+            <i
+              class="fa-solid fa-cake-candles w-12 h-12 text-marca-acento1 mb-4"
+            ></i>
             <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
               <span lang="es">Pastel Selva Negra</span>
               <span lang="en">Black Forest Cake</span>
@@ -234,8 +310,7 @@
             data-category="cupcakes"
           >
             <i
-              data-lucide="cupcake"
-              class="w-12 h-12 text-marca-acento1 mb-4"
+              class="fa-solid fa-cupcake w-12 h-12 text-marca-acento1 mb-4"
             ></i>
             <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
               <span lang="es">Set de Cupcakes Gourmet</span>
@@ -258,8 +333,7 @@
             data-category="bocaditos-dulces"
           >
             <i
-              data-lucide="cookie"
-              class="w-12 h-12 text-marca-acento1 mb-4"
+              class="fa-solid fa-cookie-bite w-12 h-12 text-marca-acento1 mb-4"
             ></i>
             <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
               <span lang="es">Galletas Artesanales</span>
@@ -283,7 +357,9 @@
             class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl product-card"
             data-category="artesanales"
           >
-            <i data-lucide="cake" class="w-12 h-12 text-marca-acento1 mb-4"></i>
+            <i
+              class="fa-solid fa-cake-candles w-12 h-12 text-marca-acento1 mb-4"
+            ></i>
             <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
               <span lang="es">Torta de Nata</span>
               <span lang="en">Cream Cake</span>
@@ -307,8 +383,7 @@
             data-category="postres"
           >
             <i
-              data-lucide="ice-cream"
-              class="w-12 h-12 text-marca-acento1 mb-4"
+              class="fa-solid fa-ice-cream w-12 h-12 text-marca-acento1 mb-4"
             ></i>
             <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
               <span lang="es">Postre de las 3 Leches</span>
@@ -327,8 +402,7 @@
             data-category="postres"
           >
             <i
-              data-lucide="bonfire"
-              class="w-12 h-12 text-marca-acento1 mb-4"
+              class="fa-solid fa-fire-flame-curved w-12 h-12 text-marca-acento1 mb-4"
             ></i>
             <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
               <span lang="es">Volcán de Chocolate</span>
@@ -772,20 +846,7 @@
         <span lang="es">Pregúntale a Suave Bocado</span>
         <span lang="en">Ask Suave Bocado</span>
         <button id="toggle-chat" class="text-white focus:outline-none">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="lucide lucide-minus"
-          >
-            <line x1="5" x2="19" y1="12" y2="12" />
-          </svg>
+          <i class="fa-solid fa-minus"></i>
         </button>
       </div>
       <div id="chat-body">
@@ -813,9 +874,6 @@
         </button>
       </div>
     </div>
-    <script>
-      lucide.createIcons();
-    </script>
     <script src="script.js"></script>
   </body>
 </html>

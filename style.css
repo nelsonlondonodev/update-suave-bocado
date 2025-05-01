@@ -1,229 +1,497 @@
-/* Estilos personalizados si es necesario (mínimo con Tailwind) */
-html {
-  scroll-behavior: smooth; /* Desplazamiento suave al hacer clic en enlaces de anclaje */
-}
-/* Estilo para las estrellas de reseña (ejemplo simple) */
-.rating .star {
-  color: #ffd700; /* Color dorado para las estrellas */
-  display: inline-block;
-  margin-right: 2px;
-}
-/* Ajuste para el tamaño del logo */
-.logo-img {
-  max-height: 70px; /* Ajustado a 70px */
-  width: auto;
+/* General styles */
+body {
+  font-family: "Montserrat", sans-serif; /* Primary text font */
+  color: #6a2e35; /* marca-oscuro */
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
+
+  /* Añadimos el fondo en degradado */
+  background: linear-gradient(
+    to bottom,
+    #ffe8e1,
+    #8cbcb9
+  ); /* Transición de marca-claro a marca-complemento1 */
+  background-attachment: fixed; /* Opcional: Mantiene el degradado fijo mientras haces scroll */
 }
 
-/* --- Estilos para manejo de idiomas --- */
-/* Oculta por defecto los elementos que no sean del idioma activo */
-body[data-lang="es"] [lang="en"],
+h1,
+h2,
+h3 {
+  font-family: "Quicksand", sans-serif; /* Titles font */
+  font-weight: 700; /* Quicksand is used for titles and is bold */
+}
+
+.container {
+  /* Styles for the container class used for max-width and centering */
+  /* These are often handled by Tailwind's 'container mx-auto px-6' but defining here for completeness */
+  max-width: 1200px; /* Example max width */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem; /* px-6 in Tailwind is 1.5rem */
+  padding-right: 1.5rem; /* px-6 in Tailwind is 1.5rem */
+}
+
+.logo-img {
+  /* Adjusted size for better visibility */
+  max-height: 60px; /* Aumentado de 50px a 60px */
+}
+
+/* Header and dynamic message bar */
+#dynamic-message-bar {
+  background-color: #8cbcb9; /* Color complemento 1 */
+  color: #6a2e35; /* Color oscuro de la marca */
+  text-align: center;
+  padding: 8px 0;
+  font-size: 0.9em;
+  width: 100%;
+  /* Added for button positioning and text alignment */
+  display: flex; /* Use flexbox to align items */
+  align-items: center; /* Vertically center items */
+  justify-content: center; /* Horizontally center the text content initially */
+  position: relative; /* Needed for absolute positioning of buttons */
+  /* Add padding to make space for the absolute positioned buttons */
+  padding-left: 40px; /* Ajusta el espacio a la izquierda */
+  padding-right: 40px; /* Ajusta el espacio a la derecha */
+}
+
+/* Styles for the navigation buttons within the message bar */
+.message-nav-button {
+  background: none;
+  border: none;
+  color: inherit; /* Inherit color from the parent message bar */
+  cursor: pointer;
+  font-size: 1em; /* Size relative to the message bar text size */
+  padding: 0 5px; /* Small horizontal padding */
+  transition: opacity 0.3s ease;
+  /* Positioning handled by absolute/left/right classes in HTML */
+  position: absolute; /* Position buttons absolutely within the relative parent */
+  top: 50%; /* Align vertically */
+  transform: translateY(-50%); /* Center vertically */
+}
+
+.message-nav-button:hover {
+  opacity: 0.7; /* Dim slightly on hover */
+}
+
+.message-nav-button i.fa-solid {
+  /* Ensure the icon inherits size and color */
+  color: inherit;
+  font-size: inherit;
+  width: 1em; /* Match font size */
+  height: 1em; /* Match font size */
+  display: inline-block; /* Ensure it behaves correctly */
+}
+
+/* Position the specific buttons */
+#message-prev {
+  left: 20px; /* Posición desde el borde izquierdo */
+}
+
+#message-next {
+  right: 20px; /* Posición desde el borde derecho */
+}
+
+header {
+  top: 35px; /* Adjusted based on the height of the message bar */
+  /* Tailwind classes handle fixed positioning, background, shadow, z-index */
+}
+
+/* Adjustment for content below the fixed header + message bar */
+/* This class is used on the first content section in each page */
+.pt-20 {
+  padding-top: calc(
+    20px + 35px
+  ); /* Sum of original pt-5 (if 20px was base) and message bar height */
+}
+
+/* Language Switcher */
+#language-switcher .lang-button {
+  /* Default styles */
+  transition: color 0.3s ease;
+  /* Color and hover color handled by Tailwind classes */
+}
+
+#language-switcher .lang-button.active {
+  /* Style for the active language button */
+  font-weight: bold; /* Example: make active button bold */
+  text-decoration: underline; /* Example: underline active button */
+  /* Color is typically the non-hover color when active */
+}
+
+/* Styles for the active navigation link */
+/* Aplicar a los enlaces dentro del nav principal y dentro del menú móvil */
+header nav a.active-nav,
+#mobile-menu a.active-nav {
+  font-weight: bold; /* Texto en negrita */
+  text-decoration: underline; /* Subrayado */
+  /* El color ya es marca-oscuro por defecto y en hover cambia.
+       Podríamos querer mantener el color normal de marca-oscuro cuando está activo,
+       incluso si el mouse no está encima. */
+  color: #6a2e35; /* Asegurar que el color sea marca-oscuro cuando está activo */
+}
+
+/* Language Switching Logic */
+/* These rules control which language span is visible based on the body's data-lang attribute */
+body[data-lang="es"] [lang="en"] {
+  display: none;
+}
+
 body[data-lang="en"] [lang="es"] {
   display: none;
 }
-/* Asegura que el idioma activo se muestre */
-body[data-lang="es"] [lang="es"],
-body[data-lang="en"] [lang="en"] {
-  display: block; /* O inline, inline-block, flex, grid según el elemento original */
+
+/* Ensure the correct language is shown in the dynamic bar using the language logic */
+/* These rules now apply to the spans *inside* #message-text */
+#dynamic-message-bar #message-text [lang="en"] {
+  display: none; /* Hide English by default */
 }
 
-/* Ajustes específicos si algunos elementos con lang='en' o lang='es' no se muestran correctamente */
-body[data-lang="es"] span[lang="es"],
-body[data-lang="en"] span[lang="en"] {
-  display: inline;
+body[data-lang="en"] #dynamic-message-bar #message-text [lang="en"] {
+  display: initial; /* Show English when data-lang="en" - Use initial to revert to span's default */
 }
 
-/* Estilo para los botones de idioma activos */
-#language-switcher .lang-button.active {
-  font-weight: bold;
-  text-decoration: underline;
+body[data-lang="en"] #dynamic-message-bar #message-text [lang="es"] {
+  display: none; /* Hide Spanish when data-lang="en" */
+}
+
+#dynamic-message-bar #message-text [lang="es"] {
+  display: initial; /* Show Spanish by default (when data-lang is es or not set) - Use initial */
+}
+
+/* COMMENTED OUT: Chatbot language display - these were specifically for the chatbot widget */
+
+/* Mobile Menu */
+/* Mobile menu toggle button icon size handled with Font Awesome rules below */
+#mobile-menu {
+  /* Tailwind handles hidden state, background, shadow */
+}
+
+/* Carousel (styles specific to index.html) */
+#inicio .carousel-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; /* Takes full height of its relative parent (.h-screen) */
+  overflow: hidden; /* Hide extra slides */
+}
+
+#inicio .carousel-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0; /* Hide by default */
+  transition: opacity 0.5s ease-in-out; /* Fade transition */
+  z-index: 1; /* Ensure slides are below buttons */
+  display: flex; /* Center content */
+  align-items: center;
+  justify-content: center;
+}
+
+#inicio .carousel-slide.active {
+  opacity: 1; /* Show active slide */
+  z-index: 2; /* Ensure active slide is on top */
+}
+
+/* Carousel navigation buttons */
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20; /* Ensure buttons are above slides */
+  padding: 12px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
   color: #6a2e35; /* Color oscuro de la marca */
 }
-/* --- Fin Estilos para manejo de idiomas --- */
 
-/* --- Estilos para el Chatbot --- */
-#chatbot-widget {
+.carousel-button:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.carousel-button.prev {
+  left: 20px;
+}
+
+.carousel-button.next {
+  right: 20px;
+}
+
+/* Font Awesome Icon Sizing */
+
+/* Icons in the header buttons (mobile menu toggle) */
+#mobile-menu-button i.fa-solid {
+  width: 24px;
+  height: 24px;
+  font-size: 24px; /* Font Awesome uses font-size for the size */
+  /* Color is typically handled by parent element color */
+}
+
+/* Icons in carousel navigation buttons */
+.carousel-button i.fa-solid {
+  width: 24px; /* Equivalent to the previous SVG size */
+  height: 24px; /* Equivalent to the previous SVG size */
+  font-size: 24px;
+  display: inline-block;
+}
+
+/* Icons in product cards (from productos-galeria.html) */
+.product-card i.fa-solid {
+  width: 3rem; /* Equivalent to w-12 (12 * 0.25rem = 3rem) */
+  height: 3rem; /* Equivalent to h-12 */
+  font-size: 3rem; /* Font Awesome uses font-size for the size */
+  color: #ffc4d1; /* Equivalent to text-marca-acento1 */
+  margin-bottom: 1rem; /* Equivalent to mb-4 (16px, 1rem) */
+  display: inline-block; /* Ensure they show correctly */
+}
+
+/* Icons in 'Why Choose Us' section (index.html) */
+#why-choose-us i.fa-solid {
+  font-size: 3rem; /* Equivalent to text-5xl (often ~3rem) */
+  color: #ffc4d1; /* Equivalent to text-marca-acento1 */
+  margin-bottom: 1rem; /* Equivalent to mb-4 */
+}
+
+/* Icons in Contact section (contacto.html) */
+#contacto i.fa-solid {
+  width: 24px; /* Example size */
+  height: 24px; /* Example size */
+  font-size: 24px; /* Font Awesome uses font-size */
+  display: inline-block; /* Ensure proper alignment */
+  /* Color is handled by text-marca-oscuro on the parent or icon itself */
+}
+
+/* Icons in Social Media section */
+section#social-media i.fa-brands {
+  /* fa-brands for brand icons */
+  font-size: 2rem; /* Example size for larger social icons */
+  /* Color is handled by parent or hover styles */
+}
+
+/* WhatsApp Floating Action Button */
+.whatsapp-fab {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  z-index: 1000;
-  width: 300px; /* Ancho del chat */
-  max-height: 400px; /* Altura máxima */
-  display: flex;
-  flex-direction: column;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-#chat-header {
-  background-color: #6a2e35; /* Color oscuro de la marca */
-  color: white;
-  padding: 10px;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
+  background-color: #25d366; /* WhatsApp green */
+  color: white; /* Icon color */
+  border-radius: 50%;
+  padding: 15px; /* Size of the button area around the icon */
+  font-size: 24px; /* Size of the icon itself */
+  display: flex; /* To center the icon */
   align-items: center;
-  font-weight: bold;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 999; /* Ensure it's above most other content */
+  transition: transform 0.3s ease-in-out;
 }
 
-#chat-body {
-  flex-grow: 1;
-  padding: 10px;
-  overflow-y: auto; /* Permite scroll si el contenido excede la altura máxima */
-  background-color: #ffe8e1; /* Color claro de la marca */
-  display: flex;
-  flex-direction: column;
+.whatsapp-fab:hover {
+  transform: scale(1.1); /* Slightly enlarge on hover */
 }
 
-.message {
-  margin-bottom: 8px;
-  padding: 6px 10px;
-  border-radius: 8px;
-  max-width: 80%;
+.whatsapp-fab i.fa-brands {
+  /* Ensure the icon inherits color and size */
+  color: inherit; /* Inherit color from the parent link */
+  font-size: inherit; /* Inherit size from the parent link */
+  width: 1em; /* Match font size */
+  height: 1em; /* Match font size */
+  display: inline-block; /* Ensure it behaves correctly */
 }
 
-.message.user {
-  align-self: flex-end;
-  background-color: #ffc4d1; /* Color de acento */
-  color: #6a2e35; /* Color oscuro */
-}
-
-.message.bot {
-  align-self: flex-start;
-  background-color: #e0e0e0; /* Gris claro */
-  color: #333; /* Gris oscuro */
-}
-
-#chat-input-area {
-  display: flex;
-  padding: 10px;
-  background-color: #f1f1f1; /* Gris muy claro */
-}
-
-#chat-input-area input {
-  flex-grow: 1;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-right: 8px;
-  font-size: 0.9em;
-}
-
-#chat-input-area button {
-  background-color: #8cbcb9; /* Color complemento */
-  color: white;
-  padding: 8px 15px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-#chat-input-area button:hover {
-  background-color: #3c6e71; /* Color complemento oscuro */
-}
-/* Oculta el cuerpo del chat por defecto */
-#chatbot-widget.collapsed #chat-body,
-#chatbot-widget.collapsed #chat-input-area {
-  display: none;
-}
-/* --- Fin Estilos para el Chatbot --- */
-
-/* --- Estilos para el Carrusel --- */
-/* Estos estilos solo son relevantes para index.html */
-.carousel-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-.carousel-slide {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0; /* Oculta por defecto */
-  transition: opacity 1s ease-in-out; /* Transición suave */
-}
-.carousel-slide.active {
-  opacity: 1; /* Muestra la slide activa */
-}
-.carousel-slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Asegura que la imagen cubra el contenedor sin distorsionarse */
-}
-/* --- Fin Estilos para el Carrusel --- */
-
-/* --- Estilos para Galería tipo Pinterest (con CSS Columns) --- */
-/* Estos estilos solo son relevantes para galeria.html */
+/* Gallery Grid (Pinterest style from productos-galeria.html) */
 .pinterest-grid {
-  /* Configuración principal usando columnas */
-  column-count: 1; /* Default para móviles */
-  column-gap: 16px; /* Espacio entre columnas */
-}
+  display: grid;
+  /* Use CSS Grid with masonry-like columns */
+  /* You might need a polyfill or adjust based on browser support */
+  /* A simpler approach is using Flexbox or pure CSS columns */
 
-/* Columnas responsivas */
-@media (min-width: 640px) {
-  /* sm breakpoint */
-  .pinterest-grid {
+  /* Example using CSS Columns (simple masonry): */
+  column-count: 1; /* Default for small screens */
+  column-gap: 1rem; /* Gap between columns */
+
+  /* Adjust column count for larger screens */
+  @media (min-width: 768px) {
+    /* md breakpoint */
     column-count: 2;
   }
-}
-@media (min-width: 768px) {
-  /* md breakpoint */
-  .pinterest-grid {
+
+  @media (min-width: 1024px) {
+    /* lg breakpoint */
     column-count: 3;
-  }
-}
-@media (min-width: 1024px) {
-  /* lg breakpoint */
-  .pinterest-grid {
-    column-count: 4;
   }
 }
 
 .gallery-item {
-  /* Estilo para cada contenedor de imagen en la cuadrícula */
-  border-radius: 8px; /* Bordes redondeados */
-  overflow: hidden; /* Asegura que la imagen redondeada no se desborde */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
-  transition: transform 0.3s ease-in-out; /* Transición suave al pasar el ratón */
-  cursor: pointer; /* Indica que es interactivo */
-  /* Espacio entre los ítems dentro de una columna */
-  margin-bottom: 16px;
-
-  /* IMPORTANTE: Previene que el ítem se rompa a través de las columnas */
-  break-inside: avoid-column;
-  -webkit-break-inside: avoid-column; /* Para navegadores Webkit */
-  page-break-inside: avoid; /* Para impresión (aunque no es el foco) */
-
-  /* Necesario para que margin-bottom funcione correctamente en columnas */
-  display: inline-block;
-  width: 100%;
-}
-
-.gallery-item:hover {
-  transform: scale(1.03); /* Ligeramente más grande al pasar el ratón */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada */
+  /* Break inside columns if using CSS columns */
+  break-inside: avoid;
+  margin-bottom: 1rem; /* Space between items */
+  position: relative; /* For caption positioning */
+  overflow: hidden; /* Hide overflowing parts of the image */
+  border-radius: 8px; /* Match Tailwind rounded-lg */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Match Tailwind shadow-lg */
 }
 
 .gallery-item img {
-  display: block;
-  width: 100%; /* La imagen ocupa todo el ancho de su contenedor */
-  height: auto; /* Mantiene la proporción de la imagen */
-  object-fit: cover; /* Asegura que la imagen cubra el área sin distorsionarse */
+  display: block; /* Remove extra space below image */
+  width: 100%; /* Make image fill the column width */
+  height: auto; /* Maintain aspect ratio */
 }
 
-/* Estilo para un pie de foto o texto dentro del ítem */
 .gallery-item-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent dark background */
+  color: white;
   padding: 8px;
   text-align: center;
-  font-size: 0.9em;
-  color: #6a2e35;
-  background-color: #fff; /* Fondo blanco para el pie de foto */
+  font-size: 0.8em;
+  opacity: 0; /* Hidden by default */
+  transition: opacity 0.3s ease;
 }
 
-/* --- Fin Estilos para Galería tipo Pinterest --- */
+.gallery-item:hover .gallery-item-caption {
+  opacity: 1; /* Show caption on hover */
+}
+
+/* Reviews (from nosotros-resenas.html) */
+.rating .star {
+  color: gold; /* Or your preferred star color */
+  /* Add any other styling for stars if needed */
+}
+
+/* COMMENTED OUT: Chatbot Widget CSS */
+/*
+#chatbot-widget {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 300px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  z-index: 1000;
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+}
+
+#chatbot-widget.collapsed {
+  width: auto;
+  height: auto;
+  bottom: 20px;
+  right: 20px;
+  border-radius: 50px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 8px 15px;
+}
+
+#chat-header {
+  background-color: #6a2e35;
+  color: white;
+  padding: 10px 15px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+#chatbot-widget.collapsed #chat-header {
+  border-radius: 50px;
+  padding: 0;
+  background-color: transparent;
+  color: #6a2e35;
+  box-shadow: none;
+}
+
+#toggle-chat {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font-size: 1.2em;
+}
+
+#chatbot-widget.collapsed #toggle-chat {
+  color: #6a2e35;
+}
+
+#chat-body {
+  flex-grow: 1;
+  padding: 15px;
+  overflow-y: auto;
+  max-height: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#chatbot-widget.collapsed #chat-body {
+  display: none;
+}
+
+.message {
+  max-width: 80%;
+  padding: 8px 12px;
+  border-radius: 15px;
+  word-wrap: break-word;
+}
+
+.message.bot {
+  background-color: #e2e2e2;
+  align-self: flex-start;
+}
+
+.message.user {
+  background-color: #ffc4d1;
+  color: #6a2e35;
+  align-self: flex-end;
+}
+
+#chat-input-area {
+  padding: 10px 15px;
+  border-top: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#chatbot-widget.collapsed #chat-input-area {
+  display: none;
+}
+
+#chat-input,
+#chat-input-en {
+  flex-grow: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  font-size: 0.9em;
+}
+
+#send-button {
+  background-color: #6a2e35;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#send-button:hover {
+  background-color: #3c6e71;
+}
+*/
