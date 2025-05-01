@@ -160,8 +160,6 @@ body[data-lang="en"] #dynamic-message-bar #message-text [lang="es"] {
   display: initial; /* Show Spanish by default (when data-lang is es or not set) - Use initial */
 }
 
-/* COMMENTED OUT: Chatbot language display - these were specifically for the chatbot widget */
-
 /* Mobile Menu */
 /* Mobile menu toggle button icon size handled with Font Awesome rules below */
 #mobile-menu {
@@ -169,6 +167,8 @@ body[data-lang="en"] #dynamic-message-bar #message-text [lang="es"] {
 }
 
 /* Carousel (styles specific to index.html) */
+/* Nota: Estos estilos deberían estar en un archivo CSS específico para index.html o cargarse condicionalmente */
+/* Los mantenemos aquí por ahora para que funcionen si style.css es el único archivo CSS */
 #inicio .carousel-container {
   position: absolute;
   top: 0;
@@ -197,7 +197,7 @@ body[data-lang="en"] #dynamic-message-bar #message-text [lang="es"] {
   z-index: 2; /* Ensure active slide is on top */
 }
 
-/* Carousel navigation buttons */
+/* Carousel navigation buttons (Base styles shared by main carousel and reviews carousel) */
 .carousel-button {
   position: absolute;
   top: 50%;
@@ -226,8 +226,9 @@ body[data-lang="en"] #dynamic-message-bar #message-text [lang="es"] {
 
 /* Font Awesome Icon Sizing */
 
-/* Icons in the header buttons (mobile menu toggle) */
-#mobile-menu-button i.fa-solid {
+/* Icons in the header buttons (mobile menu toggle, chat toggle) */
+#mobile-menu-button i.fa-solid,
+#toggle-chat i.fa-solid {
   width: 24px;
   height: 24px;
   font-size: 24px; /* Font Awesome uses font-size for the size */
@@ -308,12 +309,8 @@ section#social-media i.fa-brands {
 
 /* Gallery Grid (Pinterest style from productos-galeria.html) */
 .pinterest-grid {
-  display: grid;
-  /* Use CSS Grid with masonry-like columns */
-  /* You might need a polyfill or adjust based on browser support */
-  /* A simpler approach is using Flexbox or pure CSS columns */
-
-  /* Example using CSS Columns (simple masonry): */
+  /* Eliminamos display: grid; para confiar solo en column-count para el layout masonry */
+  /* display: grid; */
   column-count: 1; /* Default for small screens */
   column-gap: 1rem; /* Gap between columns */
 
@@ -369,95 +366,196 @@ section#social-media i.fa-brands {
   /* Add any other styling for stars if needed */
 }
 
-/* COMMENTED OUT: Chatbot Widget CSS */
-/*
+/* Filter Buttons - Add transition for color */
+/* The hover effect for inactive buttons is handled via Tailwind classes in HTML */
+.filter-button {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* --- Styles specific to the Reviews Carousel --- */
+#reviews-carousel {
+  /* La posición relativa se maneja por la clase 'relative' de Tailwind en HTML */
+  overflow: hidden; /* Oculta las reseñas que no están activas */
+  /* Añadimos una altura mínima temporal para verificar la visualización del contenedor */
+  min-height: 300px; /* Ajusta según el contenido de tus reseñas, puede ser quitado después */
+
+  /* Añadimos padding para dejar espacio a los botones de navegación a los lados */
+  padding-left: 40px; /* Espacio a la izquierda para el botón prev */
+  padding-right: 40px; /* Espacio a la derecha para el botón next */
+
+  /* Añadimos padding en la parte superior e inferior para evitar que el hover scale recorte la tarjeta */
+  padding-top: 1.5rem; /* Espacio en la parte superior (ajusta si es necesario) */
+  padding-bottom: 1.5rem; /* Espacio en la parte inferior (para simetría) */
+}
+
+.review-slide {
+  /* El posicionamiento absoluto hace que los slides se apilen unos encima de otros */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  /* Removed display: flex, justify-content, align-items here */
+
+  opacity: 0; /* Oculto por defecto para el efecto de transición */
+  transition: opacity 0.5s ease-in-out; /* Transición de fundido */
+  z-index: 1; /* Orden de apilamiento por defecto */
+}
+
+.review-slide.active-review {
+  opacity: 1; /* Mostrar la reseña activa */
+  position: relative; /* La slide activa debe ser parte del flujo normal para que el contenedor #reviews-carousel la dimensione correctamente */
+  z-index: 2; /* Asegura que la slide activa esté por encima durante la transición */
+}
+
+/* Estilos para asegurar que las slides ocultas no interfieran */
+/* La clase 'hidden' de Tailwind ya maneja 'display: none' */
+/* Podemos añadir una regla adicional si necesitamos forzarlo o ajustar su posición */
+.review-slide.hidden {
+  display: none !important; /* Usamos !important para asegurar que se oculte completamente */
+  position: absolute; /* Mantener absoluto cuando está oculto */
+  z-index: 1; /* Keep behind the active slide */
+}
+
+/* Posicionar los botones de navegación del carrusel de reseñas */
+/* Reutilizamos los estilos base de .carousel-button definidos anteriormente */
+#reviews-carousel .carousel-button.prev {
+  left: 0; /* Posición en el borde izquierdo del contenedor del carrusel */
+  transform: translateY(-50%); /* Centrar verticalmente */
+}
+
+#reviews-carousel .carousel-button.next {
+  right: 0; /* Posición en el borde derecho del contenedor del carrusel */
+  transform: translateY(-50%); /* Centrar verticalmente */
+}
+
+/* Ajustar el padding del contenedor del carrusel de reseñas para pantallas pequeñas si es necesario */
+/* Esto es opcional, pero puede mejorar el espacio alrededor de los botones */
+@media (max-width: 767px) {
+  /* Aplicar a pantallas menores de 768px (breakpoint md) */
+  #reviews-carousel {
+    padding-left: 20px; /* Menos espacio en pantallas pequeñas */
+    padding-right: 20px; /* Menos espacio en pantallas pequeñas */
+  }
+  #reviews-carousel .carousel-button.prev {
+    left: 0; /* Pegado al borde si se reduce el padding */
+  }
+  #reviews-carousel .carousel-button.next {
+    right: 0; /* Pegado al borde si se reduce el padding */
+  }
+}
+
+/* Asegurar que el contenido interno de la tarjeta de reseña esté centrado horizontalmente */
+/* Esto ya está cubierto por mx-auto y max-w-md en el div.bg-white del HTML */
+.review-slide > div {
+  /* Estilos si se necesitan ajustes adicionales en la tarjeta interna */
+}
+
+/* Add hover effect to Review Cards */
+.review-slide .bg-white {
+  /* Ensure smooth transition for transform and shadow */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.review-slide .bg-white:hover {
+  /* Slightly enlarge the card on hover */
+  transform: scale(
+    1.03
+  ); /* Adjust scale factor as desired (1.05 matches product cards) */
+  /* Apply a larger shadow on hover, similar to shadow-xl */
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04); /* Tailwind's shadow-xl */
+}
+
+/* Chatbot Widget */
+/* Los estilos del chatbot se mantienen en el CSS general, pero el widget solo aparecerá
+   en las páginas donde exista el HTML correspondiente. */
 #chatbot-widget {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  width: 300px;
+  width: 300px; /* Example width */
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   overflow: hidden;
-  z-index: 1000;
+  z-index: 1000; /* Ensure it's on top */
   transition: all 0.3s ease-in-out;
-  display: flex;
+  display: flex; /* Use flexbox for layout */
   flex-direction: column;
 }
 
 #chatbot-widget.collapsed {
-  width: auto;
+  width: auto; /* Or a fixed smaller width */
   height: auto;
   bottom: 20px;
   right: 20px;
-  border-radius: 50px;
+  border-radius: 50px; /* Pill shape when collapsed */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 8px 15px;
+  padding: 8px 15px; /* Padding for the collapsed state header */
 }
 
 #chat-header {
-  background-color: #6a2e35;
+  background-color: #6a2e35; /* marca-oscuro */
   color: white;
   padding: 10px 15px;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  border-top-left-radius: 8px; /* Match widget border-radius when expanded */
+  border-top-right-radius: 8px; /* Match widget border-radius when expanded */
 }
-
+/* Adjust header border-radius when collapsed */
 #chatbot-widget.collapsed #chat-header {
-  border-radius: 50px;
-  padding: 0;
-  background-color: transparent;
-  color: #6a2e35;
-  box-shadow: none;
+  border-radius: 50px; /* Match collapsed widget shape */
+  padding: 0; /* Remove padding as it's on the widget itself */
+  background-color: transparent; /* Optional: transparent background when collapsed */
+  color: #6a2e35; /* Optional: Change color when collapsed */
+  box-shadow: none; /* Optional: Remove shadow when collapsed */
 }
 
 #toggle-chat {
   background: none;
   border: none;
-  color: inherit;
+  /* color is handled by the parent #chat-header or collapsed state */
   cursor: pointer;
   font-size: 1.2em;
 }
-
+/* Adjust toggle button color when collapsed */
 #chatbot-widget.collapsed #toggle-chat {
-  color: #6a2e35;
+  color: #6a2e35; /* Example: Change color when collapsed */
 }
 
 #chat-body {
-  flex-grow: 1;
+  flex-grow: 1; /* Take available space */
   padding: 15px;
-  overflow-y: auto;
-  max-height: 300px;
-  display: flex;
+  overflow-y: auto; /* Enable scrolling for messages */
+  max-height: 300px; /* Example max height for chat body */
+  display: flex; /* Use flexbox for messages */
   flex-direction: column;
-  gap: 10px;
+  gap: 10px; /* Space between messages */
 }
-
+/* Hide chat body when collapsed */
 #chatbot-widget.collapsed #chat-body {
   display: none;
 }
 
 .message {
-  max-width: 80%;
+  max-width: 80%; /* Limit message width */
   padding: 8px 12px;
   border-radius: 15px;
-  word-wrap: break-word;
+  word-wrap: break-word; /* Break long words */
 }
 
 .message.bot {
-  background-color: #e2e2e2;
-  align-self: flex-start;
+  background-color: #e2e2e2; /* Light gray for bot messages */
+  align-self: flex-start; /* Align bot messages to the left */
 }
 
 .message.user {
-  background-color: #ffc4d1;
-  color: #6a2e35;
-  align-self: flex-end;
+  background-color: #ffc4d1; /* marca-acento1 for user messages */
+  color: #6a2e35; /* marca-oscuro */
+  align-self: flex-end; /* Align user messages to the right */
 }
 
 #chat-input-area {
@@ -465,16 +563,16 @@ section#social-media i.fa-brands {
   border-top: 1px solid #eee;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 10px; /* Space between input and button */
 }
-
+/* Hide input area when collapsed */
 #chatbot-widget.collapsed #chat-input-area {
   display: none;
 }
 
 #chat-input,
 #chat-input-en {
-  flex-grow: 1;
+  flex-grow: 1; /* Take available space */
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 20px;
@@ -482,7 +580,7 @@ section#social-media i.fa-brands {
 }
 
 #send-button {
-  background-color: #6a2e35;
+  background-color: #6a2e35; /* marca-oscuro */
   color: white;
   border: none;
   border-radius: 20px;
@@ -492,6 +590,5 @@ section#social-media i.fa-brands {
 }
 
 #send-button:hover {
-  background-color: #3c6e71;
+  background-color: #3c6e71; /* marca-complemento2 */
 }
-*/

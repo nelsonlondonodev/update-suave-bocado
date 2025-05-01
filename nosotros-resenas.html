@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="./image/favicon/favicon.png" />
     <title lang="es">Suave bocado Repostería - Nosotros y Reseñas</title>
     <title lang="en">Suave bocado Bakery - About Us and Reviews</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -31,70 +32,32 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&family=Quicksand:wght@700&display=swap"
       rel="stylesheet"
     />
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
     <link rel="stylesheet" href="style.css" />
-    <style>
-      /* Añadir estilos para los botones de navegación del carrusel (aunque no esté el carrusel en esta página, se mantienen por si acaso o por consistencia, aunque idealmente solo irían en index.html o css específico) */
-      /* Nota: Para optimización real, estos estilos específicos del carrusel solo deberían cargar en index.html */
-      .carousel-button {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 20;
-        padding: 12px;
-        background-color: rgba(255, 255, 255, 0.5);
-        border: none;
-        border-radius: 50%;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-        color: #6a2e35;
-      }
-
-      .carousel-button:hover {
-        background-color: rgba(255, 255, 255, 0.8);
-      }
-
-      .carousel-button.prev {
-        left: 20px;
-      }
-
-      .carousel-button.next {
-        right: 20px;
-      }
-      .carousel-button svg {
-        width: 24px;
-        height: 24px;
-      }
-
-      /* Estilo para la barra de mensajes dinámicos */
-      #dynamic-message-bar {
-        background-color: #8cbcb9; /* Color complemento 1 */
-        color: #6a2e35; /* Color oscuro de la marca */
-        text-align: center;
-        padding: 8px 0;
-        font-size: 0.9em;
-        width: 100%;
-      }
-      /* Asegura que el encabezado fijo tenga espacio para la barra de mensajes */
-      header {
-        top: 35px; /* Ajusta este valor según la altura de la barra de mensajes */
-      }
-      /* Ajuste para el contenido principal debajo del encabezado fijo */
-      .pt-20 {
-        padding-top: calc(
-          20px + 35px
-        ); /* Suma el ajuste original más la altura de la barra */
-      }
-    </style>
   </head>
   <body class="font-sans text-marca-oscuro bg-marca-claro" data-lang="es">
     <header class="bg-white shadow-lg fixed top-0 left-0 right-0 z-50">
       <div
         id="dynamic-message-bar"
-        class="w-full text-sm py-2 text-center bg-marca-complemento1 text-marca-oscuro"
+        class="w-full text-sm py-2 text-center bg-marca-complemento1 text-marca-oscuro flex items-center justify-center relative"
       >
-        <span lang="es">Cargando mensajes...</span>
-        <span lang="en">Loading messages...</span>
+        <button id="message-prev" class="message-nav-button absolute left-2">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <span id="message-text">
+          <span lang="es">¡Pedidos personalizados para tus celebraciones!</span>
+          <span lang="en">Custom orders for your celebrations!</span>
+        </span>
+        <button id="message-next" class="message-nav-button absolute right-2">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
       </div>
       <nav
         class="container mx-auto px-6 py-4 flex justify-between items-center"
@@ -152,22 +115,7 @@
             id="mobile-menu-button"
             class="text-marca-oscuro focus:outline-none"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="lucide lucide-menu"
-            >
-              <line x1="4" x2="20" y1="12" y2="12" />
-              <line x1="4" x2="20" y1="6" y2="6" />
-              <line x1="4" x2="20" y1="18" y2="18" />
-            </svg>
+            <i class="fa-solid fa-bars"></i>
           </button>
         </div>
       </nav>
@@ -287,164 +235,223 @@
           <span lang="es">Lo que Dicen Nuestros Clientes</span>
           <span lang="en">What Our Customers Say</span>
         </h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div class="bg-white rounded-lg shadow-lg p-6">
-            <div class="flex items-center mb-4">
-              <div
-                class="w-10 h-10 rounded-full bg-marca-complemento1 flex items-center justify-center text-white font-bold mr-4"
-              >
-                J.P.
-              </div>
-              <div>
-                <p class="font-semibold text-marca-oscuro">
-                  <span lang="es">Juan Pérez</span
-                  ><span lang="en">John Smith</span>
-                </p>
-                <div class="rating text-sm">
-                  <span class="star">★</span>
-                  <span class="star">★</span>
-                  <span class="star">★</span>
-                  <span class="star">★</span>
-                  <span class="star">★</span>
+
+        <div id="reviews-carousel" class="relative">
+          <button id="review-prev" class="carousel-button prev z-30">
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+
+          <div class="review-slide">
+            <div class="bg-white rounded-lg shadow-lg p-6 mx-auto max-w-md">
+              <div class="flex items-center mb-4">
+                <div
+                  class="w-10 h-10 rounded-full bg-marca-complemento1 flex items-center justify-center text-white font-bold mr-4"
+                >
+                  J.P.
+                </div>
+                <div>
+                  <p class="font-semibold text-marca-oscuro">
+                    <span lang="es">Juan Pérez</span
+                    ><span lang="en">John Smith</span>
+                  </p>
+                  <div class="rating text-sm">
+                    <i class="fa-solid fa-star star"></i>
+                    <i class="fa-solid fa-star star"></i>
+                    <i class="fa-solid fa-star star"></i>
+                    <i class="fa-solid fa-star star"></i>
+                    <i class="fa-solid fa-star star"></i>
+                  </div>
                 </div>
               </div>
+              <p class="text-marca-oscuro italic mb-4">
+                <span lang="es"
+                  >"¡Simplemente deliciosos! Probé el pastel de nata y me
+                  transportó a mi infancia. La atención es excelente."</span
+                >
+                <span lang="en"
+                  >"Simply delicious! I tried the cream cake, and it transported
+                  me back to my childhood. The service is excellent."</span
+                >
+              </p>
+              <p class="text-gray-500 text-sm">
+                <span lang="es">Reseña de Google - Hace 2 días</span>
+                <span lang="en">Google Review - 2 days ago</span>
+              </p>
             </div>
-            <p class="text-marca-oscuro italic mb-4">
-              <span lang="es"
-                >"¡Simplemente deliciosos! Probé el pastel de nata y me
-                transportó a mi infancia. La atención es excelente."</span
-              >
-              <span lang="en"
-                >"Simply delicious! I tried the cream cake, and it transported
-                me back to my childhood. The service is excellent."</span
-              >
-            </p>
-            <p class="text-gray-500 text-sm">
-              <span lang="es">Reseña de Google - Hace 2 días</span>
-              <span lang="en">Google Review - 2 days ago</span>
-            </p>
           </div>
 
-          <div class="bg-white rounded-lg shadow-lg p-6">
-            <div class="flex items-center mb-4">
-              <div
-                class="w-10 h-10 rounded-full bg-marca-complemento1 flex items-center justify-center text-white font-bold mr-4"
-              >
-                M.G.
-              </div>
-              <div>
-                <p class="font-semibold text-marca-oscuro">
-                  <span lang="es">Maria González</span
-                  ><span lang="en">Mary Jones</span>
-                </p>
-                <div class="rating text-sm">
-                  <span class="star">★</span>
-                  <span class="star">★</span>
-                  <span class="star">★</span>
-                  <span class="star">★</span>
-                  <span class="star">★</span>
+          <div class="review-slide">
+            <div class="bg-white rounded-lg shadow-lg p-6 mx-auto max-w-md">
+              <div class="flex items-center mb-4">
+                <div
+                  class="w-10 h-10 rounded-full bg-marca-complemento1 flex items-center justify-center text-white font-bold mr-4"
+                >
+                  M.G.
+                </div>
+                <div>
+                  <p class="font-semibold text-marca-oscuro">
+                    <span lang="es">Maria González</span
+                    ><span lang="en">Mary Jones</span>
+                  </p>
+                  <div class="rating text-sm">
+                    <i class="fa-solid fa-star star"></i>
+                    <i class="fa-solid fa-star star"></i>
+                    <i class="fa-solid fa-star star"></i>
+                    <i class="fa-solid fa-star star"></i>
+                    <i class="fa-solid fa-star star"></i>
+                  </div>
                 </div>
               </div>
+              <p class="text-marca-oscuro italic mb-4">
+                <span lang="es"
+                  >"Los cupcakes son obras de arte. Perfectos para cualquier
+                  celebración. Se nota la calidad de los ingredientes."</span
+                >
+                <span lang="en"
+                  >"The cupcakes are works of art. Perfect for any celebration.
+                  The quality of the ingredients is noticeable."</span
+                >
+              </p>
+              <p class="text-gray-500 text-sm">
+                <span lang="es">Reseña de Google - Hace 1 semana</span>
+                <span lang="en">Google Review - 1 week ago</span>
+              </p>
             </div>
-            <p class="text-marca-oscuro italic mb-4">
-              <span lang="es"
-                >"Los cupcakes son obras de arte. Perfectos para cualquier
-                celebración. Se nota la calidad de los ingredientes."</span
-              >
-              <span lang="en"
-                >"The cupcakes are works of art. Perfect for any celebration.
-                The quality of the ingredients is noticeable."</span
-              >
-            </p>
-            <p class="text-gray-500 text-sm">
-              <span lang="es">Reseña de Google - Hace 1 semana</span>
-              <span lang="en">Google Review - 1 week ago</span>
-            </p>
           </div>
 
-          <div class="bg-white rounded-lg shadow-lg p-6">
-            <div class="flex items-center mb-4">
-              <div
-                class="w-10 h-10 rounded-full bg-marca-complemento1 flex items-center justify-center text-white font-bold mr-4"
-              >
-                C.L.
-              </div>
-              <div>
-                <p class="font-semibold text-marca-oscuro">
-                  <span lang="es">Carlos López</span
-                  ><span lang="en">Charles Brown</span>
-                </p>
-                <div class="rating text-sm">
-                  <span class="star">★</span>
-                  <span class="star">★</span>
-                  <span class="star">★</span>
-                  <span class="star">★</span>
-                  <span class="star">★</span>
+          <div class="review-slide">
+            <div class="bg-white rounded-lg shadow-lg p-6 mx-auto max-w-md">
+              <div class="flex items-center mb-4">
+                <div
+                  class="w-10 h-10 rounded-full bg-marca-complemento1 flex items-center justify-center text-white font-bold mr-4"
+                >
+                  C.L.
+                </div>
+                <div>
+                  <p class="font-semibold text-marca-oscuro">
+                    <span lang="es">Carlos López</span
+                    ><span lang="en">Charles Brown</span>
+                  </p>
+                  <div class="rating text-sm">
+                    <i class="fa-solid fa-star star"></i>
+                    <i class="fa-solid fa-star star"></i>
+                    <i class="fa-solid fa-star star"></i>
+                    <i class="fa-solid fa-star star"></i>
+                    <i class="fa-solid fa-star star"></i>
+                  </div>
                 </div>
               </div>
+              <p class="text-marca-oscuro italic mb-4">
+                <span lang="es"
+                  >"La mejor repostería de Envigado sin duda. El volcán de
+                  chocolate es una locura. Muy recomendado."</span
+                >
+                <span lang="en"
+                  >"The best bakery in Envigado without a doubt. The chocolate
+                  lava cake is crazy good. Highly recommended."</span
+                >
+              </p>
+              <p class="text-gray-500 text-sm">
+                <span lang="es">Reseña de Google - Hace 3 días</span>
+                <span lang="en">Google Review - 3 days ago</span>
+              </p>
             </div>
-            <p class="text-marca-oscuro italic mb-4">
-              <span lang="es"
-                >"La mejor repostería de Envigado sin duda. El volcán de
-                chocolate es una locura. Muy recomendado."</span
-              >
-              <span lang="en"
-                >"The best bakery in Envigado without a doubt. The chocolate
-                lava cake is crazy good. Highly recommended."</span
-              >
-            </p>
-            <p class="text-gray-500 text-sm">
-              <span lang="es">Reseña de Google - Hace 3 días</span>
-              <span lang="en">Google Review - 3 days ago</span>
-            </p>
           </div>
 
-          <div class="bg-white rounded-lg shadow-lg p-6">
-            <div class="flex items-center mb-4">
-              <div
-                class="w-10 h-10 rounded-full bg-marca-complemento1 flex items-center justify-center text-white font-bold mr-4"
-              >
-                A.R.
-              </div>
-              <div>
-                <p class="font-semibold text-marca-oscuro">
-                  <span lang="es">Ana Ramírez</span
-                  ><span lang="en">Anna Davis</span>
-                </p>
-                <div class="rating text-sm">
-                  <span class="star">★</span>
-                  <span class="star">★</span>
-                  <span class="star">★</span>
-                  <span class="star">★</span>
-                  <span class="star">★</span>
+          <div class="review-slide">
+            <div class="bg-white rounded-lg shadow-lg p-6 mx-auto max-w-md">
+              <div class="flex items-center mb-4">
+                <div
+                  class="w-10 h-10 rounded-full bg-marca-complemento1 flex items-center justify-center text-white font-bold mr-4"
+                >
+                  A.R.
+                </div>
+                <div>
+                  <p class="font-semibold text-marca-oscuro">
+                    <span lang="es">Ana Ramírez</span
+                    ><span lang="en">Anna Davis</span>
+                  </p>
+                  <div class="rating text-sm">
+                    <i class="fa-solid fa-star star"></i>
+                    <i class="fa-solid fa-star star"></i>
+                    <i class="fa-solid fa-star star"></i>
+                    <i class="fa-solid fa-star star"></i>
+                    <i class="fa-solid fa-star star"></i>
+                  </div>
                 </div>
               </div>
+              <p class="text-marca-oscuro italic mb-4">
+                <span lang="es"
+                  >"El detalle en las galletas personalizadas es increíble. Son
+                  perfectas para regalar y están deliciosas."</span
+                >
+                <span lang="en"
+                  >"The detail in the personalized cookies is incredible. They
+                  are perfect for gifting and are delicious."</span
+                >
+              </p>
+              <p class="text-gray-500 text-sm">
+                <span lang="es">Reseña de Google - Hace 1 mes</span>
+                <span lang="en">Google Review - 1 month ago</span>
+              </p>
             </div>
-            <p class="text-marca-oscuro italic mb-4">
-              <span lang="es"
-                >"El detalle en las galletas personalizadas es increíble. Son
-                perfectas para regalar y están deliciosas."</span
-              >
-              <span lang="en"
-                >"The detail in the personalized cookies is incredible. They are
-                perfect for gifting and are delicious."</span
-              >
-            </p>
-            <p class="text-gray-500 text-sm">
-              <span lang="es">Reseña de Google - Hace 1 mes</span>
-              <span lang="en">Google Review - 1 month ago</span>
-            </p>
           </div>
+          <button id="review-next" class="carousel-button next z-30">
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
         </div>
+
         <div class="text-center mt-12">
           <a
-            href="#"
+            href="https://g.page/r/CUuKZmhtbS6bEAE/review"
             target="_blank"
-            class="inline-block bg-marca-acento1 hover:bg-marca-complemento2 text-marca-oscuro hover:text-white font-bold py-2 px-6 rounded-full transition duration-300 ease-in-out"
+            class="inline-block bg-marca-acento1 hover:bg-marca-complemento2 text-marca-oscuro hover:text-white font-bold py-2 px-6 rounded-full focus:outline-none focus:shadow-outline transition duration-300 ease-in-out"
           >
             <span lang="es">Ver más reseñas en Google</span>
             <span lang="en">View more reviews on Google</span>
           </a>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="social-media"
+      class="py-16 bg-marca-complemento2 text-white text-center"
+    >
+      <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-serif mb-8">
+          <span lang="es">Síguenos en Nuestras Redes Sociales</span>
+          <span lang="en">Follow Us on Our Social Media</span>
+        </h2>
+        <div class="flex justify-center space-x-6 text-4xl">
+          <a
+            href="https://www.instagram.com/suavebocado/"
+            target="_blank"
+            aria-label="Instagram"
+            class="hover:text-marca-acento1 transition duration-300"
+            ><i class="fa-brands fa-instagram"></i
+          ></a>
+          <a
+            href="https://www.facebook.com/suavebocado?locale=es_ES"
+            target="_blank"
+            aria-label="Facebook"
+            class="hover:text-marca-acento1 transition duration-300"
+            ><i class="fa-brands fa-facebook-f"></i
+          ></a>
+          <a
+            href="https://www.tiktok.com/@suave.bocado?_t=8p9vCYiDRGY&_r=1"
+            target="_blank"
+            aria-label="TikTok"
+            class="hover:text-marca-acento1 transition duration-300"
+            ><i class="fa-brands fa-tiktok"></i
+          ></a>
+          <a
+            href="https://wa.me/573146791484"
+            target="_blank"
+            aria-label="WhatsApp"
+            class="hover:text-marca-acento1 transition duration-300"
+            ><i class="fa-brands fa-whatsapp"></i
+          ></a>
         </div>
       </div>
     </section>
@@ -463,55 +470,15 @@
       </div>
     </footer>
 
-    <div id="chatbot-widget" class="collapsed">
-      <div id="chat-header">
-        <span lang="es">Pregúntale a Suave Bocado</span>
-        <span lang="en">Ask Suave Bocado</span>
-        <button id="toggle-chat" class="text-white focus:outline-none">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="lucide lucide-minus"
-          >
-            <line x1="5" x2="19" y1="12" y2="12" />
-          </svg>
-        </button>
-      </div>
-      <div id="chat-body">
-        <div class="message bot">
-          <span lang="es">¡Hola! Soy bocadito</span>
-          <span lang="en">¡Hello! I am bocadito</span>
-        </div>
-      </div>
-      <div id="chat-input-area">
-        <input
-          type="text"
-          id="chat-input"
-          placeholder="Escribe tu mensaje..."
-          lang="es"
-        />
-        <input
-          type="text"
-          id="chat-input-en"
-          placeholder="Type your message..."
-          lang="en"
-        />
-        <button id="send-button">
-          <span lang="es">Enviar</span>
-          <span lang="en">Send</span>
-        </button>
-      </div>
-    </div>
-    <script>
-      lucide.createIcons();
-    </script>
+    <a
+      href="https://wa.me/573146791484?text=Hola%2C%20tengo%20una%20pregunta%2C%20vengo%20desde%20la%20p%C3%A1gina%20Nosotros%20y%20Rese%C3%B1as."
+      class="whatsapp-fab"
+      target="_blank"
+      aria-label="Contactar por WhatsApp"
+    >
+      <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
     <script src="script.js"></script>
   </body>
 </html>
