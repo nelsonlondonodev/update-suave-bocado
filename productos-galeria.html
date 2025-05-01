@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="./image/favicon/favicon.png" />
     <title lang="es">Suave bocado Repostería - Productos y Galería</title>
     <title lang="en">Suave bocado Bakery - Products and Gallery</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -28,7 +29,7 @@
       };
     </script>
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&family=Quicksand:wght@700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&family=Quicksand:wght=700&display=swap"
       rel="stylesheet"
     />
     <link
@@ -38,152 +39,25 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+
     <link rel="stylesheet" href="style.css" />
-    <style>
-      /* Añadir estilos para los botones de navegación del carrusel (aunque no esté el carrusel en esta página, se mantienen por si acaso o por consistencia, aunque idealmente solo irían en index.html o css específico) */
-      /* Nota: Para optimización real, estos estilos específicos del carrusel solo deberían cargar en index.html */
-      .carousel-button {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 20;
-        padding: 12px;
-        background-color: rgba(255, 255, 255, 0.5);
-        border: none;
-        border-radius: 50%;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-        color: #6a2e35;
-      }
-
-      .carousel-button:hover {
-        background-color: rgba(255, 255, 255, 0.8);
-      }
-
-      .carousel-button.prev {
-        left: 20px;
-      }
-
-      .carousel-button.next {
-        right: 20px;
-      }
-      /* Adjusted: Styling for Font Awesome icons within carousel buttons */
-      .carousel-button i.fa-solid {
-        width: 24px;
-        height: 24px;
-        font-size: 24px; /* Font Awesome uses font-size */
-      }
-
-      /* Estilo para la barra de mensajes dinámicos */
-      #dynamic-message-bar {
-        background-color: #8cbcb9; /* Color complemento 1 */
-        color: #6a2e35; /* Color oscuro de la marca */
-        text-align: center;
-        padding: 8px 0;
-        font-size: 0.9em;
-        width: 100%;
-      }
-      /* Asegura que el encabezado fijo tenga espacio para la barra de mensajes */
-      header {
-        top: 35px; /* Ajusta este valor según la altura de la barra de mensajes */
-      }
-      /* Ajuste para el contenido principal debajo del encabezado fijo */
-      .pt-20 {
-        padding-top: calc(
-          20px + 35px
-        ); /* Suma el ajuste original más la altura de la barra */
-      }
-      /* Added/Ensured: Styling for Font Awesome icons in this file */
-      /* These should be covered by the full style.css, but included in case a minimal style.css is used */
-      #mobile-menu-button i.fa-solid,
-      #toggle-chat i.fa-solid {
-        width: 24px;
-        height: 24px;
-        font-size: 24px;
-      }
-      .product-card i.fa-solid {
-        width: 3rem;
-        height: 3rem;
-        font-size: 3rem;
-        color: #ffc4d1;
-        margin-bottom: 1rem;
-        display: inline-block;
-      }
-      /* No specific Font Awesome icons in Why Choose Us on this page */
-      /* No specific Font Awesome icons in Contact section on this page */
-      /* No specific Font Awesome icons in Social Media section on this page */
-
-      /* Styles specific to Gallery (Pinterest style) */
-      .pinterest-grid {
-        display: grid;
-        /* Use CSS Grid with masonry-like columns */
-        /* You might need a polyfill or adjust based on browser support */
-        /* A simpler approach is using Flexbox or pure CSS columns */
-
-        /* Example using CSS Columns (simple masonry): */
-        column-count: 1; /* Default for small screens */
-        column-gap: 1rem; /* Gap between columns */
-
-        /* Adjust column count for larger screens */
-        @media (min-width: 768px) {
-          /* md breakpoint */
-          column-count: 2;
-        }
-
-        @media (min-width: 1024px) {
-          /* lg breakpoint */
-          column-count: 3;
-        }
-      }
-
-      .gallery-item {
-        /* Break inside columns if using CSS columns */
-        break-inside: avoid;
-        margin-bottom: 1rem; /* Space between items */
-        position: relative; /* For caption positioning */
-        overflow: hidden; /* Hide overflowing parts of the image */
-        border-radius: 8px; /* Match Tailwind rounded-lg */
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Match Tailwind shadow-lg */
-      }
-
-      .gallery-item img {
-        display: block; /* Remove extra space below image */
-        width: 100%; /* Make image fill the column width */
-        height: auto; /* Maintain aspect ratio */
-      }
-
-      .gallery-item-caption {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background-color: rgba(
-          0,
-          0,
-          0,
-          0.6
-        ); /* Semi-transparent dark background */
-        color: white;
-        padding: 8px;
-        text-align: center;
-        font-size: 0.8em;
-        opacity: 0; /* Hidden by default */
-        transition: opacity 0.3s ease;
-      }
-
-      .gallery-item:hover .gallery-item-caption {
-        opacity: 1; /* Show caption on hover */
-      }
-    </style>
   </head>
   <body class="font-sans text-marca-oscuro bg-marca-claro" data-lang="es">
     <header class="bg-white shadow-lg fixed top-0 left-0 right-0 z-50">
       <div
         id="dynamic-message-bar"
-        class="w-full text-sm py-2 text-center bg-marca-complemento1 text-marca-oscuro"
+        class="w-full text-sm py-2 text-center bg-marca-complemento1 text-marca-oscuro flex items-center justify-center relative"
       >
-        <span lang="es">Cargando mensajes...</span>
-        <span lang="en">Loading messages...</span>
+        <button id="message-prev" class="message-nav-button absolute left-2">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <span id="message-text">
+          <span lang="es">¡Pedidos personalizados para tus celebraciones!</span>
+          <span lang="en">Custom orders for your celebrations!</span>
+        </span>
+        <button id="message-next" class="message-nav-button absolute right-2">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
       </div>
       <nav
         class="container mx-auto px-6 py-4 flex justify-between items-center"
@@ -275,17 +149,67 @@
 
     <section id="productos" class="py-16 bg-marca-complemento1">
       <div class="container mx-auto px-6">
-        <h2 class="text-4xl font-serif text-marca-oscuro text-center mb-12">
+        <h2
+          class="text-4xl font-serif text-marca-oscuro text-center mb-8 md:mb-10 lg:mb-12"
+        >
           <span lang="es">Nuestros Productos Destacados</span>
           <span lang="en">Our Featured Products</span>
         </h2>
+        <div
+          class="flex flex-wrap justify-center gap-4 mb-8 md:space-x-4 md:gap-0"
+        >
+          <button
+            class="filter-button bg-white text-marca-oscuro hover:bg-marca-acento1 hover:text-white py-2 px-4 rounded-full transition duration-300"
+            data-category="all"
+          >
+            <span lang="es">Todos</span><span lang="en">All</span>
+          </button>
+          <button
+            class="filter-button bg-white text-marca-oscuro hover:bg-marca-acento1 hover:text-white py-2 px-4 rounded-full transition duration-300"
+            data-category="artesanales"
+          >
+            <span lang="es">Artesanales</span><span lang="en">Artisanal</span>
+          </button>
+          <button
+            class="filter-button bg-white text-marca-oscuro hover:bg-marca-acento1 hover:text-white py-2 px-4 rounded-full transition duration-300"
+            data-category="cupcakes"
+          >
+            <span lang="es">Cupcakes</span><span lang="en">Cupcakes</span>
+          </button>
+          <button
+            class="filter-button bg-white text-marca-oscuro hover:bg-marca-acento1 hover:text-white py-2 px-4 rounded-full transition duration-300"
+            data-category="bocaditos-dulces"
+          >
+            <span lang="es">Bocaditos Dulces</span
+            ><span lang="en">Sweet Bites</span>
+          </button>
+          <button
+            class="filter-button bg-white text-marca-oscuro hover:bg-marca-acento1 hover:text-white py-2 px-4 rounded-full transition duration-300"
+            data-category="box-cake"
+          >
+            <span lang="es">Box Cake</span><span lang="en">Box Cake</span>
+          </button>
+          <button
+            class="filter-button bg-white text-marca-oscuro hover:bg-marca-acento1 hover:text-white py-2 px-4 rounded-full transition duration-300"
+            data-category="postres"
+          >
+            <span lang="es">Postres</span><span lang="en">Desserts</span>
+          </button>
+          <button
+            class="filter-button bg-white text-marca-oscuro hover:bg-marca-acento1 hover:text-white py-2 px-4 rounded-full transition duration-300"
+            data-category="tematicas"
+          >
+            <span lang="es">Temáticas</span><span lang="en">Themed</span>
+          </button>
+        </div>
+
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div
             class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl product-card"
             data-category="artesanales"
           >
             <i
-              class="fa-solid fa-cake-candles w-12 h-12 text-marca-acento1 mb-4"
+              class="fa-solid fa-cake-candles text-marca-acento1 text-5xl mb-4"
             ></i>
             <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
               <span lang="es">Pastel Selva Negra</span>
@@ -301,7 +225,7 @@
                 delight.</span
               >
             </p>
-            <span class="text-2xl font-bold text-marca-oscuro"
+            <span class="text-2xl font-bold text-marca-oscuro mt-2"
               >$ 45.000 COP</span
             >
           </div>
@@ -309,9 +233,7 @@
             class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl product-card"
             data-category="cupcakes"
           >
-            <i
-              class="fa-solid fa-cupcake w-12 h-12 text-marca-acento1 mb-4"
-            ></i>
+            <i class="fa-solid fa-cupcake text-marca-acento1 text-5xl mb-4"></i>
             <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
               <span lang="es">Set de Cupcakes Gourmet</span>
               <span lang="en">Gourmet Cupcake Set</span>
@@ -324,7 +246,7 @@
                 >Variety of exquisite flavors with unique decorations.</span
               >
             </p>
-            <span class="text-2xl font-bold text-marca-oscuro"
+            <span class="text-2xl font-bold text-marca-oscuro mt-2"
               >$ 6.000 COP (cada uno)</span
             >
           </div>
@@ -333,7 +255,7 @@
             data-category="bocaditos-dulces"
           >
             <i
-              class="fa-solid fa-cookie-bite w-12 h-12 text-marca-acento1 mb-4"
+              class="fa-solid fa-cookie-bite text-marca-acento1 text-5xl mb-4"
             ></i>
             <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
               <span lang="es">Galletas Artesanales</span>
@@ -349,7 +271,7 @@
                 delicious.</span
               >
             </p>
-            <span class="text-2xl font-bold text-marca-oscuro"
+            <span class="text-2xl font-bold text-marca-oscuro mt-2"
               >$ 3.000 COP (paquete)</span
             >
           </div>
@@ -358,7 +280,7 @@
             data-category="artesanales"
           >
             <i
-              class="fa-solid fa-cake-candles w-12 h-12 text-marca-acento1 mb-4"
+              class="fa-solid fa-cake-candles text-marca-acento1 text-5xl mb-4"
             ></i>
             <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
               <span lang="es">Torta de Nata</span>
@@ -374,7 +296,7 @@
                 of sweetness.</span
               >
             </p>
-            <span class="text-2xl font-bold text-marca-oscuro"
+            <span class="text-2xl font-bold text-marca-oscuro mt-2"
               >$ 38.000 COP</span
             >
           </div>
@@ -383,7 +305,7 @@
             data-category="postres"
           >
             <i
-              class="fa-solid fa-ice-cream w-12 h-12 text-marca-acento1 mb-4"
+              class="fa-solid fa-ice-cream text-marca-acento1 text-5xl mb-4"
             ></i>
             <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
               <span lang="es">Postre de las 3 Leches</span>
@@ -393,7 +315,7 @@
               <span lang="es">Húmedo y cremoso, un clásico irresistible.</span>
               <span lang="en">Moist and creamy, an irresistible classic.</span>
             </p>
-            <span class="text-2xl font-bold text-marca-oscuro"
+            <span class="text-2xl font-bold text-marca-oscuro mt-2"
               >$ 8.000 COP (porción)</span
             >
           </div>
@@ -402,7 +324,7 @@
             data-category="postres"
           >
             <i
-              class="fa-solid fa-fire-flame-curved w-12 h-12 text-marca-acento1 mb-4"
+              class="fa-solid fa-fire-flame-curved text-marca-acento1 text-5xl mb-4"
             ></i>
             <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
               <span lang="es">Volcán de Chocolate</span>
@@ -414,29 +336,146 @@
               >
               <span lang="en">The perfect molten center, served warm.</span>
             </p>
-            <span class="text-2xl font-bold text-marca-oscuro"
+            <span class="text-2xl font-bold text-marca-oscuro mt-2"
               >$ 10.000 COP (porción)</span
+            >
+          </div>
+          <div
+            class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl product-card"
+            data-category="bocaditos-dulces"
+          >
+            <i
+              class="fa-solid fa-cookie-bite text-marca-acento1 text-5xl mb-4"
+            ></i>
+            <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
+              <span lang="es">Mini Brownies</span>
+              <span lang="en">Mini Brownies</span>
+            </h3>
+            <p class="text-marca-oscuro mb-4">
+              <span lang="es">Pequeños pero llenos de sabor a chocolate.</span>
+              <span lang="en">Small but full of chocolate flavor.</span>
+            </p>
+            <span class="text-2xl font-bold text-marca-oscuro mt-2"
+              >$ 2.500 COP (c/u)</span
+            >
+          </div>
+
+          <div
+            class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl product-card"
+            data-category="box-cake"
+          >
+            <i
+              class="fa-solid fa-box-open text-marca-acento1 text-5xl mb-4"
+            ></i>
+            <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
+              <span lang="es">Caja de Regalo Variada</span>
+              <span lang="en">Assorted Gift Box</span>
+            </h3>
+            <p class="text-marca-oscuro mb-4">
+              <span lang="es"
+                >Selección de bocaditos perfectos para regalar.</span
+              >
+              <span lang="en"
+                >Selection of sweet bites perfect for gifting.</span
+              >
+            </p>
+            <span class="text-2xl font-bold text-marca-oscuro mt-2"
+              >$ 30.000 COP (caja)</span
+            >
+          </div>
+
+          <div
+            class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-xl product-card"
+            data-category="tematicas"
+          >
+            <i class="fa-solid fa-shapes text-marca-acento1 text-5xl mb-4"></i>
+            <h3 class="text-2xl font-serif text-marca-oscuro mb-2">
+              <span lang="es">Pastel Temático Personalizado</span>
+              <span lang="en">Custom Themed Cake</span>
+            </h3>
+            <p class="text-marca-oscuro mb-4">
+              <span lang="es"
+                >Diseñamos el pastel de tus sueños para cualquier ocasión.</span
+              >
+              <span lang="en"
+                >We design the cake of your dreams for any occasion.</span
+              >
+            </p>
+            <span class="text-2xl font-bold text-marca-oscuro mt-2"
+              >$ Precio según diseño</span
             >
           </div>
         </div>
         <div class="text-center mt-12">
-          <button
-            id="show-all-products"
-            class="inline-block bg-marca-acento1 hover:bg-marca-complemento2 text-marca-oscuro hover:text-white font-bold py-2 px-6 rounded-full focus:outline-none focus:shadow-outline transition duration-300 ease-in-out"
-          >
-            <span lang="es">Mostrar Todos los Productos</span>
-            <span lang="en">Show All Products</span>
-          </button>
+          <p class="text-lg italic text-marca-oscuro">
+            <span lang="es"
+              >Explora nuestra galería para ver más ejemplos de pasteles
+              temáticos y otros productos.</span
+            >
+            <span lang="en"
+              >Explore our gallery to see more examples of themed cakes and
+              other products.</span
+            >
+          </p>
         </div>
       </div>
     </section>
 
     <section id="galeria" class="py-16 bg-marca-claro">
       <div class="container mx-auto px-6">
-        <h2 class="text-4xl font-serif text-marca-oscuro text-center mb-12">
+        <h2
+          class="text-4xl font-serif text-marca-oscuro text-center mb-8 md:mb-10 lg:mb-12"
+        >
           <span lang="es">Nuestra Galería de Dulzura</span>
           <span lang="en">Our Sweetness Gallery</span>
         </h2>
+        <div
+          class="flex flex-wrap justify-center gap-4 mb-8 md:space-x-4 md:gap-0"
+        >
+          <button
+            class="filter-button bg-white text-marca-oscuro hover:bg-marca-acento1 hover:text-white py-2 px-4 rounded-full transition duration-300"
+            data-category="all"
+          >
+            <span lang="es">Todos</span><span lang="en">All</span>
+          </button>
+          <button
+            class="filter-button bg-white text-marca-oscuro hover:bg-marca-acento1 hover:text-white py-2 px-4 rounded-full transition duration-300"
+            data-category="artesanales"
+          >
+            <span lang="es">Artesanales</span><span lang="en">Artisanal</span>
+          </button>
+          <button
+            class="filter-button bg-white text-marca-oscuro hover:bg-marca-acento1 hover:text-white py-2 px-4 rounded-full transition duration-300"
+            data-category="cupcakes"
+          >
+            <span lang="es">Cupcakes</span><span lang="en">Cupcakes</span>
+          </button>
+          <button
+            class="filter-button bg-white text-marca-oscuro hover:bg-marca-acento1 hover:text-white py-2 px-4 rounded-full transition duration-300"
+            data-category="bocaditos-dulces"
+          >
+            <span lang="es">Bocaditos Dulces</span
+            ><span lang="en">Sweet Bites</span>
+          </button>
+          <button
+            class="filter-button bg-white text-marca-oscuro hover:bg-marca-acento1 hover:text-white py-2 px-4 rounded-full transition duration-300"
+            data-category="box-cake"
+          >
+            <span lang="es">Box Cake</span><span lang="en">Box Cake</span>
+          </button>
+          <button
+            class="filter-button bg-white text-marca-oscuro hover:bg-marca-acento1 hover:text-white py-2 px-4 rounded-full transition duration-300"
+            data-category="postres"
+          >
+            <span lang="es">Postres</span><span lang="en">Desserts</span>
+          </button>
+          <button
+            class="filter-button bg-white text-marca-oscuro hover:bg-marca-acento1 hover:text-white py-2 px-4 rounded-full transition duration-300"
+            data-category="tematicas"
+          >
+            <span lang="es">Temáticas</span><span lang="en">Themed</span>
+          </button>
+        </div>
         <div class="pinterest-grid">
           <div class="gallery-item" data-category="artesanales">
             <img
@@ -827,6 +866,48 @@
       </div>
     </section>
 
+    <section
+      id="social-media"
+      class="py-16 bg-marca-complemento2 text-white text-center"
+    >
+      <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-serif mb-8">
+          <span lang="es">Síguenos en Nuestras Redes Sociales</span>
+          <span lang="en">Follow Us on Our Social Media</span>
+        </h2>
+        <div class="flex justify-center space-x-6 text-4xl">
+          <a
+            href="https://www.instagram.com/suavebocado/"
+            target="_blank"
+            aria-label="Instagram"
+            class="hover:text-marca-acento1 transition duration-300"
+            ><i class="fa-brands fa-instagram"></i
+          ></a>
+          <a
+            href="https://www.facebook.com/suavebocado?locale=es_ES"
+            target="_blank"
+            aria-label="Facebook"
+            class="hover:text-marca-acento1 transition duration-300"
+            ><i class="fa-brands fa-facebook-f"></i
+          ></a>
+          <a
+            href="https://www.tiktok.com/@suave.bocado?_t=8p9vCYiDRGY&_r=1"
+            target="_blank"
+            aria-label="TikTok"
+            class="hover:text-marca-acento1 transition duration-300"
+            ><i class="fa-brands fa-tiktok"></i
+          ></a>
+          <a
+            href="https://wa.me/573146791484"
+            target="_blank"
+            aria-label="WhatsApp"
+            class="hover:text-marca-acento1 transition duration-300"
+            ><i class="fa-brands fa-whatsapp"></i
+          ></a>
+        </div>
+      </div>
+    </section>
+
     <footer class="bg-marca-oscuro text-white py-8 text-center">
       <div class="container mx-auto px-6">
         <p>
@@ -841,39 +922,15 @@
       </div>
     </footer>
 
-    <div id="chatbot-widget" class="collapsed">
-      <div id="chat-header">
-        <span lang="es">Pregúntale a Suave Bocado</span>
-        <span lang="en">Ask Suave Bocado</span>
-        <button id="toggle-chat" class="text-white focus:outline-none">
-          <i class="fa-solid fa-minus"></i>
-        </button>
-      </div>
-      <div id="chat-body">
-        <div class="message bot">
-          <span lang="es">¡Hola! Soy bocadito</span>
-          <span lang="en">¡Hello! I am bocadito</span>
-        </div>
-      </div>
-      <div id="chat-input-area">
-        <input
-          type="text"
-          id="chat-input"
-          placeholder="Escribe tu mensaje..."
-          lang="es"
-        />
-        <input
-          type="text"
-          id="chat-input-en"
-          placeholder="Type your message..."
-          lang="en"
-        />
-        <button id="send-button">
-          <span lang="es">Enviar</span>
-          <span lang="en">Send</span>
-        </button>
-      </div>
-    </div>
+    <a
+      href="https://wa.me/573146791484?text=Hola%2C%20tengo%20una%20pregunta%2C%20vengo%20desde%20la%20p%C3%A1gina%20Productos%20y%20Galer%C3%ADa."
+      class="whatsapp-fab"
+      target="_blank"
+      aria-label="Contactar por WhatsApp"
+    >
+      <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
     <script src="script.js"></script>
   </body>
 </html>
