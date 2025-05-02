@@ -2,7 +2,7 @@
 body {
   font-family: "Montserrat", sans-serif; /* Primary text font */
   color: #6a2e35; /* marca-oscuro */
-  line-height: 1.6;
+  line-height: 1.6; /* Establecemos una altura de línea base para el cuerpo */
   margin: 0;
   padding: 0;
   box-sizing: border-box; /* Include padding and border in element's total width and height */
@@ -67,8 +67,8 @@ h3 {
   transition: opacity 0.3s ease;
   /* Positioning handled by absolute/left/right classes in HTML */
   position: absolute; /* Position buttons absolutely within the relative parent */
-  top: 50%; /* Align vertically */
-  transform: translateY(-50%); /* Center vertically */
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .message-nav-button:hover {
@@ -115,21 +115,60 @@ header {
 
 #language-switcher .lang-button.active {
   /* Style for the active language button */
-  font-weight: bold; /* Example: make active button bold */
+  /* font-weight: bold; /* Example: make active button bold - COMENTADO/ELIMINADO */
   text-decoration: underline; /* Example: underline active button */
   /* Color is typically the non-hover color when active */
 }
 
 /* Styles for the active navigation link */
-/* Aplicar a los enlaces dentro del nav principal y dentro del menú móvil */
+/* Aplicar a los spans dentro de los enlaces del nav principal y menú móvil que tienen la clase active-nav */
+/* Esto asegura que el estilo se aplique al texto visible según el idioma */
+header nav a span.active-nav[lang="es"],
+header nav a span.active-nav[lang="en"],
+#mobile-menu a span.active-nav[lang="es"],
+#mobile-menu a span.active-nav[lang="en"] {
+  /* font-weight: bold; /* Texto en negrita - ELIMINADO para evitar que afecte el grosor */
+  text-decoration: underline !important; /* Aplicar subrayado */
+  color: #6a2e35 !important; /* Asegurar que el color sea marca-oscuro y prevalezca */
+
+  /* Añadimos font-size y line-height explícitamente para controlar el tamaño y espaciado */
+  font-size: 1rem !important; /* Ajusta este valor si tus enlaces tienen un tamaño diferente, 1rem suele ser 16px */
+  line-height: 1.5 !important; /* Ajusta este valor para que coincida con tus otros enlaces */
+}
+
+/* Aseguramos que los enlaces (a) en sí mismos no tengan un estilo activo no deseado */
+/* Mantenemos esta regla para seguridad */
 header nav a.active-nav,
 #mobile-menu a.active-nav {
-  font-weight: bold; /* Texto en negrita */
-  text-decoration: underline; /* Subrayado */
-  /* El color ya es marca-oscuro por defecto y en hover cambia.
-       Podríamos querer mantener el color normal de marca-oscuro cuando está activo,
-       incluso si el mouse no está encima. */
-  color: #6a2e35; /* Asegurar que el color sea marca-oscuro cuando está activo */
+  font-weight: normal !important; /* O el peso de fuente por defecto de tu diseño */
+  /* font-size: inherit !important; /* O el tamaño de fuente por defecto, comentado porque lo controlamos en el span */
+  text-decoration: none !important; /* Asegurar que el subrayado solo venga del span si es necesario */
+}
+
+/* Opcional: Si quieres que el enlace completo sea un poco más oscuro al pasar el ratón o estar activo */
+/* Mantenemos estas reglas opcionales */
+header nav a:hover,
+#mobile-menu a:hover,
+header nav a.active-nav, /* Añadimos el selector .active-nav aquí */
+#mobile-menu a.active-nav {
+  /* Añadimos el selector .active-nav aquí */
+  color: #3c6e71 !important; /* Color al pasar el ratón y para el enlace activo */
+}
+
+/* Asegurar que el span activo dentro del enlace activo mantenga el color deseado */
+/* Mantenemos esta regla para el color del texto subrayado */
+header nav a.active-nav span[lang="es"],
+header nav a.active-nav span[lang="en"],
+#mobile-menu a.active-nav span[lang="es"],
+#mobile-menu a.active-nav span[lang="en"] {
+  color: #6a2e35 !important; /* Mantenemos el color oscuro para el texto subrayado activo */
+}
+
+/* Add line-height to navigation links for consistent vertical spacing */
+header nav a,
+#mobile-menu a {
+  line-height: 1.5; /* Ajusta este valor según necesites. 1.5 o 'normal' suelen ser buenos puntos de partida. */
+  vertical-align: middle; /* Intenta alinear verticalmente el texto si hay otros elementos */
 }
 
 /* Language Switching Logic */
@@ -162,8 +201,92 @@ body[data-lang="en"] #dynamic-message-bar #message-text [lang="es"] {
 
 /* Mobile Menu */
 /* Mobile menu toggle button icon size handled with Font Awesome rules below */
-#mobile-menu {
-  /* Tailwind handles hidden state, background, shadow */
+#mobile-menu-button i.fa-solid,
+#toggle-chat i.fa-solid {
+  width: 24px;
+  height: 24px;
+  font-size: 24px; /* Font Awesome usa font-size para el tamaño */
+  /* El color se maneja típicamente por el color del elemento padre */
+}
+
+/* Icons in carousel navigation buttons */
+.carousel-button i.fa-solid {
+  width: 24px; /* Equivalente al tamaño anterior de los SVG de Lucide */
+  height: 24px; /* Equivalente al tamaño anterior de los SVG de Lucide */
+  font-size: 24px;
+  display: inline-block;
+}
+
+/* Icons in product cards (from productos-galeria.html) */
+.product-card i.fa-solid {
+  width: 3rem; /* Equivalente a w-12 (12 * 0.25rem = 3rem) */
+  height: 3rem; /* Equivalente a h-12 */
+  font-size: 3rem; /* Font Awesome usa font-size para el tamaño */
+  color: #ffc4d1; /* Equivalente a text-marca-acento1 */
+  margin-bottom: 1rem; /* Equivalente a mb-4 (16px, 1rem) */
+  display: inline-block; /* Asegura que se muestren correctamente */
+}
+
+/* Icons in 'Why Choose Us' section (index.html) */
+#why-choose-us i.fa-solid {
+  font-size: 3rem; /* Equivalente a text-5xl (aproximadamente 3rem) */
+  color: #ffc4d1; /* Equivalente a text-marca-acento1 */
+  margin-bottom: 1rem; /* Equivalente a mb-4 */
+}
+
+/* Icons in Contact section (contacto.html) */
+/* Aseguramos que los iconos de contacto directo tengan un tamaño consistente */
+#contacto i.fa-solid {
+  width: 24px; /* Tamaño consistente */
+  height: 24px; /* Tamaño consistente */
+  font-size: 24px; /* Font Awesome usa font-size */
+  display: inline-block; /* Asegura una alineación correcta */
+  /* El color se maneja por la clase text-marca-oscuro en el padre o en el propio icono */
+}
+
+/* Icons in Social Media section */
+/* Aseguramos que los iconos de redes sociales grandes tengan un tamaño consistente */
+section#social-media i.fa-brands {
+  /* fa-brands para iconos de marca */
+  font-size: 2rem; /* Tamaño de ejemplo para iconos sociales grandes */
+  /* El color se maneja por el padre o estilos hover */
+}
+
+/* Aseguramos que los iconos de redes sociales en la sección de contacto tengan un tamaño consistente */
+/* Estos tienen clases de tamaño en el HTML, pero esta regla actúa como fallback o ajuste fino */
+#contacto .flex.space-x-6 i.fa-brands {
+  font-size: 2rem; /* Asegura que tengan el mismo tamaño que los otros grandes si es necesario */
+}
+
+/* WhatsApp Floating Action Button */
+.whatsapp-fab {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #25d366; /* WhatsApp green */
+  color: white; /* Icon color */
+  border-radius: 50%;
+  padding: 15px; /* Size of the button area around the icon */
+  font-size: 24px; /* Size of the icon itself */
+  display: flex; /* To center the icon */
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 999; /* Ensure it's above most other content */
+  transition: transform 0.3s ease-in-out;
+}
+
+.whatsapp-fab:hover {
+  transform: scale(1.1); /* Slightly enlarge on hover */
+}
+
+.whatsapp-fab i.fa-brands {
+  /* Ensure the icon inherits color and size */
+  color: inherit; /* Inherit color from the parent link */
+  font-size: inherit; /* Inherit size from the parent link */
+  width: 1em; /* Match font size */
+  height: 1em; /* Match font size */
+  display: inline-block; /* Ensure it behaves correctly */
 }
 
 /* Carousel (styles specific to index.html) */
@@ -227,53 +350,62 @@ body[data-lang="en"] #dynamic-message-bar #message-text [lang="es"] {
 /* Font Awesome Icon Sizing */
 
 /* Icons in the header buttons (mobile menu toggle, chat toggle) */
+/* Aseguramos que los iconos del menú móvil y chat tengan un tamaño consistente */
 #mobile-menu-button i.fa-solid,
 #toggle-chat i.fa-solid {
   width: 24px;
   height: 24px;
-  font-size: 24px; /* Font Awesome uses font-size for the size */
-  /* Color is typically handled by parent element color */
+  font-size: 24px; /* Font Awesome usa font-size para el tamaño */
+  /* El color se maneja típicamente por el color del elemento padre */
 }
 
 /* Icons in carousel navigation buttons */
 .carousel-button i.fa-solid {
-  width: 24px; /* Equivalent to the previous SVG size */
-  height: 24px; /* Equivalent to the previous SVG size */
+  width: 24px; /* Equivalente al tamaño anterior de los SVG de Lucide */
+  height: 24px; /* Equivalente al tamaño anterior de los SVG de Lucide */
   font-size: 24px;
   display: inline-block;
 }
 
 /* Icons in product cards (from productos-galeria.html) */
 .product-card i.fa-solid {
-  width: 3rem; /* Equivalent to w-12 (12 * 0.25rem = 3rem) */
-  height: 3rem; /* Equivalent to h-12 */
-  font-size: 3rem; /* Font Awesome uses font-size for the size */
-  color: #ffc4d1; /* Equivalent to text-marca-acento1 */
-  margin-bottom: 1rem; /* Equivalent to mb-4 (16px, 1rem) */
-  display: inline-block; /* Ensure they show correctly */
+  width: 3rem; /* Equivalente a w-12 (12 * 0.25rem = 3rem) */
+  height: 3rem; /* Equivalente a h-12 */
+  font-size: 3rem; /* Font Awesome usa font-size para el tamaño */
+  color: #ffc4d1; /* Equivalente a text-marca-acento1 */
+  margin-bottom: 1rem; /* Equivalente a mb-4 (16px, 1rem) */
+  display: inline-block; /* Asegura que se muestren correctamente */
 }
 
 /* Icons in 'Why Choose Us' section (index.html) */
 #why-choose-us i.fa-solid {
-  font-size: 3rem; /* Equivalent to text-5xl (often ~3rem) */
-  color: #ffc4d1; /* Equivalent to text-marca-acento1 */
-  margin-bottom: 1rem; /* Equivalent to mb-4 */
+  font-size: 3rem; /* Equivalente a text-5xl (aproximadamente 3rem) */
+  color: #ffc4d1; /* Equivalente a text-marca-acento1 */
+  margin-bottom: 1rem; /* Equivalente a mb-4 */
 }
 
 /* Icons in Contact section (contacto.html) */
+/* Aseguramos que los iconos de contacto directo tengan un tamaño consistente */
 #contacto i.fa-solid {
-  width: 24px; /* Example size */
-  height: 24px; /* Example size */
-  font-size: 24px; /* Font Awesome uses font-size */
-  display: inline-block; /* Ensure proper alignment */
-  /* Color is handled by text-marca-oscuro on the parent or icon itself */
+  width: 24px; /* Tamaño consistente */
+  height: 24px; /* Tamaño consistente */
+  font-size: 24px; /* Font Awesome usa font-size */
+  display: inline-block; /* Asegura una alineación correcta */
+  /* El color se maneja por la clase text-marca-oscuro en el padre o en el propio icono */
 }
 
 /* Icons in Social Media section */
+/* Aseguramos que los iconos de redes sociales grandes tengan un tamaño consistente */
 section#social-media i.fa-brands {
-  /* fa-brands for brand icons */
-  font-size: 2rem; /* Example size for larger social icons */
-  /* Color is handled by parent or hover styles */
+  /* fa-brands para iconos de marca */
+  font-size: 2rem; /* Tamaño de ejemplo para iconos sociales grandes */
+  /* El color se maneja por el padre o estilos hover */
+}
+
+/* Aseguramos que los iconos de redes sociales en la sección de contacto tengan un tamaño consistente */
+/* Estos tienen clases de tamaño en el HTML, pero esta regla actúa como fallback o ajuste fino */
+#contacto .flex.space-x-6 i.fa-brands {
+  font-size: 2rem; /* Asegura que tengan el mismo tamaño que los otros grandes si es necesario */
 }
 
 /* WhatsApp Floating Action Button */
@@ -592,3 +724,10 @@ section#social-media i.fa-brands {
 #send-button:hover {
   background-color: #3c6e71; /* marca-complemento2 */
 }
+
+/* Eliminada la regla duplicada del chatbot */
+/* #chatbot-widget.collapsed {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+} */

@@ -222,32 +222,29 @@ if (messageNextButton) {
 // --- Lógica para Resaltar el Enlace de Navegación Activo ---
 
 function highlightActiveNav() {
-  // Obtener la ruta actual de la URL (ej: "/productos-galeria.html" o "/")
-  const currentPath = window.location.pathname;
+  const currentPath = window.location.pathname; // e.g., "/", "/index.html", "/productos-galeria.html"
 
-  // Seleccionar todos los enlaces de navegación en el header (versión desktop y mobile)
-  const navLinks = document.querySelectorAll("header nav a"); // Enlaces dentro de <nav> (desktop)
-  const mobileNavLinks = document.querySelectorAll("#mobile-menu a"); // Enlaces dentro del menú móvil
-
-  // Combinar ambas listas de enlaces para procesarlas juntas
+  const navLinks = document.querySelectorAll("header nav a");
+  const mobileNavLinks = document.querySelectorAll("#mobile-menu a");
   const allNavLinks = [...navLinks, ...mobileNavLinks];
 
   allNavLinks.forEach((link) => {
-    const linkPath = link.getAttribute("href"); // Obtener la ruta del enlace (ej: "index.html")
+    const linkPath = link.getAttribute("href"); // e.g., "index.html", "productos-galeria.html"
 
-    // Eliminar la clase 'active-nav' de todos los enlaces antes de añadirla al correcto
-    link.classList.remove("active-nav");
+    link.classList.remove("active-nav"); // Remove from all first
 
     // Lógica para determinar si el enlace actual corresponde a la página actual
-    // Consideramos la página de inicio ("index.html" o la raíz "/")
     const isHomePageLink =
-      linkPath === "index.html" || linkPath === "./index.html"; // Incluir "./index.html"
+      linkPath === "index.html" || linkPath === "./index.html"; // Check if the link is for the home page
+
     const isCurrentPathRoot =
       currentPath === "/" ||
       currentPath === "/index.html" ||
       currentPath === "/index"; // Considerar varias formas de la raíz
-    const isCurrentPathSpecific = currentPath.endsWith(linkPath); // Para otras páginas como productos-galeria.html
 
+    const isCurrentPathSpecific = currentPath.endsWith(linkPath); // Check if the current path ends with the link's href
+
+    // La condición principal para añadir la clase active-nav
     if (
       (isCurrentPathRoot && isHomePageLink) ||
       (!isCurrentPathRoot && isCurrentPathSpecific)
@@ -259,7 +256,6 @@ function highlightActiveNav() {
 
 // --- Lógica específica para productos-galeria.html (Filtros de Galería/Productos) ---
 // Ejecutar este código solo si estamos en productos-galeria.html
-// Incluimos un chequeo más robusto para la ruta
 const isProductsGalleryPage =
   window.location.pathname.endsWith("/productos-galeria.html") ||
   window.location.pathname.endsWith("/productos-galeria/") ||
@@ -626,6 +622,51 @@ document.addEventListener("DOMContentLoaded", () => {
   // y dentro de este DOMContentLoaded listener.
   // No es necesario llamarlas explícitamente aquí de nuevo,
   // ya que su inicialización está al final de sus bloques condicionales.
+
+  // --- Lógica para manejar el formulario de contacto con mailto: ---
+  const contactForm = document.getElementById("contact-form");
+
+  if (contactForm) {
+    contactForm.addEventListener("submit", function (event) {
+      event.preventDefault(); // Previene el envío por defecto del formulario
+
+      // Obtener los valores de los campos
+      const nombreInput = document.getElementById("nombre");
+      const correoInput = document.getElementById("correo");
+      const mensajeInput = document.getElementById("mensaje");
+
+      const nombre = nombreInput.value;
+      const correo = correoInput.value;
+      const mensaje = mensajeInput.value;
+
+      // Validar que los campos requeridos no estén vacíos (aunque el HTML ya tiene 'required')
+      if (!nombre || !correo || !mensaje) {
+        // Puedes añadir un mensaje de validación más amigable aquí si quieres
+        // Por ahora, el atributo 'required' del HTML ya maneja esto con mensajes por defecto del navegador
+        console.log("Por favor, completa todos los campos."); // Log para depuración
+        return; // Detener el proceso si falta algún campo
+      }
+
+      // Construir el cuerpo del correo
+      const subject = "Mensaje desde el sitio web Suave bocado"; // Asunto del correo
+      const body = `Nombre: ${nombre}\nCorreo: ${correo}\n\nMensaje:\n${mensaje}`;
+
+      // Codificar el asunto y el cuerpo para la URL de mailto:
+      const encodedSubject = encodeURIComponent(subject);
+      const encodedBody = encodeURIComponent(body);
+
+      // Construir la URL mailto:
+      const mailtoUrl = `mailto:contacto@suavebocado.com?subject=${encodedSubject}&body=${encodedBody}`;
+
+      // Redirigir a la URL mailto: (esto abrirá el cliente de correo del usuario)
+      window.location.href = mailtoUrl;
+
+      // Limpiar el formulario después de abrir el cliente de correo
+      // Añadido en el Paso 10
+      contactForm.reset();
+    });
+  }
+  // --- Fin Lógica formulario de contacto ---
 }); // Fin del DOMContentLoaded listener
 
 // No es necesario inicializar Font Awesome con una función como lucide.createIcons()
